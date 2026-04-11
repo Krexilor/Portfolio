@@ -1,16 +1,19 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
-import React from 'react'
+import { useState } from 'react'
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import PreLoader from './components/common/PreLoader'
 
 // APPLICATION -------------------------------------------------------------------------------------------------------------------------------------|
 function App() {
+    const [loading, setLoading] = useState(true)
+
     return (
         <div className = "min-h-screen bg-black">
+            {/* Loading screen */}
+            {loading && <PreLoader onComplete = {() => setLoading(false)} />}
             <main>
-                {/* Loading Screen */}
-                <PreLoader />
+                
             </main>
         </div>
     )

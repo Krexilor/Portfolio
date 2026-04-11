@@ -17,4 +17,165 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
+}
+
+.hud-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    font-family: monospace;
+}
+
+.micro-star {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.corner-brackets {
+    position: absolute;
+    inset: 40px;
+    opacity: 0.5;
+}
+
+.bracket {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ffffff;
+}
+
+.top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
+.top-right { top: 0; right: 0; border-left: none; border-bottom: none; }
+.bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
+.bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+.scanline-container {
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.scanline-container.left { left: 40px; }
+.scanline-container.right { right: 40px; }
+
+.scanline {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, #88ccff, transparent);
+    box-shadow: 0 0 15px rgba(136, 204, 255, 0.8);
+}
+
+.scanline.reverse {
+    background: linear-gradient(to top, transparent, #88ccff, transparent);
+}
+
+.center-loader-container {
+    position: absolute;
+    left: 50%;
+    bottom: 30%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.loader-line-base {
+    width: 200px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.loader-line-glow {
+    height: 2px;
+    background: #88ccff;
+    box-shadow: 0 0 15px #88ccff, 0 0 30px #88ccff;
+    position: absolute;
+    top: 0;
+}
+
+.loader-subtext {
+    color: #88ccff;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-shadow: 0 0 8px rgba(136, 204, 255, 0.6);
+}
+
+.click-anywhere-text {
+    position: absolute;
+    top: calc(100% + 28px);
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(136, 204, 255, 0.75);
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-shadow: 0 0 8px rgba(136, 204, 255, 0.5);
+    white-space: nowrap;
+}
+
+.telemetry {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.telemetry.top-left {
+    top: 60px;
+    left: 80px;
+}
+
+.telemetry.bottom-right {
+    bottom: 60px;
+    right: 80px;
+    text-align: right;
+    align-items: flex-end;
+}
+
+.status-label {
+    color: #88ccff;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+}
+
+.percentage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.percentage-label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+}
+
+.percentage-value {
+    color: #88ccff;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(136, 204, 255, 0.4);
+}
+
+.data-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.data-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 10px;
+    letter-spacing: 0.1em;
 }
