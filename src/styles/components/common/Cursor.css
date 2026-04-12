@@ -1,0 +1,74 @@
+body {
+  cursor: none;
+}
+
+button, a, input, textarea, .interactive {
+  cursor: none !important;
+}
+
+.cursor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.cursor-core {
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #fff, 0 0 16px #3b82f6, 0 0 24px #2563eb, 0 0 40px rgba(59, 130, 246, 0.4);
+  z-index: 10;
+  transition: transform 0.1s ease-out;
+}
+
+.blade-system {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: rotate-blades 8s linear infinite;
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.blade-system.state-link {
+  animation-duration: 2s;
+}
+
+.blade-system.state-action {
+  animation-duration: 0.8s;
+}
+
+.terminal-active .blade-system {
+  animation: none !important;
+  transform: rotate(0deg) !important;
+}
+
+@keyframes rotate-blades {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.blade-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 10px;
+  transform-origin: bottom center;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.blade-shard {
+  width: 100%;
+  height: 100%;
+  fill: #93c5fd;
+  filter: drop-shadow(0 0 3px #3b82f6) drop-shadow(0 0 6px #2563eb);
+}
