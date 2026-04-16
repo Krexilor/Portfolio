@@ -1,21 +1,24 @@
 // CUSTOM CURSOR UTILS -----------------------------------------------------------------------------------------------------------------------------|
 export const getHoverType = (target) => {
+    if (!target) return 'none'
+
     const computedStyle = window.getComputedStyle(target)
-  
-    if (target.tagName === 'A' || target.closest('.link-hover')) {
-        return 'link'
-    }
-    if (target.tagName === 'BUTTON' || target.closest('.action-hover')) {
-        return 'action'
-    }
-    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.closest('.terminal-hover')) {
+
+    if (target.closest('input, textarea, .terminal-hover')) {
         return 'terminal'
     }
+
+    if (target.closest('button, .action-hover')) {
+        return 'action'
+    }
+
+    if (target.closest('a, .link-hover')) {
+        return 'link'
+    }
+
     if (computedStyle.cursor === 'pointer') {
         return 'link'
     }
-  
+
     return 'none'
 }
-
-// 

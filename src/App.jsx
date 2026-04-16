@@ -3,14 +3,15 @@ import { useState, useEffect } from 'react'
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import Cursor from './components/common/Cursor'
+import Navbar from './components/layout/Navbar'
 import PreLoader from './components/common/PreLoader'
 
 // SECTIONS ----------------------------------------------------------------------------------------------------------------------------------------|
 import HomeSection from './sections/Home'
+import WorkSection from './sections/Work'
 import AboutSection from './sections/About'
 import ContactSection from './sections/Contact'
 import ProcessSection from './sections/Process'
-import WorkSection from './sections/Work'
 
 // APPLICATION -------------------------------------------------------------------------------------------------------------------------------------|
 function App() {
@@ -40,12 +41,13 @@ function App() {
             {!loading && (
                 <main>
                     {/* Navbar */}
-
+                    <Navbar />
 
                     {/* Portfolio sections */}
                     <HomeSection />
                     <AboutSection />
-                    <ProjectsSection />
+                    <WorkSection />
+                    <ProcessSection />
                     <ContactSection />
 
                     {/* Footer */}
