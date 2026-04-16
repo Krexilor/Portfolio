@@ -8,9 +8,9 @@ import PreLoader from './components/common/PreLoader'
 // SECTIONS ----------------------------------------------------------------------------------------------------------------------------------------|
 import HomeSection from './sections/Home'
 import AboutSection from './sections/About'
-import SkillsSection from './sections/Skills'
 import ContactSection from './sections/Contact'
-import ProjectsSection from './sections/Projects'
+import ProcessSection from './sections/Process'
+import WorkSection from './sections/Work'
 
 // APPLICATION -------------------------------------------------------------------------------------------------------------------------------------|
 function App() {
@@ -45,7 +45,6 @@ function App() {
                     {/* Portfolio sections */}
                     <HomeSection />
                     <AboutSection />
-                    <SkillsSection />
                     <ProjectsSection />
                     <ContactSection />
 

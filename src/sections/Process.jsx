@@ -2,20 +2,20 @@
 
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
-import '../styles/sections/Projects.css'
+import '../styles/sections/Process.css'
 
-// PROJECTS SECTION --------------------------------------------------------------------------------------------------------------------------------|
-function ProjectsSection() {
+// HOME SECTION ------------------------------------------------------------------------------------------------------------------------------------|
+function ProcessSection() {
     return (
-        <section id = "Projects">
-            <h2>Projects</h2>
+        <section id = "process">
+            <h2>Process</h2>
 
             <div>
-                <p>Projects Section</p>
+                <p>Process Section</p>
             </div>
         </section>
     )
 }
 
 // EXPORTS -----------------------------------------------------------------------------------------------------------------------------------------|
-export default ProjectsSection
+export default ProcessSection

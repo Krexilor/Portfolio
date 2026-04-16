@@ -14,7 +14,7 @@ import vertexShader from '../../shaders/PreLoader/vertex.glsl'
 import fragmentShader from '../../shaders/PreLoader/fragment.glsl'
 
 // UTILS -------------------------------------------------------------------------------------------------------------------------------------------|
-import { ASSET_MANIFEST, LOADER_CONFIG, animateProgress, preloadAssets } from '../../utils/preloaderUtils'
+import { ASSET_MANIFEST, LOADER_CONFIG, animateProgress, preloadAssets } from '../../utils/preLoaderUtils'
 
 // MODEL CONTROLS ----------------------------------------------------------------------------------------------------------------------------------|
 const ModelControls = {
