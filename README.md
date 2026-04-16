@@ -8,13 +8,10 @@
 
 ---
 ## ➜ Overview
-> This is an interactive 3D portfolio built to showcase my work in real-time environments.<br>
-> All 3D models, assets, and visual elements are created by me unless stated otherwise.<br>
-> The project focuses on performance, smooth interaction, and immersive presentation.<br>
-
----
-## ➜ Features
-
+> [!NOTE]
+> ✨ This is an interactive 3D portfolio built to showcase my work in real-time environments.<br>
+> 💫 All 3D models, assets, and visual elements are created by me unless stated otherwise.<br>
+> 🌟 The project focuses on performance, smooth interaction, and immersive presentation.<br>
 
 ---
 ## ➜ Tech Stack
