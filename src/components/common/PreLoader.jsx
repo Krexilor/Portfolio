@@ -220,7 +220,7 @@ function HudOverlay({ progress, isExiting }) {
                     animate = {{ opacity: [0.3, 1, 0.3] }}
                     transition = {{ duration: 2, repeat: Infinity }}
                 >
-                    ◈ Booting Simulation ◈
+                    {progress >= 100 ? '◈ ALL SYSTEMS NOMINAL ◈' : '◈ CALIBRATING SYSTEMS ◈'}
                 </motion.div>
                 {progress >= 100 && (
                     <motion.div

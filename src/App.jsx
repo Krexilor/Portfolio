@@ -1,5 +1,5 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import Cursor from './components/common/Cursor'
@@ -16,6 +16,18 @@ import ProjectsSection from './sections/Projects'
 function App() {
     const [loading, setLoading] = useState(true)
 
+    useEffect(() => {
+        if (loading) {
+            document.documentElement.style.overflow = 'hidden'
+        } else {
+            document.documentElement.style.overflow = 'auto'
+        }
+
+        return () => {
+            document.documentElement.style.overflow = 'auto'
+        }
+    }, [loading])
+
     return (
         <div className = "min-h-screen bg-black">
             {/* Custom cursor */}
@@ -24,21 +36,23 @@ function App() {
             {/* Loading screen */}
             {loading && <PreLoader onComplete = {() => setLoading(false)} />}
             
-            {/* Main content */}
-            <main>
-                {/* Navbar */}
+            {/* Main content - only render when loading is complete */}
+            {!loading && (
+                <main>
+                    {/* Navbar */}
 
 
-                {/* Portfolio sections */}
-                <HomeSection />
-                <AboutSection />
-                <SkillsSection />
-                <ProjectsSection />
-                <ContactSection />
+                    {/* Portfolio sections */}
+                    <HomeSection />
+                    <AboutSection />
+                    <SkillsSection />
+                    <ProjectsSection />
+                    <ContactSection />
 
-                {/* Footer */}
+                    {/* Footer */}
 
-            </main>
+                </main>
+            )}
         </div>
     )
 }
