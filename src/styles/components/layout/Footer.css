@@ -8,15 +8,17 @@
 }
 
 .footer-container {
-  max-width: 90rem;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 4rem 6rem 4rem;
+  padding: 0 2rem 6rem 2rem;
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 3rem;
+  align-items: flex-start;
 }
 
 .brand-section {
@@ -128,9 +130,10 @@
 }
 
 .system-bar-container {
-  max-width: 90rem;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 4rem;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

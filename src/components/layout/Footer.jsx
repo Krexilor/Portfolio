@@ -1,5 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Github, Linkedin, Mail, ArrowUpRight, ShieldCheck, Timer, Cpu } from 'lucide-react';
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
@@ -14,7 +15,7 @@ const FOOTER_CONFIG = {
         email: "aarav.malik.pro@gmail.com"
     },
     resources: [
-        { name: 'Resume', link: '/resume.pdf' },
+        { name: 'Resume', link: '/resume' },
         { name: 'Blog', link: '/blog' }
     ],
     navItems: ['Home', 'About', 'Work', 'Process', 'Contact']
@@ -117,16 +118,14 @@ const Footer = () => {
                         <h4 className = "section-label">Resources</h4>
                         <nav className = "footer-nav">
                             {FOOTER_CONFIG.resources.map((item) => (
-                                <a 
+                                <Link 
                                     key = {item.name}
-                                    href = {item.link}
+                                    to = {item.link}
                                     className = "footer-nav-link"
-                                    target = "_blank" 
-                                    rel = "noopener noreferrer"
                                 >
                                     <span>{item.name}</span>
                                     <ArrowUpRight size = {14} className = "nav-arrow-icon" />
-                                </a>
+                                </Link>
                             ))}
                         </nav>
                     </div>

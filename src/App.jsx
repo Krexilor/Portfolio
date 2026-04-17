@@ -1,5 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import Cursor from './components/common/Cursor'
@@ -13,6 +14,10 @@ import WorkSection from './sections/Work'
 import AboutSection from './sections/About'
 import ContactSection from './sections/Contact'
 import ProcessSection from './sections/Process'
+
+// PAGES --------------------------------------------------------------------------------------------------------------------------------------------|
+import Blog from './pages/Blog'
+import Resume from './pages/Resume'
 
 // APPLICATION -------------------------------------------------------------------------------------------------------------------------------------|
 function App() {
@@ -30,6 +35,9 @@ function App() {
         }
     }, [loading])
 
+    const location = useLocation()
+    const isDetailPage = location.pathname === '/blog' || location.pathname === '/resume'
+
     return (
         <div className = "min-h-screen bg-black">
             {/* Custom cursor */}
@@ -41,19 +49,32 @@ function App() {
             {/* Main content - only render when loading is complete */}
             {!loading && (
                 <main>
-                    {/* Navbar */}
-                    <Navbar />
+                    {!isDetailPage && <Navbar />}
 
-                    {/* Portfolio sections */}
-                    <HomeSection />
-                    <AboutSection />
-                    <WorkSection />
-                    <ProcessSection />
-                    <ContactSection />
-
-                    {/* Footer */}
-                    <Footer />
-
+                    <Routes>
+                        <Route path = "/" element = {
+                            <>
+                                <HomeSection />
+                                <AboutSection />
+                                <WorkSection />
+                                <ProcessSection />
+                                <ContactSection />
+                                <Footer />
+                            </>
+                        } />
+                        <Route path = "/blog" element = {<Blog />} />
+                        <Route path = "/resume" element = {<Resume />} />
+                        <Route path = "*" element = {
+                            <>
+                                <HomeSection />
+                                <AboutSection />
+                                <WorkSection />
+                                <ProcessSection />
+                                <ContactSection />
+                                <Footer />
+                            </>
+                        } />
+                    </Routes>
                 </main>
             )}
         </div>
