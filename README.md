@@ -52,6 +52,9 @@ Porfolio/
 │   │   └── layout/                          # Structural components (Nav, Footer)
 │   │        ├── Footer.jsx
 │   │        └── Navbar.jsx
+│   ├── pages/
+│   │   ├── Blog.jsx
+│   │   └── Resume.jsx
 │   ├── sections/                            # High-level page sections
 │   │   ├── About.jsx
 │   │   ├── Contact.jsx
@@ -72,6 +75,9 @@ Porfolio/
 │   │   │    └── layout/
 │   │   │         ├── Footer.css
 │   │   │         └── Navbar.css
+│   │   ├── pages/
+│   │   │    ├── Blog.css
+│   │   │    └── Resume.css
 │   │   ├── sections/                        # Styles for main page sections
 │   │   │    ├── About.css
 │   │   │    ├── Contact.css
