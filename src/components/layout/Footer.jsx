@@ -50,14 +50,11 @@ const Footer = () => {
     }, []);
 
     // Email handler for Gmail web
-    const handleEmailClick = (e) => {
-        e.preventDefault();
+    const handleEmailClick = () => {
         const email = FOOTER_CONFIG.socials.email;
-        const subject = "Contact from Portfolio";
-        const body = "Hello Aarav,\n\nI would like to get in touch with you...";
-        
-        // Open Gmail compose window
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const subject = "Let's get in touch";
+        const body = `Hello Aarav,%0D%0A%0D%0AI wanted to reach out and say hello.%0D%0A%0D%0AFeel free to reply with anything on your mind — whether it is feedback, a question, or just a quick message.%0D%0A%0D%0ABest regards,%0D%0A[Your Name]`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${body}`;
         window.open(gmailUrl, '_blank');
     };
 
@@ -83,13 +80,13 @@ const Footer = () => {
                             <a href = {FOOTER_CONFIG.socials.linkedin} className = "social-pill" target = "_blank" rel = "noopener noreferrer">
                                 <Linkedin size = {18} />
                             </a>
-                            <a 
-                                href = "#" 
+                            <button 
+                                type = "button"
                                 className = "social-pill" 
                                 onClick = {handleEmailClick}
                             >
                                 <Mail size = {18} />
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -99,6 +96,7 @@ const Footer = () => {
                         <nav className = "footer-nav">
                             {FOOTER_CONFIG.navItems.map((item) => (
                                 <button 
+                                    type = "button"
                                     key = {item}
                                     onClick = {() =>
                                         document

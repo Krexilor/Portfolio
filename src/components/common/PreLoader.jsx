@@ -24,7 +24,7 @@ const ModelControls = {
 
 // PARTICLE CONTROLS -------------------------------------------------------------------------------------------------------------------------------|
 const ParticleControls = {
-    count: 1000,
+    count: 500,
     size: 0.03,
     color: "#88ccff",
     baseOpacity: 0.2,
@@ -340,7 +340,7 @@ function PreLoader({ onComplete }) {
             onClick = {phase === 'ready' ? handleEnter : undefined}
             style = {{ cursor: phase === 'ready' ? 'pointer' : 'default' }}
         >
-            <Canvas camera = {{ position: [0, 0, 5], fov: 50 }}>
+            <Canvas camera = {{ position: [0, 0, 5], fov: 50 }} dpr = {[1, 1.5]} gl = {{ antialias: true, alpha: true, powerPreference: 'high-performance' }}>
                 <ambientLight intensity = {0.2} />
                 <DustParticles explodingRef = {explodingRef} />
                 <Model />

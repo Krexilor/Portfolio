@@ -79,6 +79,7 @@ const Navbar = () => {
                 
                 {tabs.map((tab) => (
                     <button 
+                        type = "button"
                         key = {tab.id}
                         ref = {el => buttonRefs.current[tab.id] = el}
                         onClick = {() => document.getElementById(tab.id)?.scrollIntoView({ behavior: 'smooth' })}

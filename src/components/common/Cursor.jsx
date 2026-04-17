@@ -1,5 +1,5 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
 import '../../styles/components/common/Cursor.css';
@@ -9,24 +9,43 @@ import { getHoverType } from '../../utils/helpers'
 
 // COMPONENT ---------------------------------------------------------------------------------------------------------------------------------------|
 const Cursor = ({ isSystemLoading }) => {
-	const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+	const cursorRef = useRef(null)
+	const mousePosRef = useRef({ x: 0, y: 0 })
 	const [hoverType, setHoverType] = useState('none')
 	const [isClicking, setIsClicking] = useState(false)
 	const [isVisible, setIsVisible] = useState(false)
 
 	useEffect(() => {
+		let animationFrameId = null
+
+		const updateCursor = () => {
+			if (cursorRef.current) {
+				const { x, y } = mousePosRef.current
+				cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
+			}
+			animationFrameId = requestAnimationFrame(updateCursor)
+		}
+
+		updateCursor()
+
+		return () => {
+			if (animationFrameId) cancelAnimationFrame(animationFrameId)
+		}
+	}, [])
+
+	useEffect(() => {
 		const onMouseMove = (e) => {
-			setMousePos({ x: e.clientX, y: e.clientY })
+			mousePosRef.current = { x: e.clientX, y: e.clientY }
 			if (!isVisible) setIsVisible(true)
 		}
-		
+
 		const onMouseDown = () => setIsClicking(true)
 		const onMouseUp = () => setIsClicking(false)
 
 		const onMouseOver = (e) => {
 			setHoverType(getHoverType(e.target))
 		}
-		
+
 		window.addEventListener('mousemove', onMouseMove)
 		window.addEventListener('mousedown', onMouseDown)
 		window.addEventListener('mouseup', onMouseUp)
@@ -38,7 +57,7 @@ const Cursor = ({ isSystemLoading }) => {
 			window.removeEventListener('mouseup', onMouseUp)
 			window.removeEventListener('mouseover', onMouseOver)
 		}
-	}, [isVisible])
+	}, [])
 
 	const blades = Array.from({ length: 7 })
 	const isTerminal = hoverType === 'terminal'
@@ -52,9 +71,9 @@ const Cursor = ({ isSystemLoading }) => {
 			)}
 
 			<div
+				ref = {cursorRef}
 				className = {`cursor-container ${isTerminal ? 'terminal-active' : ''}`}
 				style = {{
-					transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0) translate(-50%, -50%)`,
 					opacity: isVisible ? 1 : 0,
 					zIndex: 10000
 				}}
