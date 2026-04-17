@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import Cursor from './components/common/Cursor'
 import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
 import PreLoader from './components/common/PreLoader'
 
 // SECTIONS ----------------------------------------------------------------------------------------------------------------------------------------|
@@ -51,6 +52,7 @@ function App() {
                     <ContactSection />
 
                     {/* Footer */}
+                    <Footer />
 
                 </main>
             )}
