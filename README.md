@@ -47,20 +47,9 @@ Porfolio/
 │   │   ├── common/                          # Shared UI elements (Cursor, Loader)
 │   │   │    ├── Cursor.jsx
 │   │   │    └── PreLoader.jsx
-│   │   ├── forms/                           # User input components
-│   │   │    └── ContactForm.jsx
 │   │   └── layout/                          # Structural components (Nav, Footer)
 │   │        ├── Footer.jsx
 │   │        └── Navbar.jsx
-│   ├── pages/
-│   │   ├── Blog.jsx
-│   │   └── Resume.jsx
-│   ├── sections/                            # High-level page sections
-│   │   ├── About.jsx
-│   │   ├── Contact.jsx
-│   │   ├── Home.jsx
-│   │   ├── Projects.jsx
-│   │   └── Skills.jsx
 │   ├── shaders/                             # Custom GLSL shader files
 │   │   └── PreLoader/
 │   │        ├── fragment.glsl
@@ -70,20 +59,9 @@ Porfolio/
 │   │   │    ├── common/
 │   │   │    │    ├── Cursor.css
 │   │   │    │    └── PreLoader.css
-│   │   │    ├── forms/
-│   │   │    │    └── ContactForm.css
 │   │   │    └── layout/
 │   │   │         ├── Footer.css
 │   │   │         └── Navbar.css
-│   │   ├── pages/
-│   │   │    ├── Blog.css
-│   │   │    └── Resume.css
-│   │   ├── sections/                        # Styles for main page sections
-│   │   │    ├── About.css
-│   │   │    ├── Contact.css
-│   │   │    ├── Home.css
-│   │   │    ├── Projects.css
-│   │   │    └── Skills.css
 │   │   └── globals.css                      # Global CSS resets and variables
 │   ├── utils/                               # Helper functions and constants
 │   │   ├── helpers.js
