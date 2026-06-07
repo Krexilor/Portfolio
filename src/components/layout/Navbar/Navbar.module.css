@@ -14,11 +14,14 @@
     align-items: center;
     padding: 0.5rem;
     border-radius: 9999px;
-    background: rgba(10, 15, 30, 0.35);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 1px 1px rgba(255,255,255,0.05) inset;
+    background: radial-gradient(circle at center, rgba(6, 10, 20, 0.75) 0%, rgba(0, 0, 0, 0.85) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(136, 204, 255, 0.15);
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(59, 130, 246, 0.12),
+        0 1px 2px rgba(255, 255, 255, 0.12) inset;
     overflow-x: auto;
 }
 
@@ -27,7 +30,7 @@
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
     font-weight: 600;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.05em;
     border-radius: 9999px;
     background: none;
     border: none;
@@ -46,9 +49,9 @@
     left: 20%;
     right: 20%;
     height: 2.5px;
-    background: linear-gradient(to right, transparent, #22d3ee, transparent);
+    background: linear-gradient(to right, transparent, #88ccff, transparent);
     border-radius: 9999px;
-    box-shadow: 0 0 12px rgba(34, 211, 238, 0.8);
+    box-shadow: 0 0 12px #88ccff, 0 0 4px #3b82f6;
 }
 
 .hoverUnderline {
@@ -57,7 +60,7 @@
     left: 20%;
     right: 20%;
     height: 2px;
-    background: linear-gradient(to right, transparent, #22d3ee, transparent);
+    background: linear-gradient(to right, transparent, #93c5fd, transparent);
     border-radius: 9999px;
     pointer-events: none;
 }
