@@ -12,7 +12,6 @@ import Home from './sections/Home/Home.jsx'
 import About from './sections/About/About.jsx'
 import Skills from './sections/Skills/Skills.jsx'
 import Contact from './sections/Contact/Contact.jsx'
-import Process from './sections/Process/Process.jsx'
 import Projects from './sections/Projects/Projects.jsx'
 import Achievement from './sections/Achievements/Achievements.jsx'
 
@@ -45,7 +44,6 @@ function App() {
                         <About />
                         <Skills />
                         <Projects />
-                        <Process />
                         <Achievement />
                         <Contact />
                     </main>

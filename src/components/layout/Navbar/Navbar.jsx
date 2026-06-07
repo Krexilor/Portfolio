@@ -6,7 +6,7 @@ import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import styles from './Navbar.module.css'
 
 // NAVBAR ------------------------------------------------------------------------------------------------------------------------------------------|
-const tabs = ['Home', 'About', 'Skills', 'Projects', 'Process', 'Achievements', 'Contact']
+const tabs = ['Home', 'About', 'Skills', 'Projects', 'Achievements', 'Contact']
 
 const springTransition = { type: 'spring', stiffness: 380, damping: 30 }
 const hoverSpringTransition = { type: 'spring', stiffness: 400, damping: 25 }
