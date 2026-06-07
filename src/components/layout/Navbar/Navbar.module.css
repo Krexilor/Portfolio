@@ -14,13 +14,13 @@
     align-items: center;
     padding: 0.5rem;
     border-radius: 9999px;
-    background: rgba(5, 14, 34, 0.65);
+    background: rgba(10, 15, 26, 0.65);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(88, 223, 255, 0.18);
+    border: 1px solid rgba(34, 211, 238, 0.18);
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(88, 223, 255, 0.05) inset;
+        0 0 0 1px rgba(34, 211, 238, 0.05) inset;
     overflow-x: auto;
 }
 
@@ -48,9 +48,9 @@
     left: 1.25rem;
     right: 1.25rem;
     height: 1.5px;
-    background: #58DFFF;
+    background: #22D3EE;
     border-radius: 9999px;
-    box-shadow: 0 0 6px #58DFFF, 0 0 3px #426BFF;
+    box-shadow: 0 0 6px #22D3EE, 0 0 3px #3B82F6;
 }
 
 .hoverUnderline {
@@ -59,27 +59,26 @@
     left: 1.25rem;
     right: 1.25rem;
     height: 1px;
-    background: #6F8BFF;
+    background: #818CF8;
     border-radius: 9999px;
-    box-shadow: 0 0 4px #6F8BFF;
+    box-shadow: 0 0 4px #818CF8;
     pointer-events: none;
 }
 
-/* Custom scrollbar for nav overflow */
 .nav::-webkit-scrollbar {
     height: 4px;
 }
 
 .nav::-webkit-scrollbar-track {
-    background: rgba(111, 139, 255, 0.08);
+    background: rgba(129, 140, 248, 0.08);
     border-radius: 9999px;
 }
 
 .nav::-webkit-scrollbar-thumb {
-    background: rgba(88, 223, 255, 0.3);
+    background: rgba(34, 211, 238, 0.3);
     border-radius: 9999px;
 }
 
 .nav::-webkit-scrollbar-thumb:hover {
-    background: rgba(88, 223, 255, 0.5);
+    background: rgba(34, 211, 238, 0.5);
 }

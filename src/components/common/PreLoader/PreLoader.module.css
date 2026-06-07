@@ -1,7 +1,7 @@
 .preloader-container {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, #050E22 0%, #020614 100%);
+    background: radial-gradient(circle at center, #0A0F1A 0%, #000000 80%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,7 +32,7 @@
     position: absolute;
     width: 1px;
     height: 1px;
-    background: #F0FBFF;
+    background: #FFFFFF;
     border-radius: 50%;
 }
 
@@ -46,7 +46,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    border: 1px solid #F0FBFF;
+    border: 1px solid #F4F8FB;
 }
 
 .top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
@@ -59,7 +59,7 @@
     top: 10%;
     bottom: 10%;
     width: 1px;
-    background: rgba(111, 139, 255, 0.15);
+    background: rgba(129, 140, 248, 0.15);
 }
 
 .scanline-container.left { left: 40px; }
@@ -69,12 +69,12 @@
     position: absolute;
     width: 100%;
     height: 100px;
-    background: linear-gradient(to bottom, transparent, #58DFFF, transparent);
-    box-shadow: 0 0 15px rgba(88, 223, 255, 0.5);
+    background: linear-gradient(to bottom, transparent, #22D3EE, transparent);
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
 }
 
 .scanline.reverse {
-    background: linear-gradient(to top, transparent, #58DFFF, transparent);
+    background: linear-gradient(to top, transparent, #22D3EE, transparent);
 }
 
 .center-loader-container {
@@ -91,22 +91,22 @@
 .loader-line-base {
     width: 200px;
     height: 1px;
-    background: rgba(240, 251, 255, 0.08);
+    background: rgba(244, 251, 251, 0.08);
 }
 
 .loader-line-glow {
     height: 2px;
-    background: #58DFFF;
-    box-shadow: 0 0 15px #58DFFF, 0 0 30px #426BFF;
+    background: #22D3EE;
+    box-shadow: 0 0 15px #22D3EE, 0 0 30px #3B82F6;
     position: absolute;
     top: 0;
 }
 
 .loader-subtext {
-    color: #58DFFF;
+    color: #22D3EE;
     font-size: 11px;
     letter-spacing: 0.3em;
-    text-shadow: 0 0 8px rgba(88, 223, 255, 0.5);
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
 }
 
 .click-anywhere-text {
@@ -114,10 +114,10 @@
     top: calc(100% + 28px);
     left: 50%;
     transform: translateX(-50%);
-    color: rgba(88, 223, 255, 0.7);
+    color: rgba(34, 211, 238, 0.75);
     font-size: 10px;
     letter-spacing: 0.35em;
-    text-shadow: 0 0 8px rgba(88, 223, 255, 0.4);
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.4);
     white-space: nowrap;
 }
 
@@ -141,7 +141,7 @@
 }
 
 .status-label {
-    color: #6F8BFF;
+    color: #818CF8;
     font-size: 11px;
     letter-spacing: 0.2em;
     font-weight: bold;
@@ -155,17 +155,17 @@
 }
 
 .percentage-label {
-    color: rgba(111, 139, 255, 0.6);
+    color: rgba(129, 140, 248, 0.6);
     font-size: 10px;
     letter-spacing: 0.2em;
 }
 
 .percentage-value {
-    color: #58DFFF;
+    color: #22D3EE;
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 0.1em;
-    text-shadow: 0 0 10px rgba(88, 223, 255, 0.4);
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
 }
 
 .data-row {
@@ -175,7 +175,7 @@
 }
 
 .data-text {
-    color: rgba(240, 251, 255, 0.7);
+    color: rgba(244, 251, 251, 0.7);
     font-size: 10px;
     letter-spacing: 0.1em;
 }

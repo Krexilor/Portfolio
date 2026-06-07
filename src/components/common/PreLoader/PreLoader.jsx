@@ -26,7 +26,7 @@ const ModelControls = {
 const ParticleControls = {
     count: 500,
     size: 0.03,
-    color: "#58DFFF",
+    color: "#22D3EE",
     baseOpacity: 0.2,
     twinkleSpeed: 0.8,
     speed: { x: 0.02, y: 0.05 },

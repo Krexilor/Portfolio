@@ -63,8 +63,8 @@ export default function Navbar() {
                             >
                                 <motion.span
                                     animate = {{
-                                        color: isActive ? '#58DFFF' : isHovered ? '#F0FBFF' : '#6F8BFF',
-                                        textShadow: isActive ? '0 0 8px rgba(88, 223, 255, 0.4)' : 'none',
+                                        color: isActive ? '#22D3EE' : isHovered ? '#FFFFFF' : '#818CF8',
+                                        textShadow: isActive ? '0 0 8px rgba(34, 221, 238, 0.4)' : 'none',
                                         y: isActive ? -0.5 : 0
                                     }}
                                     transition = {{ duration: 0.2 }}
