@@ -26,12 +26,12 @@ const ModelControls = {
 const ParticleControls = {
     count: 500,
     size: 0.03,
-    color: "#88ccff",
+    color: "#58DFFF",
     baseOpacity: 0.2,
     twinkleSpeed: 0.8,
     speed: { x: 0.02, y: 0.05 },
     spread: { x: 15, y: 15, z: 10 },
-    explodeSpeed: 8,
+    explodeSpeed: 8
 }
 
 // MODEL -------------------------------------------------------------------------------------------------------------------------------------------|
@@ -46,7 +46,7 @@ function Model() {
                     fragmentShader,
                     uniforms: {
                         uTime: { value: 0 },
-                        uType: { value: 0 },
+                        uType: { value: 0 }
                     }
                 })
             }
@@ -56,7 +56,7 @@ function Model() {
                     fragmentShader,
                     uniforms: {
                         uTime: { value: 0 },
-                        uType: { value: 1 },
+                        uType: { value: 1 }
                     },
                     transparent: true,
                     toneMapped: false,
@@ -157,7 +157,7 @@ function HudOverlay({ progress, isExiting }) {
         top: `${Math.random() * 100}%`,
         left: `${Math.random() * 100}%`,
         duration: Math.random() * 3 + 2,
-        delay: Math.random() * 1.5,
+        delay: Math.random() * 1.5
     })), [])
 
     return (
