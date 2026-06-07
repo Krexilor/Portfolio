@@ -63,8 +63,8 @@ export default function Navbar() {
                             >
                                 <motion.span
                                     animate = {{
-                                        color: isActive ? '#88ccff' : isHovered ? '#f1f5f9' : '#64748b',
-                                        textShadow: isActive ? '0 0 12px rgba(136, 204, 255, 0.6)' : 'none',
+                                        color: isActive ? '#58DFFF' : isHovered ? '#F0FBFF' : '#6F8BFF',
+                                        textShadow: isActive ? '0 0 8px rgba(88, 223, 255, 0.4)' : 'none',
                                         y: isActive ? -0.5 : 0
                                     }}
                                     transition = {{ duration: 0.2 }}
@@ -85,7 +85,7 @@ export default function Navbar() {
                                     {isHovered && !isActive && (
                                         <motion.div
                                             initial = {{ scaleX: 0, opacity: 0 }}
-                                            animate = {{ scaleX: 1, opacity: 0.7 }}
+                                            animate = {{ scaleX: 1, opacity: 1 }}
                                             exit = {{ scaleX: 0, opacity: 0 }}
                                             transition = {hoverSpringTransition}
                                             style = {{ originX: 0.5 }}

@@ -14,14 +14,13 @@
     align-items: center;
     padding: 0.5rem;
     border-radius: 9999px;
-    background: radial-gradient(circle at center, rgba(6, 10, 20, 0.75) 0%, rgba(0, 0, 0, 0.85) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(136, 204, 255, 0.15);
+    background: rgba(5, 14, 34, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(88, 223, 255, 0.18);
     box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(59, 130, 246, 0.12),
-        0 1px 2px rgba(255, 255, 255, 0.12) inset;
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(88, 223, 255, 0.05) inset;
     overflow-x: auto;
 }
 
@@ -45,22 +44,42 @@
 
 .activeUnderline {
     position: absolute;
-    bottom: 0.25rem;
-    left: 20%;
-    right: 20%;
-    height: 2.5px;
-    background: linear-gradient(to right, transparent, #88ccff, transparent);
+    bottom: 0.125rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 1.5px;
+    background: #58DFFF;
     border-radius: 9999px;
-    box-shadow: 0 0 12px #88ccff, 0 0 4px #3b82f6;
+    box-shadow: 0 0 6px #58DFFF, 0 0 3px #426BFF;
 }
 
 .hoverUnderline {
     position: absolute;
-    bottom: 0.25rem;
-    left: 20%;
-    right: 20%;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #93c5fd, transparent);
+    bottom: 0.125rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 1px;
+    background: #6F8BFF;
     border-radius: 9999px;
+    box-shadow: 0 0 4px #6F8BFF;
     pointer-events: none;
+}
+
+/* Custom scrollbar for nav overflow */
+.nav::-webkit-scrollbar {
+    height: 4px;
+}
+
+.nav::-webkit-scrollbar-track {
+    background: rgba(111, 139, 255, 0.08);
+    border-radius: 9999px;
+}
+
+.nav::-webkit-scrollbar-thumb {
+    background: rgba(88, 223, 255, 0.3);
+    border-radius: 9999px;
+}
+
+.nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(88, 223, 255, 0.5);
 }
