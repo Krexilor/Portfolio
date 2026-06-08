@@ -63,14 +63,14 @@ export default function Navbar() {
                             >
                                 <motion.span
                                     animate = {{
-                                        color: isActive ? '#22D3EE' : isHovered ? '#FFFFFF' : '#818CF8',
-                                        textShadow: isActive ? '0 0 8px rgba(34, 221, 238, 0.4)' : 'none',
+                                        color: isActive ? '#2DE2E6' : isHovered ? '#EAF0FF' : '#A6B0C3',
+                                        textShadow: isActive ? '0 0 8px rgba(45, 226, 230, 0.4)' : 'none',
                                         y: isActive ? -0.5 : 0
                                     }}
                                     transition = {{ duration: 0.2 }}
                                     className = {styles.tabText}
                                 >
-                                    {tab}
+                                    { tab }
                                 </motion.span>
 
                                 {isActive && (
@@ -82,7 +82,7 @@ export default function Navbar() {
                                 )}
 
                                 <AnimatePresence>
-                                    {isHovered && !isActive && (
+                                    { isHovered && !isActive && (
                                         <motion.div
                                             initial = {{ scaleX: 0, opacity: 0 }}
                                             animate = {{ scaleX: 1, opacity: 1 }}
@@ -91,7 +91,7 @@ export default function Navbar() {
                                             style = {{ originX: 0.5 }}
                                             className = {styles.hoverUnderline}
                                         />
-                                    )}
+                                    ) }
                                 </AnimatePresence>
                             </button>
                         )
