@@ -1,74 +1,74 @@
 body {
-  cursor: none;
+    cursor: none;
 }
 
 button, a, input, textarea, .interactive {
-  cursor: none !important;
+    cursor: none !important;
 }
 
 .cursor-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  pointer-events: none;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
 }
 
 .cursor-core {
-  width: 5px;
-  height: 5px;
-  background: #22D3EE;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #22D3EE, 0 0 16px #22D3EE, 0 0 24px #3B82F6, 0 0 40px rgba(34, 211, 238, 0.4);
-  z-index: 10;
-  transition: transform 0.1s ease-out;
+    width: 5px;
+    height: 5px;
+    background: #2DE2E6;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #2DE2E6, 0 0 16px #2DE2E6, 0 0 24px #7C5CFF, 0 0 40px rgba(45, 226, 230, 0.4);
+    z-index: 10;
+    transition: transform 0.1s ease-out;
 }
 
 .blade-system {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  animation: rotate-blades 8s linear infinite;
-  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotate-blades 8s linear infinite;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .blade-system.state-link {
-  animation-duration: 2s;
+    animation-duration: 2s;
 }
 
 .blade-system.state-action {
-  animation-duration: 0.8s;
+    animation-duration: 0.8s;
 }
 
 .terminal-active .blade-system {
-  animation: none !important;
-  transform: rotate(0deg) !important;
+    animation: none !important;
+    transform: rotate(0deg) !important;
 }
 
 @keyframes rotate-blades {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .blade-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 10px;
-  transform-origin: bottom center;
-  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 10px;
+    transform-origin: bottom center;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .blade-shard {
-  width: 100%;
-  height: 100%;
-  fill: #22D3EE;
-  filter: drop-shadow(0 0 3px #22D3EE) drop-shadow(0 0 6px #3B82F6);
+    width: 100%;
+    height: 100%;
+    fill: #2DE2E6;
+    filter: drop-shadow(0 0 3px #2DE2E6) drop-shadow(0 0 6px #7C5CFF);
 }

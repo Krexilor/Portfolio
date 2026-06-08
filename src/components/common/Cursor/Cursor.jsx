@@ -8,121 +8,121 @@ import styles from './Cursor.module.css'
 import { getHoverType } from '../../../utils/helpers'
 
 // CURSOR ------------------------------------------------------------------------------------------------------------------------------------------|
-const Cursor = ({ isSystemLoading }) => {
-	const cursorRef = useRef(null)
-	const mousePosRef = useRef({ x: 0, y: 0 })
-	const [hoverType, setHoverType] = useState('none')
-	const [isClicking, setIsClicking] = useState(false)
-	const [isVisible, setIsVisible] = useState(false)
+const Cursor = ({isSystemLoading}) => {
+    const cursorRef = useRef(null)
+    const mousePosRef = useRef({ x: 0, y: 0 })
+    const [hoverType, setHoverType] = useState('none')
+    const [isClicking, setIsClicking] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
 
-	useEffect(() => {
-		let animationFrameId = null
+    useEffect(() => {
+        let animationFrameId = null
 
-		const updateCursor = () => {
-			if (cursorRef.current) {
-				const { x, y } = mousePosRef.current
-				cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
-			}
-			animationFrameId = requestAnimationFrame(updateCursor)
-		}
+        const updateCursor = () => {
+            if (cursorRef.current) {
+                const { x, y } = mousePosRef.current
+                cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
+            }
+            animationFrameId = requestAnimationFrame(updateCursor)
+        }
 
-		updateCursor()
+        updateCursor()
 
-		return () => {
-			if (animationFrameId) cancelAnimationFrame(animationFrameId)
-		}
-	}, [])
+        return () => {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId)
+        }
+    }, [])
 
-	useEffect(() => {
-		const onMouseMove = (e) => {
-			mousePosRef.current = { x: e.clientX, y: e.clientY }
-			if (!isVisible) setIsVisible(true)
-		}
+    useEffect(() => {
+        const onMouseMove = (e) => {
+            mousePosRef.current = { x: e.clientX, y: e.clientY }
+            if (!isVisible) setIsVisible(true)
+        }
 
-		const onMouseDown = () => setIsClicking(true)
-		const onMouseUp = () => setIsClicking(false)
+        const onMouseDown = () => setIsClicking(true)
+        const onMouseUp = () => setIsClicking(false)
 
-		const onMouseOver = (e) => {
-			setHoverType(getHoverType(e.target))
-		}
+        const onMouseOver = (e) => {
+            setHoverType(getHoverType(e.target))
+        }
 
-		window.addEventListener('mousemove', onMouseMove)
-		window.addEventListener('mousedown', onMouseDown)
-		window.addEventListener('mouseup', onMouseUp)
-		window.addEventListener('mouseover', onMouseOver)
+        window.addEventListener('mousemove', onMouseMove)
+        window.addEventListener('mousedown', onMouseDown)
+        window.addEventListener('mouseup', onMouseUp)
+        window.addEventListener('mouseover', onMouseOver)
 
-		return () => {
-			window.removeEventListener('mousemove', onMouseMove)
-			window.removeEventListener('mousedown', onMouseDown)
-			window.removeEventListener('mouseup', onMouseUp)
-			window.removeEventListener('mouseover', onMouseOver)
-		}
-	}, [])
+        return () => {
+            window.removeEventListener('mousemove', onMouseMove)
+            window.removeEventListener('mousedown', onMouseDown)
+            window.removeEventListener('mouseup', onMouseUp)
+            window.removeEventListener('mouseover', onMouseOver)
+        }
+    }, [])
 
-	const blades = Array.from({ length: 7 })
-	const isTerminal = hoverType === 'terminal'
+    const blades = Array.from({ length: 7 })
+    const isTerminal = hoverType === 'terminal'
 
-	return (
-		<>
-			{isSystemLoading && (
-				<style>
-					{`* { cursor: none !important; }`}
-				</style>
-			)}
+    return (
+        <>
+            {isSystemLoading && (
+                <style>
+                    {`* { cursor: none !important; }`}
+                </style>
+            )}
 
-			<div
-				ref = {cursorRef}
-				className = {`${styles['cursor-container']} ${isTerminal ? styles['terminal-active'] : ''}`}
-				style = {{
-					opacity: isVisible ? 1 : 0,
-					zIndex: 10000
-				}}
-			>
-				<div
-					className = {styles['cursor-core']}
-					style = {{ transform: `scale(${isClicking ? 0.6 : 1})`}}
-				/>
+            <div
+                ref = {cursorRef}
+                className = {`${styles['cursor-container']} ${isTerminal ? styles['terminal-active'] : ''}`}
+                style = {{
+                    opacity: isVisible ? 1 : 0,
+                    zIndex: 10000
+                }}
+            >
+                <div
+                    className = {styles['cursor-core']}
+                    style = {{ transform: `scale(${isClicking ? 0.6 : 1})` }}
+                />
 
-				<div className = {`${styles['blade-system']} ${styles[`state-${hoverType}`] || ''}`}>
-					{blades.map((_, i) => {
-						let rotation = i * (360 / 7)
-						let opacity = 1
-						let translateY = '-8px'
+                <div className = {`${styles['blade-system']} ${styles[`state-${hoverType}`] || ''}`}>
+                    {blades.map((_, i) => {
+                        let rotation = i * (360 / 7)
+                        let opacity = 1
+                        let translateY = '-8px'
 
-						if (isTerminal) {
-							if (i === 0) {
-								rotation = 0
-								translateY = '-11px'
-							} else if (i === 4) {
-								rotation = 180
-								translateY = '-11px'
-							} else {
-								opacity = 0
-							}
-						} else if (hoverType === 'action') {
-							translateY = '-13px'
-						} else if (hoverType === 'link') {
-							translateY = '-11px'
-						}
-						return (
-							<div
-								key = {i}
-								className = {styles['blade-wrapper']}
-								style = {{
-									opacity: opacity,
-									transform: `translate(-50%, -100%) rotate(${rotation}deg) translateY(${isClicking ? '-4px' : translateY})`
-								}}
-							>
-								<svg viewBox = "0 0 20 50" className = {styles['blade-shard']}>
-									<path d = "M10 0 L18 15 L12 50 L8 50 L2 15 Z" />
-								</svg>
-							</div>
-						)
-					})}
-				</div>
-			</div>
-		</>
-	)
+                        if (isTerminal) {
+                            if (i === 0) {
+                                rotation = 0
+                                translateY = '-11px'
+                            } else if (i === 4) {
+                                rotation = 180
+                                translateY = '-11px'
+                            } else {
+                                opacity = 0
+                            }
+                        } else if (hoverType === 'action') {
+                            translateY = '-13px'
+                        } else if (hoverType === 'link') {
+                            translateY = '-11px'
+                        }
+                        return (
+                            <div
+                                key = {i}
+                                className = {styles['blade-wrapper']}
+                                style = {{
+                                    opacity: opacity,
+                                    transform: `translate(-50%, -100%) rotate(${rotation}deg) translateY(${isClicking ? '-4px' : translateY})`
+                                }}
+                            >
+                                <svg viewBox = "0 0 20 50" className = { styles['blade-shard'] }>
+                                    <path d = "M10 0 L18 15 L12 50 L8 50 L2 15 Z" />
+                                </svg>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </>
+    )
 }
 
 // EXPORTS -----------------------------------------------------------------------------------------------------------------------------------------|
