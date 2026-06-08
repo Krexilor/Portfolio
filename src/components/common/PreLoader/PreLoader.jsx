@@ -26,7 +26,6 @@ const ModelControls = {
 const ParticleControls = {
     count: 500,
     size: 0.03,
-    color: "#22D3EE",
     baseOpacity: 0.2,
     twinkleSpeed: 0.8,
     speed: { x: 0.02, y: 0.05 },
@@ -81,14 +80,18 @@ function Model() {
 
 // DUST PARTICLES ----------------------------------------------------------------------------------------------------------------------------------|
 function DustParticles({ explodingRef }) {
-    const pointsRef = useRef()
-    const materialRef = useRef()
+    const cyanPointsRef = useRef()
+    const violetPointsRef = useRef()
+    const cyanMaterialRef = useRef()
+    const violetMaterialRef = useRef()
 
-    const { positions, velocities } = useMemo(() => {
-        const count = ParticleControls.count
-        const pos = new Float32Array(count * 3)
-        const vel = new Float32Array(count * 3)
-        for (let i = 0; i < count; i++) {
+    const cyanCount = Math.floor(ParticleControls.count * 0.7)
+    const violetCount = ParticleControls.count - cyanCount
+
+    const { positions: cyanPositions, velocities: cyanVelocities } = useMemo(() => {
+        const pos = new Float32Array(cyanCount * 3)
+        const vel = new Float32Array(cyanCount * 3)
+        for (let i = 0; i < cyanCount; i++) {
             pos[i * 3] = (Math.random() - 0.5) * ParticleControls.spread.x
             pos[i * 3 + 1] = (Math.random() - 0.5) * ParticleControls.spread.y
             pos[i * 3 + 2] = (Math.random() - 0.5) * ParticleControls.spread.z
@@ -97,56 +100,118 @@ function DustParticles({ explodingRef }) {
             vel[i * 3 + 2] = (Math.random() - 0.5) * 2
         }
         return { positions: pos, velocities: vel }
-    }, [])
+    }, [cyanCount])
+
+    const { positions: violetPositions, velocities: violetVelocities } = useMemo(() => {
+        const pos = new Float32Array(violetCount * 3)
+        const vel = new Float32Array(violetCount * 3)
+        for (let i = 0; i < violetCount; i++) {
+            pos[i * 3] = (Math.random() - 0.5) * ParticleControls.spread.x
+            pos[i * 3 + 1] = (Math.random() - 0.5) * ParticleControls.spread.y
+            pos[i * 3 + 2] = (Math.random() - 0.5) * ParticleControls.spread.z
+            vel[i * 3] = (Math.random() - 0.5) * 2
+            vel[i * 3 + 1] = (Math.random() - 0.5) * 2
+            vel[i * 3 + 2] = (Math.random() - 0.5) * 2
+        }
+        return { positions: pos, velocities: vel }
+    }, [violetCount])
 
     useFrame((state, delta) => {
         const t = state.clock.getElapsedTime()
 
         if (explodingRef?.current) {
-            if (pointsRef.current) {
-                const pos = pointsRef.current.geometry.attributes.position.array
-                for (let i = 0; i < ParticleControls.count; i++) {
-                    pos[i * 3] += velocities[i * 3] * delta * ParticleControls.explodeSpeed
-                    pos[i * 3 + 1] += velocities[i * 3 + 1] * delta * ParticleControls.explodeSpeed
-                    pos[i * 3 + 2] += velocities[i * 3 + 2] * delta * ParticleControls.explodeSpeed
+            if (cyanPointsRef.current) {
+                const pos = cyanPointsRef.current.geometry.attributes.position.array
+                for (let i = 0; i < cyanCount; i++) {
+                    pos[i * 3] += cyanVelocities[i * 3] * delta * ParticleControls.explodeSpeed
+                    pos[i * 3 + 1] += cyanVelocities[i * 3 + 1] * delta * ParticleControls.explodeSpeed
+                    pos[i * 3 + 2] += cyanVelocities[i * 3 + 2] * delta * ParticleControls.explodeSpeed
                 }
-                pointsRef.current.geometry.attributes.position.needsUpdate = true
+                cyanPointsRef.current.geometry.attributes.position.needsUpdate = true
             }
-            if (materialRef.current) {
-                materialRef.current.opacity = Math.max(0, materialRef.current.opacity - delta * 2.5)
+
+            if (violetPointsRef.current) {
+                const pos = violetPointsRef.current.geometry.attributes.position.array
+                for (let i = 0; i < violetCount; i++) {
+                    pos[i * 3] += violetVelocities[i * 3] * delta * ParticleControls.explodeSpeed
+                    pos[i * 3 + 1] += violetVelocities[i * 3 + 1] * delta * ParticleControls.explodeSpeed
+                    pos[i * 3 + 2] += violetVelocities[i * 3 + 2] * delta * ParticleControls.explodeSpeed
+                }
+                violetPointsRef.current.geometry.attributes.position.needsUpdate = true
+            }
+
+            if (cyanMaterialRef.current) {
+                cyanMaterialRef.current.opacity = Math.max(0, cyanMaterialRef.current.opacity - delta * 2.5)
+            }
+
+            if (violetMaterialRef.current) {
+                violetMaterialRef.current.opacity = Math.max(0, violetMaterialRef.current.opacity - delta * 2.5)
             }
         } else {
-            if (pointsRef.current) {
-                pointsRef.current.rotation.y += delta * ParticleControls.speed.y
-                pointsRef.current.rotation.x += delta * ParticleControls.speed.x
+            if (cyanPointsRef.current) {
+                cyanPointsRef.current.rotation.y += delta * ParticleControls.speed.y
+                cyanPointsRef.current.rotation.x += delta * ParticleControls.speed.x
             }
-            if (materialRef.current) {
-                materialRef.current.opacity = ParticleControls.baseOpacity + Math.abs(Math.sin(t * ParticleControls.twinkleSpeed)) * 0.2
+
+            if (violetPointsRef.current) {
+                violetPointsRef.current.rotation.y += delta * ParticleControls.speed.y
+                violetPointsRef.current.rotation.x += delta * ParticleControls.speed.x
+            }
+
+            if (cyanMaterialRef.current) {
+                cyanMaterialRef.current.opacity = ParticleControls.baseOpacity + Math.abs(Math.sin(t * ParticleControls.twinkleSpeed)) * 0.2
+            }
+
+            if (violetMaterialRef.current) {
+                violetMaterialRef.current.opacity = (ParticleControls.baseOpacity * 0.8) + Math.abs(Math.sin(t * (ParticleControls.twinkleSpeed + 0.3))) * 0.15
             }
         }
     })
 
     return (
-        <points ref = {pointsRef}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach = "attributes-position"
-                    count = {positions.length / 3}
-                    array = {positions}
-                    itemSize = {3}
+        <>
+            <points ref = {cyanPointsRef}>
+                <bufferGeometry>
+                    <bufferAttribute
+                        attach = "attributes-position"
+                        count = {cyanPositions.length / 3}
+                        array = {cyanPositions}
+                        itemSize = {3}
+                    />
+                </bufferGeometry>
+                <pointsMaterial
+                    ref = {cyanMaterialRef}
+                    size = {ParticleControls.size}
+                    color = "#2DE2E6"
+                    transparent = {true}
+                    opacity = {ParticleControls.baseOpacity}
+                    depthWrite = {false}
+                    sizeAttenuation = {true}
+                    blending = {2}
                 />
-            </bufferGeometry>
-            <pointsMaterial
-                ref = {materialRef}
-                size = {ParticleControls.size}
-                color = {ParticleControls.color}
-                transparent = {true}
-                opacity = {ParticleControls.baseOpacity}
-                depthWrite = {false}
-                sizeAttenuation = {true}
-                blending = {2}
-            />
-        </points>
+            </points>
+
+            <points ref = {violetPointsRef}>
+                <bufferGeometry>
+                    <bufferAttribute
+                        attach = "attributes-position"
+                        count = {violetPositions.length / 3}
+                        array = {violetPositions}
+                        itemSize = {3}
+                    />
+                </bufferGeometry>
+                <pointsMaterial
+                    ref = {violetMaterialRef}
+                    size = {ParticleControls.size * 0.9}
+                    color = "#7C5CFF"
+                    transparent = {true}
+                    opacity = {ParticleControls.baseOpacity * 0.8}
+                    depthWrite = {false}
+                    sizeAttenuation = {true}
+                    blending = {2}
+                />
+            </points>
+        </>
     )
 }
 
@@ -163,8 +228,9 @@ function HudOverlay({ progress, isExiting }) {
     return (
         <motion.div
             className = {styles['hud-overlay']}
+            initial = {{ opacity: 0 }}
             animate = {{ opacity: isExiting ? 0 : 1 }}
-            transition = {{ duration: 0.3 }}
+            transition = {{ duration: isExiting ? 0.3 : 0.9, delay: isExiting ? 0 : 0.4, ease: 'easeOut' }}
         >
             {microStars.map(star => (
                 <motion.div
@@ -179,7 +245,6 @@ function HudOverlay({ progress, isExiting }) {
 
             <motion.div
                 className = {styles['corner-brackets']}
-                initial = {{ opacity: 0, scale: 1.06 }}
                 animate = {{ opacity: 0.5, scale: 1 }}
                 transition = {{ duration: 0.9, ease: 'easeOut' }}
             >
@@ -220,7 +285,7 @@ function HudOverlay({ progress, isExiting }) {
                     animate = {{ opacity: [0.3, 1, 0.3] }}
                     transition = {{ duration: 2, repeat: Infinity }}
                 >
-                    {progress >= 100 ? '◈ ALL SYSTEMS NOMINAL ◈' : '◈ CALIBRATING SYSTEMS ◈'}
+                    {progress >= 100 ? 'ALL SYSTEMS NOMINAL' : 'CALIBRATING SYSTEMS'}
                 </motion.div>
                 {progress >= 100 && (
                     <motion.div
@@ -325,7 +390,7 @@ function PreLoader({ onComplete }) {
     return (
         <motion.div
             className = {styles['preloader-container']}
-            initial = {{ opacity: 0, scale: 0.97 }}
+            initial = {{ opacity: 0 }}
             animate = {
                 phase === 'exiting'
                     ? { opacity: 0, scale: 1.07 }
@@ -334,9 +399,8 @@ function PreLoader({ onComplete }) {
             transition = {
                 phase === 'exiting'
                     ? { duration: LOADER_CONFIG.exit.duration / 1000, ease: 'easeIn' }
-                    : { duration: 0.8, ease: 'easeOut' }
+                    : { duration: 1.2, ease: 'easeOut', delay: 0.05 }
             }
-            onAnimationComplete = {handleAnimationComplete}
             onClick = {phase === 'ready' ? handleEnter : undefined}
             style = {{ cursor: phase === 'ready' ? 'pointer' : 'default' }}
         >
@@ -355,6 +419,18 @@ function PreLoader({ onComplete }) {
             </Canvas>
 
             <HudOverlay progress = {progress} isExiting = {phase === 'exiting'} />
+
+            <motion.div
+                className = {styles['exit-blur-overlay']}
+                initial = {{ opacity: 0, backdropFilter: 'blur(0px)' }}
+                animate = {
+                    phase === 'exiting'
+                        ? { opacity: 1, backdropFilter: 'blur(18px)' }
+                        : { opacity: 0, backdropFilter: 'blur(0px)' }
+                }
+                transition = {{ duration: LOADER_CONFIG.exit.duration / 1000, ease: 'easeIn' }}
+                onAnimationComplete = {handleAnimationComplete}
+            />
         </motion.div>
     )
 }
