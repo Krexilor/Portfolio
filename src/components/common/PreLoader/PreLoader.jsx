@@ -10,8 +10,8 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import styles from './PreLoader.module.css'
 
 // SHADERS -----------------------------------------------------------------------------------------------------------------------------------------|
-import vertexShader from '../../../shaders/PreLoader/vertex.glsl'
-import fragmentShader from '../../../shaders/PreLoader/fragment.glsl'
+import vertexShader from "../../../shaders/PreLoader/vertex.glsl?raw"
+import fragmentShader from "../../../shaders/PreLoader/fragment.glsl?raw"
 
 // UTILS -------------------------------------------------------------------------------------------------------------------------------------------|
 import { ASSET_MANIFEST, LOADER_CONFIG, animateProgress, preloadAssets } from '../../../utils/preLoaderUtils'
