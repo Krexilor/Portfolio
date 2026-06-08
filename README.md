@@ -37,13 +37,10 @@
 ```
 Porfolio/
 ├── public/                                  # Static assets
+│    ├── models/                             # 3D models
+│    ├── favicon.ico
+│    └── site.webmanifest
 ├── src/                                     # Source files
-│   ├── assets/                              # Global media assets
-│   │   ├── images/                          # Images used across the project
-│   │   │    └── branding/
-|   |   |         └── Logo.png
-│   │   └── models/                          # models used for 3D scenes
-│   │        └── Loader.glb
 │   ├── components/                          # Reusable UI components
 │   │   ├── common/                          # Shared UI elements
 │   │   │    ├── Cursor/
@@ -83,8 +80,8 @@ Porfolio/
 |   |         └── Skills.module.css
 │   ├── shaders/                             # Custom GLSL shader files
 │   │   └── PreLoader/
-│   │        ├── fragment.glsl
-│   │        └── vertex.glsl
+│   │        ├── FragmentShader.glsl
+│   │        └── VertexShader.glsl
 │   ├── styles/                              # Global CSS or Tailwind modules
 │   │   └── globals.css                      # Global CSS resets and variables
 │   ├── utils/                               # Helper functions and constants
@@ -117,4 +114,4 @@ This project is protected under a custom All Rights Reserved license.
 
 You may view and study the source code for educational purposes only. Copying, modification, redistribution, republication, or commercial use of any part of this project is prohibited without explicit written permission.
 
-See the LICENSE file for full terms.
+See the [LICENSE](./LICENSE) file for full terms.
