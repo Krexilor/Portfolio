@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react'
 import styles from './About.module.css'
 
 // ASSETS ------------------------------------------------------------------------------------------------------------------------------------------|
-import ProfileImg from '../../assets/images/Profile.jpeg'
+import ProfileImg from '../../assets/Images/Profile.jpeg'
 
 import CIcon from '../../assets/Icons/C.png'
 import CppIcon from '../../assets/Icons/C++.png'
