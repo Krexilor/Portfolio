@@ -1,0 +1,517 @@
+/* SECTION LAYOUT -------------------------------------------------------------------------------------------------------------------------------- */
+.section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(64px + var(--space-3xl)) var(--space-lg) var(--space-3xl);
+    scroll-margin-top: 100px;
+}
+
+.grid {
+    max-width: 1320px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-lg);
+}
+
+/* SHARED CARD SURFACE --------------------------------------------------------------------------------------------------------------------------- */
+.card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    min-height: 360px;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* SHARED DIVIDER -------------------------------------------------------------------------------------------------------------------------------- */
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--glass-border);
+}
+
+/* IDENTITY CARD --------------------------------------------------------------------------------------------------------------------------------- */
+.identityCard {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+    gap: var(--space-sm);
+}
+
+.photoWrapper {
+    position: relative;
+    width: 100%;
+    max-height: 360px;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+    will-change: transform;
+}
+
+.statusBadge {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding: var(--space-2xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.3px;
+    background: var(--color-overlay);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid transparent;
+}
+
+.statusDot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+}
+
+/* STATUS/BADGE COLOR VARIANTS ------------------------------------------------------------------------------------------------------------------- */
+.variantSuccess {
+    color: var(--color-success);
+}
+
+span.statusBadge.variantSuccess {
+    border-color: var(--color-success-border);
+}
+
+span.statusDot.variantSuccess {
+    background-color: var(--color-success);
+}
+
+.variantInfo {
+    color: var(--color-info);
+}
+
+span.statusBadge.variantInfo {
+    border-color: var(--color-info-border);
+}
+
+span.statusDot.variantInfo {
+    background-color: var(--color-info);
+}
+
+.variantWarning {
+    color: var(--color-warning);
+}
+
+span.statusBadge.variantWarning {
+    border-color: var(--color-warning-border);
+}
+
+span.statusDot.variantWarning {
+    background-color: var(--color-warning);
+}
+
+.variantNeutral {
+    color: var(--color-text-secondary);
+}
+
+span.statusBadge.variantNeutral {
+    border-color: var(--glass-border);
+}
+
+span.statusDot.variantNeutral {
+    background-color: var(--color-text-secondary);
+}
+
+.identityInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.name {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+}
+
+.role {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2xs);
+}
+
+.statsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.statRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-xs);
+}
+
+.statLabel {
+    color: var(--color-text-muted);
+}
+
+.statValue {
+    font-family: 'Space Mono', monospace;
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-bold);
+}
+
+.statValue.variantSuccess {
+    color: var(--color-success);
+}
+
+.statValue.variantInfo {
+    color: var(--color-info);
+}
+
+.statValue.variantWarning {
+    color: var(--color-warning);
+}
+
+.statValue.variantNeutral {
+    color: var(--color-text-secondary);
+}
+
+.socials {
+    display: flex;
+    gap: var(--space-xs);
+    margin-top: auto;
+}
+
+.socialLink {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xs);
+    padding: var(--space-xs) 0;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-secondary);
+    background: var(--glass-bg-elevated);
+    border: 1px solid var(--glass-border);
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* INFO CARD ------------------------------------------------------------------------------------------------------------------------------------- */
+.infoCard {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--space-2xl);
+    gap: var(--space-lg);
+}
+
+.infoContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.hook {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+}
+
+.paragraph {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-loose);
+    color: var(--color-text-secondary);
+    max-width: var(--max-width-text);
+}
+
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--glass-border);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.statNumber {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.statCaption {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* SKILLS CARD ----------------------------------------------------------------------------------------------------------------------------------- */
+.skillsCard {
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-2xl);
+    gap: var(--space-xl);
+}
+
+.skillsHeader {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.skillsTitle {
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+}
+
+.skillsSubtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.skillsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: var(--space-lg);
+}
+
+.skillGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.groupLabel {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chipRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    background: var(--glass-bg-elevated);
+    border: 1px solid var(--glass-border);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    cursor: default;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.chipIcon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+}
+
+.learningSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.learningHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.pulseDot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+    animation: pulse 2s infinite;
+}
+
+.learningLabel {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.learningGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+}
+
+.learningCard {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.learningCard img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.learningCard h4 {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2xs);
+}
+
+.learningCard p {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+}
+
+/* KEYFRAMES ------------------------------------------------------------------------------------------------------------------------------------- */
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+/* HOVER INTERACTIONS (DESKTOP ONLY) ------------------------------------------------------------------------------------------------------------- */
+@media (hover: hover) {
+    .photoWrapper:hover .photo {
+        transform: scale(1.05);
+    }
+
+    .socialLink:hover {
+        color: var(--color-text-primary);
+        border-color: var(--color-accent-400);
+    }
+
+    .chip:hover {
+        color: var(--color-text-primary);
+        border-color: var(--color-accent-400);
+        background: var(--glass-bg);
+        transform: translateY(-2px);
+    }
+}
+
+/* RESPONSIVE BREAKPOINTS ------------------------------------------------------------------------------------------------------------------------ */
+@media (max-width: 1023px) {
+    .section {
+        padding: calc(64px + var(--space-xl)) var(--space-md) var(--space-xl);
+    }
+
+    .grid {
+        gap: var(--space-md);
+    }
+
+    .card {
+        min-height: 0;
+    }
+
+    .identityCard,
+    .infoCard {
+        grid-column: span 12;
+    }
+
+    .skillsGrid {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        align-items: start;
+    }
+
+    .learningGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .section {
+        padding: calc(64px + var(--space-lg)) var(--space-sm) var(--space-lg);
+    }
+
+    .identityCard,
+    .infoCard,
+    .skillsCard {
+        padding: var(--space-md);
+    }
+
+    .photoWrapper {
+        max-height: none;
+    }
+
+    .statsRow {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+
+    .socials {
+        flex-wrap: wrap;
+    }
+
+    .socialLink {
+        flex: 1 1 calc(50% - var(--space-xs));
+    }
+}

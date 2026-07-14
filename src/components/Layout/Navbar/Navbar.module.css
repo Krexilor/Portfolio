@@ -1,0 +1,175 @@
+.navbar {
+    position: fixed;
+    top: var(--space-lg);
+    left: var(--space-lg);
+    right: var(--space-lg);
+    z-index: var(--z-index-navbar);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-md);
+    height: 64px;
+    padding: 0 var(--space-xl);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(var(--glass-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-md);
+}
+
+.logo {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.3px;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+}
+
+.divider {
+    width: 2px;
+    height: 32px;
+    background-color: var(--glass-border);
+}
+
+.navList {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+}
+
+.navItemWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ghost {
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg-elevated);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    z-index: 0;
+}
+
+.navItem {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    transition: color var(--transition-fast);
+}
+
+.navItem.active {
+    color: var(--color-text-primary);
+}
+
+.navItem:not(.active):hover {
+    color: var(--color-text-primary);
+}
+
+.pushRight {
+    margin-left: auto;
+}
+
+/* HAMBURGER (hidden on desktop) ------------------------------------------------------------------------------------------------------------------ */
+.hamburger {
+    display: none;
+    position: relative;
+    isolation: isolate;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--glass-bg-elevated);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1.5px solid var(--color-accent-400);
+}
+
+.hamburgerLine {
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: 20px;
+    height: 2px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-text-primary);
+    transform-origin: center;
+}
+
+/* MOBILE DROPDOWN MENU ---------------------------------------------------------------------------------------------------------------------------- */
+.mobileMenu {
+    position: fixed;
+    top: calc(var(--space-lg) + 64px + var(--space-xs));
+    left: var(--space-lg);
+    right: var(--space-lg);
+    z-index: var(--z-index-navbar);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg-elevated);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+}
+
+.mobileNavList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.mobileNavItem {
+    width: 100%;
+    text-align: left;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.mobileNavItem:hover {
+    color: var(--color-text-primary);
+    background: var(--glass-bg);
+}
+
+.mobileActive {
+    color: var(--color-text-primary);
+    background: var(--glass-bg);
+}
+
+/* RESPONSIVE BREAKPOINTS --------------------------------------------------------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .navbar {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border: none !important;
+        box-shadow: none;
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .logo,
+    .divider,
+    .navList {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
