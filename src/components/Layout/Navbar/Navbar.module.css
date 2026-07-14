@@ -11,10 +11,10 @@
     height: 64px;
     padding: 0 var(--space-xl);
     border-radius: var(--radius-md);
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(var(--glass-blur)) !important;
-    -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-    border: 1px solid var(--glass-border) !important;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
     box-shadow: var(--shadow-md);
 }
 
@@ -154,10 +154,10 @@
 /* RESPONSIVE BREAKPOINTS --------------------------------------------------------------------------------------------------------------------------- */
 @media (max-width: 768px) {
     .navbar {
-        background: transparent !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        border: none !important;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border: none;
         box-shadow: none;
         justify-content: space-between;
         padding: 0;
