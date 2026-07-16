@@ -8,19 +8,11 @@ import styles from './Projects.module.css'
 // ASSETS ------------------------------------------------------------------------------------------------------------------------------------------|
 import DefaultImage from '../../assets/Images/BrokenImage.png'
 
-import DepVizThumbnail from '../../assets/Thumbnails/DepViz.png'
+// DATA --------------------------------------------------------------------------------------------------------------------------------------------|
+import { GITHUB_USERNAME, ALLOWED_REPOS, PROJECT_IMAGES } from '../../data/projects.data.js'
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import ScrollFade from '../../components/Common/Animations/ScrollFade.jsx'
-
-// GITHUB CONFIG -----------------------------------------------------------------------------------------------------------------------------------|
-const GITHUB_USERNAME = 'Krexilor'
-
-const ALLOWED_REPOS = ['DepViz', 'ForgeLit']
-
-const PROJECT_IMAGES = {
-    DepViz: DepVizThumbnail
-}
 
 // PROJECTS SECTION --------------------------------------------------------------------------------------------------------------------------------|
 export default function ProjectsSection() {
