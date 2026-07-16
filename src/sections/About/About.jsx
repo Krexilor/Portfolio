@@ -25,10 +25,10 @@ function SkillGroup({ label, items }) {
             <span className = {styles.groupLabel}>{label}</span>
             <div className = {styles.chipRow}>
                 {items.map((skill) => (
-                    <ScrollFade key = {skill.name} distance = {16} className = {styles.chip}>
+                    <div key = {skill.name} className = {styles.chip}>
                         <img src = {skill.icon} alt = {skill.name} className = {styles.chipIcon} />
                         <span>{skill.name}</span>
-                    </ScrollFade>
+                    </div>
                 ))}
             </div>
         </div>
