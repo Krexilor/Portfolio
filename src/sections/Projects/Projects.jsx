@@ -11,9 +11,6 @@ import DefaultImage from '../../assets/Images/BrokenImage.png'
 // DATA --------------------------------------------------------------------------------------------------------------------------------------------|
 import { GITHUB_USERNAME, ALLOWED_REPOS, PROJECT_IMAGES } from '../../data/projects.data.js'
 
-// COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
-import ScrollFade from '../../components/Common/Animations/ScrollFade.jsx'
-
 // PROJECTS SECTION --------------------------------------------------------------------------------------------------------------------------------|
 export default function ProjectsSection() {
     const [projects, setProjects] = useState([])
@@ -67,7 +64,7 @@ export default function ProjectsSection() {
         <section id = "projects" className = {styles.section}>
             <div className = {styles.container}>
 
-                <ScrollFade className = {styles.card}>
+                <div className = {styles.card}>
 
                     {/* Header */}
                     <div className = {styles.header}>
@@ -78,7 +75,7 @@ export default function ProjectsSection() {
                     {/* Project cards grid */}
                     <div className = {styles.grid}>
                         {!isLoading && projects.map((project) => (
-                            <ScrollFade key = {project.name} distance = {24} className = {styles.projectCard}>
+                            <div key = {project.name} className = {styles.projectCard}>
 
                                 <div className = {styles.imageWrapper}>
                                     <img src = {project.image} alt = {project.name} className = {styles.image} />
@@ -114,11 +111,11 @@ export default function ProjectsSection() {
                                     </a>
                                 </div>
 
-                            </ScrollFade>
+                            </div>
                         ))}
                     </div>
 
-                </ScrollFade>
+                </div>
 
             </div>
         </section>

@@ -4,9 +4,6 @@ import { MapPin } from 'lucide-react'
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
 import styles from './About.module.css'
 
-// COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
-import ScrollFade from '../../components/Common/Animations/ScrollFade.jsx'
-
 // DATA --------------------------------------------------------------------------------------------------------------------------------------------|
 import { profile, socialLinks, bio, stats, languageSkills, webSkills, creativeSkills, toolSkills, currentFocus } from '../../data/about.data.js'
 
@@ -42,7 +39,7 @@ export default function AboutSection() {
             <div className = {styles.grid}>
 
                 {/* Identity Card */}
-                <ScrollFade className = {`${styles.card} ${styles.identityCard}`}>
+                <div className = {`${styles.card} ${styles.identityCard}`}>
 
                     {/* Photo + status badge */}
                     <div className = {styles.photoWrapper}>
@@ -111,10 +108,10 @@ export default function AboutSection() {
                             Twitter
                         </a>
                     </div>
-                </ScrollFade>
+                </div>
 
                 {/* Info Card */}
-                <ScrollFade className = {`${styles.card} ${styles.infoCard}`}>
+                <div className = {`${styles.card} ${styles.infoCard}`}>
 
                     {/* Hook + bio paragraphs */}
                     <div className = {styles.infoContent}>
@@ -136,10 +133,10 @@ export default function AboutSection() {
                             </div>
                         ))}
                     </div>
-                </ScrollFade>
+                </div>
 
                 {/* Skills Card */}
-                <ScrollFade className = {`${styles.card} ${styles.skillsCard}`}>
+                <div className = {`${styles.card} ${styles.skillsCard}`}>
 
                     {/* Header */}
                     <div className = {styles.skillsHeader}>
@@ -177,7 +174,7 @@ export default function AboutSection() {
                         </div>
                     </div>
 
-                </ScrollFade>
+                </div>
 
             </div>
         </section>
