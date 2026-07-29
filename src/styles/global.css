@@ -199,6 +199,9 @@ table {
     --z-index-modal: 80;
     --z-index-overlay: 70;
 
+    /* NAVBAR CLEARANCE */
+    --navbar-clearance: 88px;
+
     /* LAYOUT */
     --max-width-content: 1200px;
     --max-width-text: 700px;

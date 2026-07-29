@@ -45,11 +45,17 @@ export default function Navbar() {
         isClickScrolling.current = true
         setActiveTab(item)
         setIsMenuOpen(false)
-        document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+
+        window.dispatchEvent(new CustomEvent('nav-scroll', { detail: true }))
+
+        setTimeout(() => {
+            document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+        }, 50)
 
         clearTimeout(handleClick.timeoutId)
         handleClick.timeoutId = setTimeout(() => {
             isClickScrolling.current = false
+            window.dispatchEvent(new CustomEvent('nav-scroll', { detail: false }))
         }, 700)
     }
 

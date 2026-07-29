@@ -1,10 +1,11 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'motion/react'
 
 // SCROLL-DRIVEN REVEAL WRAPPER --------------------------------------------------------------------------------------------------------------------|
 export default function ScrollFade({ children, className, distance = 60 }) {
     const ref = useRef(null)
+    const [isNavScrolling, setIsNavScrolling] = useState(false)
 
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -21,8 +22,18 @@ export default function ScrollFade({ children, className, distance = 60 }) {
     const y = useTransform(smoothProgress, [0, 0.25, 0.75, 1], [distance, 0, 0, -distance])
     const scale = useTransform(smoothProgress, [0, 0.25, 0.75, 1], [0.96, 1, 1, 0.96])
 
+    useEffect(() => {
+        const handleNavScroll = (event) => setIsNavScrolling(event.detail)
+        window.addEventListener('nav-scroll', handleNavScroll)
+        return () => window.removeEventListener('nav-scroll', handleNavScroll)
+    }, [])
+
     return (
-        <motion.div ref = {ref} className = {className} style = {{ opacity, y, scale }}>
+        <motion.div
+            ref = {ref}
+            className = {className}
+            style = {isNavScrolling ? { opacity: 1, y: 0, scale: 1 } : { opacity, y, scale }}
+        >
             {children}
         </motion.div>
     )
