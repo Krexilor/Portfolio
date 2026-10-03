@@ -153,7 +153,7 @@
 }
 
 /* RESPONSIVE BREAKPOINTS --------------------------------------------------------------------------------------------------------------------------- */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .navbar {
         background: transparent !important;
         backdrop-filter: none !important;
