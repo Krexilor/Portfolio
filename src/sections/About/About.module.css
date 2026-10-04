@@ -205,33 +205,6 @@ span.statusDot.variantNeutral {
 
 .socialLink {
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2xs);
-    padding: var(--space-xs) 0;
-    border-radius: var(--radius-sm);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-secondary);
-    background: var(--glass-bg-elevated);
-    border: 1px solid var(--glass-border);
-    transition: color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-}
-
-.icon svg {
-    width: 100%;
-    height: 100%;
-    display: block;
 }
 
 /* INFO CARD ------------------------------------------------------------------------------------------------------------------------------------- */
@@ -445,11 +418,6 @@ span.statusDot.variantNeutral {
     .photoWrapper:hover .photo {
         transform: scale(1.05);
         filter: grayscale(60%);
-    }
-
-    .socialLink:hover {
-        color: var(--color-text-primary);
-        border-color: var(--color-accent-400);
     }
 
     .chip:hover {

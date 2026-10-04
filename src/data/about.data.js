@@ -34,13 +34,6 @@ export const profile = {
     handle: '@Krexilor'
 }
 
-// SOCIAL LINKS ------------------------------------------------------------------------------------------------------------------------------------|
-export const socialLinks = {
-    github: 'https://github.com/Krexilor',
-    linkedin: 'https://linkedin.com/',
-    x: 'https://x.com/krexilor'
-}
-
 // BIO CONTENT ------------------------------------------------------------------------------------------------------------------------------------------|
 export const bio = {
     hook: 'Started out in Blender and Unreal Engine, ended up falling into code — right now I\'m all in on C++.',
