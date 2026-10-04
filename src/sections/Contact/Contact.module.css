@@ -1,14 +1,252 @@
+/* SECTION LAYOUT -------------------------------------------------------------------------------------------------------------------------------- */
 .section {
-    min-height: 100vh;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    min-height: calc(100vh - var(--navbar-clearance));
+    min-height: calc(100dvh - var(--navbar-clearance));
     padding: var(--space-xl) var(--space-lg);
     scroll-margin-top: var(--navbar-clearance);
 }
 
-.text {
-    font-size: var(--font-size-2xl);
+.container {
+    max-width: 1320px;
+    width: 100%;
+}
+
+/* OUTER CARD ------------------------------------------------------------------------------------------------------------------------------------ */
+.card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+/* HEADER ---------------------------------------------------------------------------------------------------------------------------------------- */
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.title {
+    font-size: var(--font-size-xl);
     color: var(--color-text-primary);
+}
+
+.subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* PANELS ---------------------------------------------------------------------------------------------------------------------------------------- */
+.panels {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-lg);
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+}
+
+/* INFO PANEL ------------------------------------------------------------------------------------------------------------------------------------ */
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.infoRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.infoIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    background: var(--glass-bg-elevated);
+    border: 1px solid var(--glass-border);
+}
+
+.infoText {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    min-width: 0;
+}
+
+.infoLabel {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.infoValue {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-secondary);
+    overflow-wrap: anywhere;
+    transition: color var(--transition-fast);
+}
+
+.availability {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg-elevated);
+    border: 1px solid var(--glass-border);
+}
+
+.pulseDot {
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    background-color: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+    animation: pulse 2s infinite;
+}
+
+.availabilityText {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+}
+
+.socials {
+    display: flex;
+    gap: var(--space-xs);
+    margin-top: auto;
+}
+
+/* LAYOUT ONLY - BUTTON LOOK COMES FROM Button.module.css */
+.socialLink {
+    flex: 1;
+}
+
+/* FORM PANEL (PLACEHOLDER) ---------------------------------------------------------------------------------------------------------------------- */
+.formPreview {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.fieldRow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.messageField {
+    flex: 1;
+}
+
+.label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    letter-spacing: 0.5px;
+}
+
+.skeleton {
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.skeletonTall {
+    flex: 1;
+    min-height: 140px;
+}
+
+.formFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+}
+
+.note {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* KEYFRAMES ------------------------------------------------------------------------------------------------------------------------------------- */
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+/* HOVER INTERACTIONS (DESKTOP ONLY) ------------------------------------------------------------------------------------------------------------- */
+@media (hover: hover) {
+    .infoValue:hover {
+        color: var(--color-text-primary);
+    }
+}
+
+/* RESPONSIVE BREAKPOINTS ------------------------------------------------------------------------------------------------------------------------ */
+@media (max-width: 1023px) {
+    .panels {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        padding: var(--space-md);
+    }
+
+    .panel {
+        padding: var(--space-md);
+    }
+
+    .fieldRow {
+        grid-template-columns: 1fr;
+    }
+
+    .socials {
+        flex-wrap: wrap;
+    }
+
+    .socialLink {
+        flex: 1 1 calc(50% - var(--space-xs));
+    }
+
+    .formFooter {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .note {
+        text-align: center;
+    }
 }

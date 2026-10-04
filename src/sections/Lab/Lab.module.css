@@ -1,5 +1,5 @@
+/* SECTION LAYOUT -------------------------------------------------------------------------------------------------------------------------------- */
 .section {
-    min-height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -8,7 +8,133 @@
     scroll-margin-top: var(--navbar-clearance);
 }
 
-.text {
-    font-size: var(--font-size-2xl);
+.container {
+    max-width: 1320px;
+    width: 100%;
+}
+
+/* OUTER CARD ------------------------------------------------------------------------------------------------------------------------------------ */
+.card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+/* HEADER ---------------------------------------------------------------------------------------------------------------------------------------- */
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.title {
+    font-size: var(--font-size-xl);
     color: var(--color-text-primary);
+}
+
+.subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* TERMINAL WINDOW ------------------------------------------------------------------------------------------------------------------------------- */
+.terminal {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    overflow: hidden;
+    background: var(--color-bg-primary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+}
+
+.titleBar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--glass-bg-elevated);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.dots {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--color-slate-400);
+}
+
+.titleText {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-loose);
+}
+
+.line {
+    color: var(--color-text-secondary);
+    overflow-wrap: anywhere;
+}
+
+.prompt {
+    margin-right: var(--space-xs);
+    color: var(--color-success);
+}
+
+.command {
+    color: var(--color-text-primary);
+}
+
+.output {
+    color: var(--color-text-muted);
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    vertical-align: text-bottom;
+    background: var(--color-text-primary);
+    animation: blink 1s steps(1) infinite;
+}
+
+/* KEYFRAMES ------------------------------------------------------------------------------------------------------------------------------------- */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* RESPONSIVE BREAKPOINTS ------------------------------------------------------------------------------------------------------------------------ */
+@media (max-width: 600px) {
+    .card {
+        padding: var(--space-md);
+    }
+
+    .terminal {
+        min-height: 320px;
+    }
+
+    .body {
+        padding: var(--space-md);
+        font-size: var(--font-size-xs);
+    }
 }
