@@ -15,6 +15,7 @@ import { contactInfo, formConfig } from '../../data/contact.data.js'
 const INITIAL_FORM = { name: '', email: '', subject: '', message: '' }
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const INVALID_EMAIL_ERROR = 'Enter a valid email address.'
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
 const { maxMessageLength } = formConfig
 
 const fields = {
@@ -122,15 +123,19 @@ function ContactIllustration() {
 export default function ContactSection() {
     const [form, setForm] = useState(INITIAL_FORM)
     const [errors, setErrors] = useState({})
-    const [isSent, setIsSent] = useState(false)
+    const [status, setStatus] = useState('idle')
     const localTime = useLocalTime(contactInfo.timeZone)
+
+    const isSending = status === 'sending'
+    const isFinished = status === 'success' || status === 'error'
+    const fallbackHref = `mailto:${contactInfo.email}?subject=${encodeURIComponent(form.subject.trim())}&body=${encodeURIComponent(form.message.trim())}`
 
     const handleChange = (event) => {
         const { name, value } = event.target
 
         setForm((prev) => ({ ...prev, [name]: value }))
         if (errors[name]) setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }))
-        if (isSent) setIsSent(false)
+        if (isFinished) setStatus('idle')
     }
 
     const handleBlur = (event) => {
@@ -139,9 +144,12 @@ export default function ContactSection() {
         if (value.trim()) setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
 
+        if (isSending) return
+
+        const formElement = event.currentTarget
         const nextErrors = {}
 
         Object.keys(INITIAL_FORM).forEach((name) => {
@@ -154,14 +162,38 @@ export default function ContactSection() {
         const firstInvalid = Object.keys(nextErrors)[0]
 
         if (firstInvalid) {
-            event.currentTarget.elements[firstInvalid]?.focus()
-            setIsSent(false)
+            formElement.elements[firstInvalid]?.focus()
+            setStatus('idle')
             return
         }
 
-        // UI ONLY FOR NOW - NOT CONNECTED TO ANY EMAIL SERVICE
-        setIsSent(true)
-        setForm(INITIAL_FORM)
+        if (formElement.elements.botcheck.checked) return
+
+        setStatus('sending')
+
+        try {
+            const response = await fetch(WEB3FORMS_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    access_key: formConfig.accessKey,
+                    from_name: 'Portfolio Contact Form',
+                    name: form.name.trim(),
+                    email: form.email.trim(),
+                    subject: `Portfolio contact: ${form.subject.trim()}`,
+                    message: form.message.trim()
+                })
+            })
+
+            const result = await response.json()
+
+            if (!response.ok || !result.success) throw new Error(result.message)
+
+            setStatus('success')
+            setForm(INITIAL_FORM)
+        } catch {
+            setStatus('error')
+        }
     }
 
     // Shared input props
@@ -217,15 +249,35 @@ export default function ContactSection() {
                             <textarea maxLength = {maxMessageLength} {...getInputProps('message', styles.textarea)} />
                         </div>
 
+                        <input
+                            type = "checkbox"
+                            name = "botcheck"
+                            className = {styles.honeypot}
+                            tabIndex = {-1}
+                            autoComplete = "off"
+                            aria-hidden = "true"
+                        />
+
                         <div className = {styles.formFooter}>
-                            <PrimaryBtn type = "submit">
-                                {formConfig.submitLabel}
+                            <PrimaryBtn type = "submit" disabled = {isSending}>
+                                {isSending ? formConfig.sendingLabel : formConfig.submitLabel}
                                 <Send size = {14} />
                             </PrimaryBtn>
 
-                            <p className = {`${styles.feedback} ${isSent ? styles.feedbackVisible : ''}`} role = "status">
-                                <Check size = {14} />
-                                {formConfig.successMessage}
+                            <p
+                                className = {`${styles.feedback} ${isFinished ? styles.feedbackVisible : ''} ${status === 'error' ? styles.feedbackError : ''}`}
+                                role = "status"
+                            >
+                                {status === 'error' ? <AlertCircle size = {14} /> : <Check size = {14} />}
+                                <span>
+                                    {status === 'error' ? formConfig.errorMessage : formConfig.successMessage}
+                                    {status === 'error' && (
+                                        <>
+                                            {' '}
+                                            <a href = {fallbackHref} className = {styles.feedbackLink}>{formConfig.fallbackLabel}</a>
+                                        </>
+                                    )}
+                                </span>
                             </p>
                         </div>
 

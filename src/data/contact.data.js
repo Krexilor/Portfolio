@@ -14,7 +14,11 @@ export const contactInfo = {
 
 // FORM CONFIG -------------------------------------------------------------------------------------------------------------------------------------|
 export const formConfig = {
+    accessKey: '2907d03d-b047-4c1b-b21f-012ba0ff32d9',
     maxMessageLength: 1000,
     submitLabel: 'Send message',
-    successMessage: 'Message sent. Thanks for reaching out!'
+    sendingLabel: 'Sending...',
+    successMessage: 'Message sent. Thanks for reaching out!',
+    errorMessage: 'Couldn\'t send your message.',
+    fallbackLabel: 'Email me directly instead'
 }
