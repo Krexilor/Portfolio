@@ -9,3 +9,6 @@ export const ALLOWED_REPOS = ['DepViz']
 export const PROJECT_IMAGES = {
     DepViz: DepVizThumbnail
 }
+
+// SLIDESHOW CONFIG --------------------------------------------------------------------------------------------------------------------------------|
+export const SLIDE_INTERVAL = 6000
