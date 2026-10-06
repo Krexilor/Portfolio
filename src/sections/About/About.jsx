@@ -1,6 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { motion } from 'motion/react'
-import { MapPin } from 'lucide-react'
+import { MapPin, Layers, Target } from 'lucide-react'
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
 import styles from './About.module.css'
@@ -10,6 +10,17 @@ import { GithubBtn, LinkedinBtn, XBtn } from '../../components/Common/Button/But
 
 // DATA --------------------------------------------------------------------------------------------------------------------------------------------|
 import { profile, bio, stats, languageSkills, webSkills, creativeSkills, toolSkills, currentFocus } from '../../data/about.data.js'
+
+// CONSTANTS ---------------------------------------------------------------------------------------------------------------------------------------|
+const skillGroups = [
+    { label: 'Languages', items: languageSkills },
+    { label: 'Web & Frameworks', items: webSkills },
+    { label: '3D & Game Dev', items: creativeSkills },
+    { label: 'Tools', items: toolSkills }
+]
+
+const totalSkills = skillGroups.reduce((sum, group) => sum + group.items.length, 0)
+const formatCount = (value) => String(value).padStart(2, '0')
 
 // VARIANT CLASS MAP -------------------------------------------------------------------------------------------------------------------------------|
 const variantClass = {
@@ -23,7 +34,11 @@ const variantClass = {
 function SkillGroup({ label, items }) {
     return (
         <div className = {styles.skillGroup}>
-            <span className = {styles.groupLabel}>{label}</span>
+            <div className = {styles.groupHeader}>
+                <span className = {styles.groupLabel}>{label}</span>
+                <span className = {styles.groupCount}>{formatCount(items.length)}</span>
+            </div>
+
             <div className = {styles.chipRow}>
                 {items.map((skill) => (
                     <div key = {skill.name} className = {styles.chip}>
@@ -63,7 +78,7 @@ export default function AboutSection() {
 
                     {/* Name, role, location */}
                     <div className = {styles.identityInfo}>
-                        <h2 className = {styles.name}>{profile.name}</h2>
+                        <h3 className = {styles.name}>{profile.name}</h3>
                         <p className = {styles.role}>{profile.role}</p>
 
                         <div className = {styles.location}>
@@ -74,16 +89,16 @@ export default function AboutSection() {
 
                     <div className = {styles.divider} />
 
-                    {/* Handle + status stats */}
-                    <div className = {styles.statsList}>
-                        <div className = {styles.statRow}>
-                            <span className = {styles.statLabel}>Handle</span>
-                            <span className = {styles.statValue}>{profile.handle}</span>
+                    {/* Handle + status */}
+                    <div className = {styles.detailList}>
+                        <div className = {styles.detailRow}>
+                            <span className = {styles.detailLabel}>Handle</span>
+                            <span className = {styles.detailValue}>{profile.handle}</span>
                         </div>
 
-                        <div className = {styles.statRow}>
-                            <span className = {styles.statLabel}>{profile.status.label}</span>
-                            <span className = {`${styles.statValue} ${variantClass[profile.status.variant]}`}>
+                        <div className = {styles.detailRow}>
+                            <span className = {styles.detailLabel}>{profile.status.label}</span>
+                            <span className = {`${styles.detailValue} ${variantClass[profile.status.variant]}`}>
                                 {profile.status.text}
                             </span>
                         </div>
@@ -102,7 +117,7 @@ export default function AboutSection() {
 
                     {/* Hook + bio paragraphs */}
                     <div className = {styles.infoContent}>
-                        <h3 className = {styles.hook}>{bio.hook}</h3>
+                        <h2 className = {styles.hook}>{bio.hook}</h2>
 
                         <div className = {styles.divider} />
 
@@ -111,8 +126,8 @@ export default function AboutSection() {
                         ))}
                     </div>
 
-                    {/* Bottom stats row */}
-                    <div className = {styles.statsRow}>
+                    {/* Stat tiles */}
+                    <div className = {styles.stats}>
                         {stats.map((stat) => (
                             <div key = {stat.caption} className = {styles.stat}>
                                 <span className = {styles.statNumber}>{stat.number}</span>
@@ -125,45 +140,62 @@ export default function AboutSection() {
                 {/* Skills Card */}
                 <div className = {`${styles.card} ${styles.skillsCard}`}>
 
-                    {/* Header */}
-                    <div className = {styles.skillsHeader}>
-                        <h3 className = {styles.skillsTitle}>Skills & Tools</h3>
-                        <p className = {styles.skillsSubtitle}>The tech stack and creative software I work with everyday.</p>
+                    <div className = {styles.cardHeader}>
+                        <div className = {styles.titleRow}>
+                            <span className = {styles.titleIcon}><Layers size = {18} /></span>
+                            <h3 className = {styles.cardTitle}>Skills & Tools</h3>
+                            <span className = {styles.countPill}>{totalSkills} total</span>
+                        </div>
+
+                        <p className = {styles.subtitle}>The tech stack and creative software I work with everyday.</p>
                     </div>
 
-                    {/* Skill groups */}
-                    <div className = {styles.skillsGrid}>
-                        <SkillGroup label = "Languages" items = {languageSkills} />
-                        <SkillGroup label = "Web & Frameworks" items = {webSkills} />
-                        <SkillGroup label = "3D & Game Dev" items = {creativeSkills} />
-                        <SkillGroup label = "Tools" items = {toolSkills} />
+                    <div className = {styles.skillMatrix}>
+                        {skillGroups.map((group) => (
+                            <SkillGroup key = {group.label} label = {group.label} items = {group.items} />
+                        ))}
                     </div>
 
-                    <div className = {styles.divider} />
+                </div>
 
-                    {/* Current focus areas */}
-                    <div className = {styles.learningSection}>
-                        <div className = {styles.learningHeader}>
+                {/* Focus Card */}
+                <div className = {`${styles.card} ${styles.focusCard}`}>
+
+                    <div className = {styles.cardHeader}>
+                        <div className = {styles.titleRow}>
+                            <span className = {styles.titleIcon}><Target size = {18} /></span>
+                            <h3 className = {styles.cardTitle}>Current Focus</h3>
                             <span className = {styles.pulseDot} />
-                            <span className = {styles.learningLabel}>Current Focus Areas</span>
                         </div>
 
-                        <div className = {styles.learningGrid}>
-                            {currentFocus.map((focus) => (
-                                <div key = {focus.title} className = {styles.learningCard}>
-                                    <motion.img
-                                        src = {focus.icon}
-                                        alt = {focus.title}
-                                        whileHover = {{ y: -3 }}
-                                        transition = {{ type: 'spring', stiffness: 300, damping: 15 }}
-                                    />
-                                    <div>
-                                        <h4>{focus.title}</h4>
-                                        <p>{focus.description}</p>
-                                    </div>
+                        <p className = {styles.subtitle}>What I'm digging into right now.</p>
+                    </div>
+
+                    <div className = {styles.focusList}>
+                        {currentFocus.map((focus, index) => (
+                            <div key = {focus.title} className = {styles.focusItem}>
+
+                                <div className = {styles.focusTop}>
+                                    <span className = {styles.focusIcon}>
+                                        <motion.img
+                                            src = {focus.icon}
+                                            alt = {focus.title}
+                                            className = {styles.focusImage}
+                                            whileHover = {{ y: -3 }}
+                                            transition = {{ type: 'spring', stiffness: 300, damping: 15 }}
+                                        />
+                                    </span>
+
+                                    <span className = {styles.focusIndex}>{formatCount(index + 1)}</span>
                                 </div>
-                            ))}
-                        </div>
+
+                                <div className = {styles.focusText}>
+                                    <h4 className = {styles.focusTitle}>{focus.title}</h4>
+                                    <p className = {styles.focusDescription}>{focus.description}</p>
+                                </div>
+
+                            </div>
+                        ))}
                     </div>
 
                 </div>
