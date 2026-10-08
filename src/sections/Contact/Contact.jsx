@@ -1,5 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState, useEffect } from 'react'
+import { motion, MotionConfig } from 'motion/react'
 import { Mail, MapPin, Clock, Send, Check, AlertCircle } from 'lucide-react'
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
@@ -119,6 +120,41 @@ function ContactIllustration() {
     )
 }
 
+// MOTION VARIANTS ---------------------------------------------------------------------------------------------------------------------------------|
+const ease = [0.22, 1, 0.36, 1]
+
+const viewport = { once: true, amount: 0.15, margin: '0px 0px -10% 0px' }
+const reveal = { initial: 'hidden', whileInView: 'visible', viewport }
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 28 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.65, ease }
+    }
+}
+
+const listVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.06, delayChildren: 0.2 } }
+}
+
+const subListVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.06 } }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+}
+
+const detailVariants = {
+    hidden: { opacity: 0, x: 16 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease } }
+}
+
 // CONTACT SECTION ---------------------------------------------------------------------------------------------------------------------------------|
 export default function ContactSection() {
     const [form, setForm] = useState(INITIAL_FORM)
@@ -211,118 +247,141 @@ export default function ContactSection() {
     })
 
     return (
-        <section id = "contact" className = {styles.section}>
-            <div className = {styles.container}>
+        <MotionConfig reducedMotion = "user">
+            <section id = "contact" className = {styles.section}>
+                <div className = {styles.container}>
+                    <motion.div
+                        className = {styles.card}
+                        variants = {cardVariants}
+                        {...reveal}
+                    >
 
-                <div className = {styles.card}>
+                        {/* Left: heading + form */}
+                        <motion.form
+                            className = {styles.formColumn}
+                            variants = {listVariants}
+                            onSubmit = {handleSubmit}
+                            noValidate
+                        >
 
-                    {/* Left: heading + form */}
-                    <form className = {styles.formColumn} onSubmit = {handleSubmit} noValidate>
+                            <motion.div className = {styles.header} variants = {itemVariants}>
+                                <h2 className = {styles.title}>{contactInfo.title}</h2>
+                                <p className = {styles.subtitle}>{contactInfo.subtitle}</p>
+                            </motion.div>
 
-                        <div className = {styles.header}>
-                            <h2 className = {styles.title}>{contactInfo.title}</h2>
-                            <p className = {styles.subtitle}>{contactInfo.subtitle}</p>
-                        </div>
+                            <motion.div className = {styles.fieldRow} variants = {itemVariants}>
+                                <div className = {styles.field}>
+                                    <FieldLabel name = "name" error = {errors.name} />
+                                    <input type = "text" autoComplete = "name" {...getInputProps('name')} />
+                                </div>
 
-                        <div className = {styles.fieldRow}>
-                            <div className = {styles.field}>
-                                <FieldLabel name = "name" error = {errors.name} />
-                                <input type = "text" autoComplete = "name" {...getInputProps('name')} />
-                            </div>
+                                <div className = {styles.field}>
+                                    <FieldLabel name = "email" error = {errors.email} />
+                                    <input type = "email" autoComplete = "email" {...getInputProps('email')} />
+                                </div>
+                            </motion.div>
 
-                            <div className = {styles.field}>
-                                <FieldLabel name = "email" error = {errors.email} />
-                                <input type = "email" autoComplete = "email" {...getInputProps('email')} />
-                            </div>
-                        </div>
+                            <motion.div className = {styles.field} variants = {itemVariants}>
+                                <FieldLabel name = "subject" error = {errors.subject} />
+                                <input type = "text" {...getInputProps('subject')} />
+                            </motion.div>
 
-                        <div className = {styles.field}>
-                            <FieldLabel name = "subject" error = {errors.subject} />
-                            <input type = "text" {...getInputProps('subject')} />
-                        </div>
+                            <motion.div className = {`${styles.field} ${styles.messageField}`} variants = {itemVariants}>
+                                <FieldLabel name = "message" error = {errors.message}>
+                                    <span className = {styles.counter}>{form.message.length} / {maxMessageLength}</span>
+                                </FieldLabel>
 
-                        <div className = {`${styles.field} ${styles.messageField}`}>
-                            <FieldLabel name = "message" error = {errors.message}>
-                                <span className = {styles.counter}>{form.message.length} / {maxMessageLength}</span>
-                            </FieldLabel>
+                                <textarea maxLength = {maxMessageLength} {...getInputProps('message', styles.textarea)} />
+                            </motion.div>
 
-                            <textarea maxLength = {maxMessageLength} {...getInputProps('message', styles.textarea)} />
-                        </div>
+                            <input
+                                type = "checkbox"
+                                name = "botcheck"
+                                className = {styles.honeypot}
+                                tabIndex = {-1}
+                                autoComplete = "off"
+                                aria-hidden = "true"
+                            />
 
-                        <input
-                            type = "checkbox"
-                            name = "botcheck"
-                            className = {styles.honeypot}
-                            tabIndex = {-1}
-                            autoComplete = "off"
-                            aria-hidden = "true"
-                        />
+                            <motion.div className = {styles.formFooter} variants = {itemVariants}>
+                                <PrimaryBtn type = "submit" disabled = {isSending}>
+                                    {isSending ? formConfig.sendingLabel : formConfig.submitLabel}
+                                    <Send size = {14} />
+                                </PrimaryBtn>
 
-                        <div className = {styles.formFooter}>
-                            <PrimaryBtn type = "submit" disabled = {isSending}>
-                                {isSending ? formConfig.sendingLabel : formConfig.submitLabel}
-                                <Send size = {14} />
-                            </PrimaryBtn>
+                                <p
+                                    className = {`${styles.feedback} ${isFinished ? styles.feedbackVisible : ''} ${status === 'error' ? styles.feedbackError : ''}`}
+                                    role = "status"
+                                >
+                                    {status === 'error' ? <AlertCircle size = {14} /> : <Check size = {14} />}
+                                    <span>
+                                        {status === 'error' ? formConfig.errorMessage : formConfig.successMessage}
+                                        {status === 'error' && (
+                                            <>
+                                                {' '}
+                                                <a href = {fallbackHref} className = {styles.feedbackLink}>{formConfig.fallbackLabel}</a>
+                                            </>
+                                        )}
+                                    </span>
+                                </p>
+                            </motion.div>
 
-                            <p
-                                className = {`${styles.feedback} ${isFinished ? styles.feedbackVisible : ''} ${status === 'error' ? styles.feedbackError : ''}`}
-                                role = "status"
-                            >
-                                {status === 'error' ? <AlertCircle size = {14} /> : <Check size = {14} />}
-                                <span>
-                                    {status === 'error' ? formConfig.errorMessage : formConfig.successMessage}
-                                    {status === 'error' && (
-                                        <>
-                                            {' '}
-                                            <a href = {fallbackHref} className = {styles.feedbackLink}>{formConfig.fallbackLabel}</a>
-                                        </>
-                                    )}
-                                </span>
-                            </p>
-                        </div>
+                        </motion.form>
 
-                    </form>
+                        {/* Right: illustration + details + socials */}
+                        <motion.aside
+                            className = {styles.sideColumn}
+                            variants = {listVariants}
+                            {...reveal}
+                        >
 
-                    {/* Right: illustration + details + socials */}
-                    <aside className = {styles.sideColumn}>
+                            <motion.div className = {styles.illustrationWrap} variants = {detailVariants}>
+                                <ContactIllustration />
+                            </motion.div>
 
-                        <div className = {styles.illustrationWrap}>
-                            <ContactIllustration />
-                        </div>
+                            <motion.span className = {styles.availability} variants = {itemVariants}>
+                                <span className = {styles.pulseDot} />
+                                {contactInfo.availability}
+                            </motion.span>
 
-                        <span className = {styles.availability}>
-                            <span className = {styles.pulseDot} />
-                            {contactInfo.availability}
-                        </span>
+                            <motion.div className = {styles.details} variants = {subListVariants}>
+                                <motion.a
+                                    href = {`mailto:${contactInfo.email}`}
+                                    className = {`${styles.detail} ${styles.detailLink}`}
+                                    variants = {itemVariants}
+                                >
+                                    <Mail size = {16} />
+                                    <span>{contactInfo.email}</span>
+                                </motion.a>
 
-                        <div className = {styles.details}>
-                            <a href = {`mailto:${contactInfo.email}`} className = {`${styles.detail} ${styles.detailLink}`}>
-                                <Mail size = {16} />
-                                <span>{contactInfo.email}</span>
-                            </a>
+                                <motion.div className = {styles.detail} variants = {itemVariants}>
+                                    <MapPin size = {16} />
+                                    <span>{contactInfo.location}</span>
+                                </motion.div>
 
-                            <div className = {styles.detail}>
-                                <MapPin size = {16} />
-                                <span>{contactInfo.location}</span>
-                            </div>
+                                <motion.div className = {styles.detail} variants = {itemVariants}>
+                                    <Clock size = {16} />
+                                    <span>Local time: {localTime} {contactInfo.timeZoneLabel}</span>
+                                </motion.div>
+                            </motion.div>
 
-                            <div className = {styles.detail}>
-                                <Clock size = {16} />
-                                <span>Local time: {localTime} {contactInfo.timeZoneLabel}</span>
-                            </div>
-                        </div>
+                            <motion.div className = {styles.socials} variants = {subListVariants}>
+                                <motion.div className = {styles.socialLink} variants = {itemVariants}>
+                                    <GithubBtn />
+                                </motion.div>
+                                <motion.div className = {styles.socialLink} variants = {itemVariants}>
+                                    <LinkedinBtn />
+                                </motion.div>
+                                <motion.div className = {styles.socialLink} variants = {itemVariants}>
+                                    <XBtn />
+                                </motion.div>
+                            </motion.div>
 
-                        <div className = {styles.socials}>
-                            <GithubBtn className = {styles.socialLink} />
-                            <LinkedinBtn className = {styles.socialLink} />
-                            <XBtn className = {styles.socialLink} />
-                        </div>
+                        </motion.aside>
 
-                    </aside>
-
+                    </motion.div>
                 </div>
-
-            </div>
-        </section>
+            </section>
+        </MotionConfig>
     )
 }

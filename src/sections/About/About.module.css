@@ -392,7 +392,7 @@ span.statusDot.variantNeutral {
     font-size: var(--font-size-xs);
     color: var(--color-text-secondary);
     cursor: default;
-    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .chipIcon {
@@ -483,11 +483,31 @@ span.statusDot.variantNeutral {
     color: var(--color-text-secondary);
 }
 
+/* MOTION PRIMITIVES ----------------------------------------------------------------------------------------------------------------------------- */
+.card,
+.skillGroup,
+.chip,
+.stat,
+.focusItem {
+    backface-visibility: hidden;
+}
+
 /* KEYFRAMES ------------------------------------------------------------------------------------------------------------------------------------- */
 @keyframes pulse {
     0% { transform: scale(0.95); opacity: 0.5; }
     50% { transform: scale(1.05); opacity: 1; }
     100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+/* REDUCED MOTION -------------------------------------------------------------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .pulseDot {
+        animation: none;
+    }
+
+    .photo {
+        transition: none;
+    }
 }
 
 /* HOVER INTERACTIONS (DESKTOP ONLY) ------------------------------------------------------------------------------------------------------------- */
@@ -501,7 +521,6 @@ span.statusDot.variantNeutral {
         color: var(--color-text-primary);
         border-color: var(--color-accent-400);
         background: var(--glass-bg);
-        transform: translateY(-2px);
     }
 
     .focusItem:hover {

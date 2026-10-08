@@ -6,7 +6,6 @@ import styles from './Landing.module.css'
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import Navbar from '../components/Layout/Navbar/Navbar'
-import ScrollFade from '../components/Common/Animations/ScrollFade.jsx'
 
 // SECTIONS ----------------------------------------------------------------------------------------------------------------------------------------|
 import LabSection from './Lab/Lab.jsx'
@@ -137,11 +136,11 @@ export default function Landing() {
             <Navbar />
 
             <div className = {styles.content}>
-                <ScrollFade><AboutSection /></ScrollFade>
-                <ScrollFade><ProjectSection /></ScrollFade>
-                <ScrollFade><ExperienceSection /></ScrollFade>
-                <ScrollFade><LabSection /></ScrollFade>
-                <ScrollFade><ContactSection /></ScrollFade>
+                <AboutSection />
+                <ProjectSection />
+                <ExperienceSection />
+                <LabSection />
+                <ContactSection />
             </div>
         </div>
     )

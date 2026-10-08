@@ -1,5 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState, useEffect, useRef } from 'react'
+import { motion, MotionConfig } from 'motion/react'
 import { Star, GitFork, ArrowUpRight, ChevronLeft, ChevronRight, Globe, FolderGit2 } from 'lucide-react'
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
@@ -17,6 +18,31 @@ import { GITHUB_USERNAME, ALLOWED_REPOS, PROJECT_IMAGES, SLIDE_INTERVAL } from '
 // HELPERS -----------------------------------------------------------------------------------------------------------------------------------------|
 const formatDate = (value) => new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(new Date(value))
 const formatCount = (value) => String(value).padStart(2, '0')
+
+// MOTION VARIANTS ---------------------------------------------------------------------------------------------------------------------------------|
+const ease = [0.22, 1, 0.36, 1]
+
+const viewport = { once: true, amount: 0.15, margin: '0px 0px -10% 0px' }
+const reveal = { initial: 'hidden', whileInView: 'visible', viewport }
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 28 },
+    visible: (order = 0) => ({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.65, ease, delay: order * 0.1 }
+    })
+}
+
+const listVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.06, delayChildren: 0.2 } }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+}
 
 // PROJECTS SECTION --------------------------------------------------------------------------------------------------------------------------------|
 export default function ProjectsSection() {
@@ -112,227 +138,254 @@ export default function ProjectsSection() {
         list.scrollTo({
             top: Math.max(0, active.offsetTop - (list.clientHeight - active.offsetHeight) / 2),
             left: Math.max(0, active.offsetLeft - (list.clientWidth - active.offsetWidth) / 2),
-            behavior: 'smooth'
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
         })
-    }, [selected?.name])
+    }, [selected?.name, prefersReducedMotion])
 
     return (
-        <section id = "projects" className = {styles.section}>
-            <div className = {styles.grid}>
+        <MotionConfig reducedMotion = "user">
+            <section id = "projects" className = {styles.section}>
+                <div className = {styles.grid}>
 
-                {/* Info + List Card */}
-                <div className = {`${styles.card} ${styles.infoCard}`}>
+                    {/* Info + List Card */}
+                    <motion.div
+                        className = {`${styles.card} ${styles.infoCard}`}
+                        variants = {cardVariants}
+                        custom = {0}
+                        {...reveal}
+                    >
 
-                    <div className = {styles.infoHeader}>
-                        <div className = {styles.titleRow}>
-                            <span className = {styles.titleIcon}><FolderGit2 size = {18} /></span>
-                            <h2 className = {styles.title}>Projects</h2>
-                        </div>
-
-                        <p className = {styles.subtitle}>A few things I've built and shipped, pulled live from GitHub.</p>
-                    </div>
-
-                    <div className = {styles.divider} />
-
-                    {/* Totals */}
-                    <div className = {styles.stats}>
-                        <div className = {styles.stat}>
-                            <span className = {styles.statNumber}>{isLoading ? '--' : formatCount(projects.length)}</span>
-                            <span className = {styles.statCaption}>Projects</span>
-                        </div>
-
-                        <div className = {styles.stat}>
-                            <span className = {styles.statNumber}>{isLoading ? '--' : formatCount(totalStars)}</span>
-                            <span className = {styles.statCaption}>Stars</span>
-                        </div>
-
-                        <div className = {styles.stat}>
-                            <span className = {styles.statNumber}>{isLoading ? '--' : formatCount(totalForks)}</span>
-                            <span className = {styles.statCaption}>Forks</span>
-                        </div>
-                    </div>
-
-                    {/* Project list */}
-                    {!showEmpty && (
-                        <div className = {styles.group}>
-                            <span className = {styles.groupLabel}>All projects</span>
-
-                            <div className = {styles.listWrap}>
-                                <div ref = {listRef} className = {styles.list}>
-
-                                    {isLoading && [0, 1, 2].map((index) => (
-                                        <div key = {index} className = {styles.skeletonItem} aria-hidden = "true" />
-                                    ))}
-
-                                    {!isLoading && projects.map((project) => {
-                                        const isSelected = project.name === selected.name
-
-                                        return (
-                                            <button
-                                                key = {project.name}
-                                                type = "button"
-                                                className = {`${styles.listItem} ${isSelected ? styles.listItemActive : ''}`}
-                                                onClick = {() => setSelectedName(project.name)}
-                                                aria-current = {isSelected ? 'true' : undefined}
-                                            >
-                                                <img src = {project.image} alt = "" className = {styles.thumb} />
-
-                                                <span className = {styles.listText}>
-                                                    <span className = {styles.listName}>{project.name}</span>
-                                                    <span className = {styles.listMeta}>
-                                                        {project.languages.slice(0, 3).join(' · ') || 'Repository'}
-                                                    </span>
-                                                </span>
-
-                                                <ChevronRight size = {14} className = {styles.listArrow} />
-                                            </button>
-                                        )
-                                    })}
-
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* GitHub profile */}
-                    <div className = {styles.footer}>
-                        <GithubBtn className = {styles.profileLink} />
-                    </div>
-
-                </div>
-
-                {/* Detail Card */}
-                <div className = {`${styles.card} ${styles.detailCard}`}>
-
-                    {isLoading && <div className = {styles.skeletonDetail} aria-hidden = "true" />}
-
-                    {showEmpty && (
-                        <div className = {styles.messageBox}>
-                            <p className = {styles.message}>
-                                {hasError
-                                    ? 'Couldn\'t load projects from GitHub right now. Try again later, or browse them directly.'
-                                    : 'No projects to show yet. Check back soon.'}
-                            </p>
-
-                            <a
-                                href = {`https://github.com/${GITHUB_USERNAME}`}
-                                target = "_blank"
-                                rel = "noreferrer"
-                                className = {styles.linkButton}
-                            >
-                                Open GitHub profile
-                                <ArrowUpRight size = {14} />
-                            </a>
-                        </div>
-                    )}
-
-                    {!isLoading && selected && (
-                        <div key = {selected.name} className = {styles.detail}>
-
-                            {/* Preview */}
-                            <div className = {styles.stage}>
-                                <img src = {selected.image} alt = "" aria-hidden = "true" className = {styles.stageBackdrop} />
-                                <img src = {selected.image} alt = {selected.name} className = {styles.stageImage} />
-
-                                {canSlide && (
-                                    <span className = {styles.counter}>
-                                        {formatCount(activeIndex + 1)} / {formatCount(projects.length)}
-                                    </span>
-                                )}
+                        <div className = {styles.infoHeader}>
+                            <div className = {styles.titleRow}>
+                                <span className = {styles.titleIcon}><FolderGit2 size = {18} /></span>
+                                <h2 className = {styles.title}>Projects</h2>
                             </div>
 
-                            {/* Slideshow controls */}
-                            {canSlide && (
-                                <div className = {styles.controls} style = {{ '--slide-duration': `${SLIDE_INTERVAL}ms` }}>
-                                    <div className = {styles.segments}>
-                                        {projects.map((project, index) => {
-                                            const isActive = index === activeIndex
-                                            const isRunning = isActive && isAutoplay
-                                            const isDone = index < activeIndex || (isActive && !isAutoplay)
+                            <p className = {styles.subtitle}>A few things I've built and shipped, pulled live from GitHub.</p>
+                        </div>
+
+                        <div className = {styles.divider} />
+
+                        {/* Totals */}
+                        <motion.div
+                            className = {styles.stats}
+                            variants = {listVariants}
+                            {...reveal}
+                        >
+                            <motion.div className = {styles.stat} variants = {itemVariants}>
+                                <span className = {styles.statNumber}>{isLoading ? '--' : formatCount(projects.length)}</span>
+                                <span className = {styles.statCaption}>Projects</span>
+                            </motion.div>
+
+                            <motion.div className = {styles.stat} variants = {itemVariants}>
+                                <span className = {styles.statNumber}>{isLoading ? '--' : formatCount(totalStars)}</span>
+                                <span className = {styles.statCaption}>Stars</span>
+                            </motion.div>
+
+                            <motion.div className = {styles.stat} variants = {itemVariants}>
+                                <span className = {styles.statNumber}>{isLoading ? '--' : formatCount(totalForks)}</span>
+                                <span className = {styles.statCaption}>Forks</span>
+                            </motion.div>
+                        </motion.div>
+
+                        {/* Project list */}
+                        {!showEmpty && (
+                            <div className = {styles.group}>
+                                <span className = {styles.groupLabel}>All projects</span>
+
+                                <div className = {styles.listWrap}>
+                                    <motion.div
+                                        ref = {listRef}
+                                        className = {styles.list}
+                                        variants = {listVariants}
+                                        {...reveal}
+                                    >
+
+                                        {isLoading && [0, 1, 2].map((index) => (
+                                            <div key = {index} className = {styles.skeletonItem} aria-hidden = "true" />
+                                        ))}
+
+                                        {!isLoading && projects.map((project) => {
+                                            const isSelected = project.name === selected.name
 
                                             return (
-                                                <button
+                                                <motion.button
                                                     key = {project.name}
                                                     type = "button"
-                                                    className = {styles.segment}
-                                                    onClick = {() => goTo(index)}
-                                                    aria-label = {`Show ${project.name}`}
+                                                    className = {`${styles.listItem} ${isSelected ? styles.listItemActive : ''}`}
+                                                    onClick = {() => setSelectedName(project.name)}
+                                                    aria-current = {isSelected ? 'true' : undefined}
+                                                    variants = {itemVariants}
+                                                    whileTap = {{ scale: 0.985 }}
                                                 >
-                                                    <span className = {styles.segmentTrack}>
-                                                        <span
-                                                            key = {`${isRunning ? 'running' : 'idle'}-${project.name}`}
-                                                            className = {`${styles.segmentFill} ${isDone ? styles.segmentDone : ''} ${isRunning ? styles.segmentRunning : ''}`}
-                                                            onAnimationEnd = {isRunning ? () => goTo(index + 1) : undefined}
-                                                        />
+                                                    <img src = {project.image} alt = "" className = {styles.thumb} />
+
+                                                    <span className = {styles.listText}>
+                                                        <span className = {styles.listName}>{project.name}</span>
+                                                        <span className = {styles.listMeta}>
+                                                            {project.languages.slice(0, 3).join(' · ') || 'Repository'}
+                                                        </span>
                                                     </span>
-                                                </button>
+
+                                                    <ChevronRight size = {14} className = {styles.listArrow} />
+                                                </motion.button>
                                             )
                                         })}
-                                    </div>
 
-                                    <div className = {styles.arrows}>
-                                        <button type = "button" className = {styles.arrow} onClick = {() => goTo(activeIndex - 1)} aria-label = "Previous project">
-                                            <ChevronLeft size = {16} />
-                                        </button>
-
-                                        <button type = "button" className = {styles.arrow} onClick = {() => goTo(activeIndex + 1)} aria-label = "Next project">
-                                            <ChevronRight size = {16} />
-                                        </button>
-                                    </div>
+                                    </motion.div>
                                 </div>
-                            )}
+                            </div>
+                        )}
 
-                            {/* Info */}
-                            <div className = {styles.detailInfo}>
-                                <div className = {styles.detailHeader}>
-                                    <h3 className = {styles.detailName}>{selected.name}</h3>
-                                    <span className = {styles.updated}>Updated {formatDate(selected.updated)}</span>
+                        {/* GitHub profile */}
+                        <div className = {styles.footer}>
+                            <GithubBtn className = {styles.profileLink} />
+                        </div>
+
+                    </motion.div>
+
+                    {/* Detail Card */}
+                    <motion.div
+                        className = {`${styles.card} ${styles.detailCard}`}
+                        variants = {cardVariants}
+                        custom = {1}
+                        {...reveal}
+                    >
+
+                        {isLoading && <div className = {styles.skeletonDetail} aria-hidden = "true" />}
+
+                        {showEmpty && (
+                            <motion.div
+                                className = {styles.messageBox}
+                                variants = {itemVariants}
+                                {...reveal}
+                            >
+                                <p className = {styles.message}>
+                                    {hasError
+                                        ? 'Couldn\'t load projects from GitHub right now. Try again later, or browse them directly.'
+                                        : 'No projects to show yet. Check back soon.'}
+                                </p>
+
+                                <a
+                                    href = {`https://github.com/${GITHUB_USERNAME}`}
+                                    target = "_blank"
+                                    rel = "noreferrer"
+                                    className = {styles.linkButton}
+                                >
+                                    Open GitHub profile
+                                    <ArrowUpRight size = {14} />
+                                </a>
+                            </motion.div>
+                        )}
+
+                        {!isLoading && selected && (
+                            <div key = {selected.name} className = {styles.detail}>
+
+                                {/* Preview */}
+                                <div className = {styles.stage}>
+                                    <img src = {selected.image} alt = "" aria-hidden = "true" className = {styles.stageBackdrop} />
+                                    <img src = {selected.image} alt = {selected.name} className = {styles.stageImage} />
+
+                                    {canSlide && (
+                                        <span className = {styles.counter}>
+                                            {formatCount(activeIndex + 1)} / {formatCount(projects.length)}
+                                        </span>
+                                    )}
                                 </div>
 
-                                <p className = {styles.detailDescription}>{selected.description}</p>
+                                {/* Slideshow controls — untouched */}
+                                {canSlide && (
+                                    <div className = {styles.controls} style = {{ '--slide-duration': `${SLIDE_INTERVAL}ms` }}>
+                                        <div className = {styles.segments}>
+                                            {projects.map((project, index) => {
+                                                const isActive = index === activeIndex
+                                                const isRunning = isActive && isAutoplay
+                                                const isDone = index < activeIndex || (isActive && !isAutoplay)
 
-                                {selected.languages.length > 0 && (
-                                    <div className = {styles.languageTags}>
-                                        {selected.languages.map((lang) => (
-                                            <span key = {lang} className = {styles.languageTag}>{lang}</span>
-                                        ))}
+                                                return (
+                                                    <button
+                                                        key = {project.name}
+                                                        type = "button"
+                                                        className = {styles.segment}
+                                                        onClick = {() => goTo(index)}
+                                                        aria-label = {`Show ${project.name}`}
+                                                    >
+                                                        <span className = {styles.segmentTrack}>
+                                                            <span
+                                                                key = {`${isRunning ? 'running' : 'idle'}-${project.name}`}
+                                                                className = {`${styles.segmentFill} ${isDone ? styles.segmentDone : ''} ${isRunning ? styles.segmentRunning : ''}`}
+                                                                onAnimationEnd = {isRunning ? () => goTo(index + 1) : undefined}
+                                                            />
+                                                        </span>
+                                                    </button>
+                                                )
+                                            })}
+                                        </div>
+
+                                        <div className = {styles.arrows}>
+                                            <button type = "button" className = {styles.arrow} onClick = {() => goTo(activeIndex - 1)} aria-label = "Previous project">
+                                                <ChevronLeft size = {16} />
+                                            </button>
+
+                                            <button type = "button" className = {styles.arrow} onClick = {() => goTo(activeIndex + 1)} aria-label = "Next project">
+                                                <ChevronRight size = {16} />
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
-                            </div>
 
-                            <div className = {styles.detailMeta}>
-                                <div className = {styles.metaStats}>
-                                    <span className = {styles.metaItem}>
-                                        <Star size = {14} />
-                                        {selected.stars}
-                                    </span>
-                                    <span className = {styles.metaItem}>
-                                        <GitFork size = {14} />
-                                        {selected.forks}
-                                    </span>
-                                </div>
+                                {/* Info */}
+                                <div className = {styles.detailInfo}>
+                                    <div className = {styles.detailHeader}>
+                                        <h3 className = {styles.detailName}>{selected.name}</h3>
+                                        <span className = {styles.updated}>Updated {formatDate(selected.updated)}</span>
+                                    </div>
 
-                                <div className = {styles.actions}>
-                                    {selected.homepage && (
-                                        <a href = {selected.homepage} target = "_blank" rel = "noreferrer" className = {styles.linkButton}>
-                                            <Globe size = {14} />
-                                            Live
-                                        </a>
+                                    <p className = {styles.detailDescription}>{selected.description}</p>
+
+                                    {selected.languages.length > 0 && (
+                                        <div className = {styles.languageTags}>
+                                            {selected.languages.map((lang) => (
+                                                <span key = {lang} className = {styles.languageTag}>{lang}</span>
+                                            ))}
+                                        </div>
                                     )}
-
-                                    <a href = {selected.url} target = "_blank" rel = "noreferrer" className = {styles.linkButton}>
-                                        Code
-                                        <ArrowUpRight size = {14} />
-                                    </a>
                                 </div>
-                            </div>
 
-                        </div>
-                    )}
+                                <div className = {styles.detailMeta}>
+                                    <div className = {styles.metaStats}>
+                                        <span className = {styles.metaItem}>
+                                            <Star size = {14} />
+                                            {selected.stars}
+                                        </span>
+                                        <span className = {styles.metaItem}>
+                                            <GitFork size = {14} />
+                                            {selected.forks}
+                                        </span>
+                                    </div>
+
+                                    <div className = {styles.actions}>
+                                        {selected.homepage && (
+                                            <a href = {selected.homepage} target = "_blank" rel = "noreferrer" className = {styles.linkButton}>
+                                                <Globe size = {14} />
+                                                Live
+                                            </a>
+                                        )}
+
+                                        <a href = {selected.url} target = "_blank" rel = "noreferrer" className = {styles.linkButton}>
+                                            Code
+                                            <ArrowUpRight size = {14} />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        )}
+
+                    </motion.div>
 
                 </div>
-
-            </div>
-        </section>
+            </section>
+        </MotionConfig>
     )
 }

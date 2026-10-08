@@ -1,6 +1,7 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { Terminal } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
+import { motion, MotionConfig } from 'motion/react'
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
 import styles from './Lab.module.css'
@@ -83,6 +84,46 @@ function OutputLine({ line }) {
     }
 
     return null
+}
+
+// MOTION VARIANTS ---------------------------------------------------------------------------------------------------------------------------------|
+const ease = [0.22, 1, 0.36, 1]
+const hoverSpring = { type: 'spring', stiffness: 400, damping: 18 }
+
+const viewport = { once: true, amount: 0.15, margin: '0px 0px -10% 0px' }
+const reveal = { initial: 'hidden', whileInView: 'visible', viewport }
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 28 },
+    visible: (order = 0) => ({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.65, ease, delay: order * 0.1 }
+    })
+}
+
+const listVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.06, delayChildren: 0.2 } }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+}
+
+const chipVariants = {
+    hidden: { opacity: 0, scale: 0.92, y: 6 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        transition: {
+            opacity: { duration: 0.3, ease },
+            default: { type: 'spring', stiffness: 320, damping: 26 }
+        }
+    },
+    hover: { y: -2, transition: hoverSpring }
 }
 
 // LAB SECTION -------------------------------------------------------------------------------------------------------------------------------------|
@@ -243,133 +284,171 @@ export default function LabSection() {
     }
 
     return (
-        <section id = "lab" className = {styles.section}>
-            <div className = {styles.grid}>
+        <MotionConfig reducedMotion = "user">
+            <section id = "lab" className = {styles.section}>
+                <div className = {styles.grid}>
 
-                {/* Info Card */}
-                <div className = {`${styles.card} ${styles.infoCard}`}>
+                    {/* Info Card */}
+                    <motion.div
+                        className = {`${styles.card} ${styles.infoCard}`}
+                        variants = {cardVariants}
+                        custom = {0}
+                        {...reveal}
+                    >
 
-                    <div className = {styles.infoHeader}>
-                        <div className = {styles.titleRow}>
-                            <span className = {styles.titleIcon}><Terminal size = {18} /></span>
-                            <h2 className = {styles.title}>Lab</h2>
-                        </div>
-
-                        <p className = {styles.subtitle}>A playground for experiments and ideas that don't fit anywhere else.</p>
-                    </div>
-
-                    <div className = {styles.divider} />
-
-                    {/* Session stats */}
-                    <div className = {styles.stats}>
-                        <div className = {styles.stat}>
-                            <span className = {styles.statNumber}>{visibleCommands.length}</span>
-                            <span className = {styles.statCaption}>Commands</span>
-                        </div>
-
-                        <div className = {styles.stat}>
-                            <span className = {styles.statNumber}>{String(ranCount).padStart(2, '0')}</span>
-                            <span className = {styles.statCaption}>Ran</span>
-                        </div>
-
-                        <div className = {styles.stat}>
-                            <span className = {styles.statNumber}><Uptime /></span>
-                            <span className = {styles.statCaption}>
-                                <span className = {styles.pulseDot} />
-                                Uptime
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Quick commands */}
-                    <div className = {styles.group}>
-                        <span className = {styles.groupLabel}>Try a command</span>
-
-                        <div className = {styles.chipGrid}>
-                            {visibleCommands.map((command) => (
-                                <button
-                                    key = {command.name}
-                                    type = "button"
-                                    className = {styles.chip}
-                                    onClick = {() => handleChip(command.name)}
-                                >
-                                    {command.name}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Keyboard shortcuts */}
-                    <div className = {styles.shortcuts}>
-                        {SHORTCUTS.map((shortcut) => (
-                            <span key = {shortcut.label} className = {styles.shortcut}>
-                                <span className = {styles.keys}>
-                                    {shortcut.keys.map((key) => (
-                                        <kbd key = {key} className = {styles.key}>{key}</kbd>
-                                    ))}
-                                </span>
-                                <span className = {styles.shortcutLabel}>{shortcut.label}</span>
-                            </span>
-                        ))}
-                    </div>
-
-                </div>
-
-                {/* Terminal Card */}
-                <div ref = {terminalRef} className = {styles.terminalCard}>
-                    <div className = {styles.terminal}>
-
-                        <div className = {styles.titleBar}>
-                            <div className = {styles.dots} aria-hidden = "true">
-                                <span className = {styles.dot} />
-                                <span className = {styles.dot} />
-                                <span className = {styles.dot} />
+                        <div className = {styles.infoHeader}>
+                            <div className = {styles.titleRow}>
+                                <span className = {styles.titleIcon}><Terminal size = {18} /></span>
+                                <h2 className = {styles.title}>Lab</h2>
                             </div>
 
-                            <span className = {styles.titleText}>{terminalConfig.title}</span>
-                            <span className = {styles.shell}>{terminalConfig.shell}</span>
+                            <p className = {styles.subtitle}>A playground for experiments and ideas that don't fit anywhere else.</p>
                         </div>
 
-                        <div ref = {bodyRef} className = {styles.body} onClick = {focusInput} role = "log">
-                            {entries.map((entry) => (
-                                <div key = {entry.id} className = {styles.entry}>
-                                    {entry.command !== null && (
-                                        <p className = {styles.line}>
-                                            <span className = {styles.prompt}>{terminalConfig.prompt}</span>
-                                            <span className = {styles.command}>{entry.command}</span>
-                                        </p>
-                                    )}
+                        <div className = {styles.divider} />
 
-                                    {entry.lines.map((line, index) => (
-                                        <OutputLine key = {index} line = {line} />
-                                    ))}
-                                </div>
+                        {/* Session stats */}
+                        <motion.div
+                            className = {styles.stats}
+                            variants = {listVariants}
+                            {...reveal}
+                        >
+                            <motion.div className = {styles.stat} variants = {itemVariants}>
+                                <span className = {styles.statNumber}>{visibleCommands.length}</span>
+                                <span className = {styles.statCaption}>Commands</span>
+                            </motion.div>
+
+                            <motion.div className = {styles.stat} variants = {itemVariants}>
+                                <span className = {styles.statNumber}>{String(ranCount).padStart(2, '0')}</span>
+                                <span className = {styles.statCaption}>Ran</span>
+                            </motion.div>
+
+                            <motion.div className = {styles.stat} variants = {itemVariants}>
+                                <span className = {styles.statNumber}><Uptime /></span>
+                                <span className = {styles.statCaption}>
+                                    <span className = {styles.pulseDot} />
+                                    Uptime
+                                </span>
+                            </motion.div>
+                        </motion.div>
+
+                        {/* Quick commands */}
+                        <div className = {styles.group}>
+                            <span className = {styles.groupLabel}>Try a command</span>
+
+                            <motion.div
+                                className = {styles.chipGrid}
+                                variants = {listVariants}
+                                {...reveal}
+                            >
+                                {visibleCommands.map((command) => (
+                                    <motion.button
+                                        key = {command.name}
+                                        type = "button"
+                                        className = {styles.chip}
+                                        onClick = {() => handleChip(command.name)}
+                                        variants = {chipVariants}
+                                        whileHover = "hover"
+                                        whileTap = {{ scale: 0.97 }}
+                                    >
+                                        {command.name}
+                                    </motion.button>
+                                ))}
+                            </motion.div>
+                        </div>
+
+                        {/* Keyboard shortcuts */}
+                        <motion.div
+                            className = {styles.shortcuts}
+                            variants = {listVariants}
+                            {...reveal}
+                        >
+                            {SHORTCUTS.map((shortcut) => (
+                                <motion.span
+                                    key = {shortcut.label}
+                                    className = {styles.shortcut}
+                                    variants = {itemVariants}
+                                >
+                                    <span className = {styles.keys}>
+                                        {shortcut.keys.map((key) => (
+                                            <kbd key = {key} className = {styles.key}>{key}</kbd>
+                                        ))}
+                                    </span>
+                                    <span className = {styles.shortcutLabel}>{shortcut.label}</span>
+                                </motion.span>
                             ))}
+                        </motion.div>
 
-                            <form className = {styles.inputLine} onSubmit = {handleSubmit}>
-                                <span className = {styles.prompt}>{terminalConfig.prompt}</span>
-                                <input
-                                    ref = {inputRef}
-                                    type = "text"
-                                    className = {styles.input}
-                                    value = {input}
-                                    onChange = {handleChange}
-                                    onKeyDown = {handleKeyDown}
-                                    placeholder = {ranCount === 0 ? terminalConfig.placeholder : ''}
-                                    aria-label = "Terminal input"
-                                    enterKeyHint = "send"
-                                    spellCheck = {false}
-                                    autoComplete = "off"
-                                    autoCorrect = "off"
-                                    autoCapitalize = "off"
-                                />
-                            </form>
+                    </motion.div>
+
+                    {/* Terminal Card */}
+                    <motion.div
+                        ref = {terminalRef}
+                        className = {styles.terminalCard}
+                        variants = {cardVariants}
+                        custom = {1}
+                        {...reveal}
+                    >
+                        <div className = {styles.terminal}>
+
+                            <div className = {styles.titleBar}>
+                                <div className = {styles.dots} aria-hidden = "true">
+                                    <span className = {styles.dot} />
+                                    <span className = {styles.dot} />
+                                    <span className = {styles.dot} />
+                                </div>
+
+                                <span className = {styles.titleText}>{terminalConfig.title}</span>
+                                <span className = {styles.shell}>{terminalConfig.shell}</span>
+                            </div>
+
+                            <div ref = {bodyRef} className = {styles.body} onClick = {focusInput} role = "log">
+                                {entries.map((entry) => (
+                                    <motion.div
+                                        key = {entry.id}
+                                        className = {styles.entry}
+                                        initial = {entry.id === 0 ? false : { opacity: 0, y: 4 }}
+                                        animate = {{ opacity: 1, y: 0 }}
+                                        transition = {{ duration: 0.2, ease }}
+                                    >
+                                        {entry.command !== null && (
+                                            <p className = {styles.line}>
+                                                <span className = {styles.prompt}>{terminalConfig.prompt}</span>
+                                                <span className = {styles.command}>{entry.command}</span>
+                                            </p>
+                                        )}
+
+                                        {entry.lines.map((line, index) => (
+                                            <OutputLine key = {index} line = {line} />
+                                        ))}
+                                    </motion.div>
+                                ))}
+
+                                <form className = {styles.inputLine} onSubmit = {handleSubmit}>
+                                    <span className = {styles.prompt}>{terminalConfig.prompt}</span>
+                                    <input
+                                        ref = {inputRef}
+                                        type = "text"
+                                        className = {styles.input}
+                                        value = {input}
+                                        onChange = {handleChange}
+                                        onKeyDown = {handleKeyDown}
+                                        placeholder = {ranCount === 0 ? terminalConfig.placeholder : ''}
+                                        aria-label = "Terminal input"
+                                        enterKeyHint = "send"
+                                        spellCheck = {false}
+                                        autoComplete = "off"
+                                        autoCorrect = "off"
+                                        autoCapitalize = "off"
+                                    />
+                                </form>
+                            </div>
+
                         </div>
+                    </motion.div>
 
-                    </div>
                 </div>
-
-            </div>
-        </section>
+            </section>
+        </MotionConfig>
     )
 }
