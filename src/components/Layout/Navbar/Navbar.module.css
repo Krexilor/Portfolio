@@ -1,0 +1,269 @@
+/* NAVBAR CONTAINER ------------------------------------------------------------------------------------------------------------------------------ */
+.navbar {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    max-width: var(--container-width);
+    margin-inline: auto;
+    height: calc(var(--header-height) * 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--space-4);
+
+    /* Fallbacks if CSS variables fail on build */
+    background-color: #1b241c;
+    background-color: rgba(27, 36, 28, 0.78);
+    background-color: color-mix(in srgb, var(--color-surface, #1b241c) 78%, transparent);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border: 1px solid #30372F;
+    border: var(--border-width) solid color-mix(in srgb, var(--color-border, #30372F) 60%, transparent);
+
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+
+    z-index: var(--z-sticky);
+
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* DIVIDER --------------------------------------------------------------------------------------------------------------------------------------- */
+.divider {
+    --divider-height: 2rem;
+    --divider-width: 2px;
+
+    width: var(--divider-width);
+    height: var(--divider-height);
+    background-color: var(--color-border-strong);
+}
+
+/* NAVBAR LOGO ----------------------------------------------------------------------------------------------------------------------------------- */
+.brandContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.brandLogo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.brandLogo:hover {
+    color: var(--color-text);
+}
+
+.brandWordmark {
+    width: 118px;
+    height: 24px;
+    overflow: visible;
+}
+
+/* NAVIGATION LINKS ------------------------------------------------------------------------------------------------------------------------------ */
+.navLinks {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+}
+
+.navLink {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    font-size: calc(var(--font-size-base) * 1.03);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    padding: var(--space-1) 1.25rem;
+    transition: color var(--transition-base);
+}
+
+.navLink:hover {
+    color: var(--color-text-secondary);
+}
+
+.navLabel {
+    position: relative;
+    padding-block: var(--space-1);
+}
+
+.navLabel::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transition: width var(--transition-base);
+    border-radius: var(--radius-full);
+}
+
+/* ACTIONS --------------------------------------------------------------------------------------------------------------------------------------- */
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+/* HAMBURGER BUTTON ------------------------------------------------------------------------------------------------------------------------------ */
+.hamburgerBtn {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    cursor: pointer;
+    background-color: color-mix(in srgb, var(--color-surface) 78%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: var(--border-width) solid color-mix(in srgb, var(--color-border) 60%, transparent);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    z-index: var(--z-sticky);
+    transition: border-color var(--transition-base), background-color var(--transition-base);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hamburgerBtn:active {
+    transform: scale(0.95);
+}
+
+.hamburgerBtn:focus {
+    outline: none;
+}
+
+.hamburgerBtn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.hamburgerLine {
+    width: 20px;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: var(--radius-full);
+    transition: background-color var(--transition-fast);
+}
+
+/* MOBILE MENU CONTAINER & DROPDOWN -------------------------------------------------------------------------------------------------------------- */
+.mobileMenuWrapper {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+}
+
+.mobileMenu {
+    display: none;
+    background-color: rgba(27, 36, 28, 0.96);
+    background-color: color-mix(in srgb, var(--color-surface, #1b241c) 96%, transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid #30372F;
+    border: var(--border-width) solid color-mix(in srgb, var(--color-border, #30372F) 80%, transparent);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+    flex-direction: column;
+
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobileNavLinks {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.mobileNavLink {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    padding: 0.75rem var(--space-3);
+    border-radius: var(--radius-md);
+    transition: color var(--transition-base), background-color var(--transition-base);
+}
+
+.mobileNavLink:hover {
+    color: var(--color-text-secondary);
+}
+
+/* HOVER INTERACTIONS (MOUSE ONLY) --------------------------------------------------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+    .brandLogo:hover {
+        color: var(--color-text);
+    }
+
+    .navLink:hover {
+        color: var(--color-text);
+    }
+
+    .navLink:hover .navLabel::after {
+        width: 100%;
+    }
+
+    .hamburgerBtn:hover {
+        border-color: var(--color-border-strong);
+    }
+
+    .hamburgerBtn:hover .hamburgerLine {
+        background-color: var(--color-accent);
+    }
+
+    .mobileNavLink:hover {
+        color: var(--color-accent);
+        background-color: color-mix(in srgb, var(--color-surface-raised, #222D23) 60%, transparent);
+    }
+}
+
+/* RESPONSIVE BREAKPOINT ------------------------------------------------------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+    .navbar {
+        top: 0.75rem;
+        padding-inline: 0;
+        background: none;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        pointer-events: none;
+    }
+
+    .hamburgerBtn,
+    .actions,
+    .mobileMenuWrapper {
+        pointer-events: auto;
+    }
+
+    .brandContainer,
+    .navLinks {
+        display: none;
+    }
+
+    .hamburgerBtn {
+        display: flex;
+    }
+
+    .mobileMenuWrapper {
+        top: calc(100% + 0.5rem);
+    }
+
+    .mobileMenu {
+        display: flex;
+    }
+}
