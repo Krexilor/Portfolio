@@ -1,0 +1,61 @@
+/* RESUME BUTTON --------------------------------------------------------------------------------------------------------------------------------- */
+.resumeBtn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border);
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.resumeBtn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.resumeBtn:hover {
+    color: var(--color-text);
+}
+
+/* HOVER INTERACTIONS (MOUSE ONLY) --------------------------------------------------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+    .resumeBtn:hover {
+        color: var(--color-bg);
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .resumeBtn:hover::before {
+        transform: scaleX(1);
+    }
+}
+
+/* RESPONSIVE BREAKPOINT ------------------------------------------------------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+    .resumeBtn {
+        height: 46px;
+        background-color: color-mix(in srgb, var(--color-surface) 78%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: var(--border-width) solid color-mix(in srgb, var(--color-border) 60%, transparent);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+    }
+}
