@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router"
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
+import AppLayout from "./components/Layout/AppLayout.jsx"
 import Cursor from "./components/Common/Cursor/Cursor.jsx"
 
 // PAGES -------------------------------------------------------------------------------------------------------------------------------------------|
@@ -15,10 +16,12 @@ export default function App() {
         <>
             <Cursor />
             <Routes>
-                <Route path = "/" element = {<Home />} />
-                <Route path = "/resume" element = {<Resume />} />
+                <Route element = {<AppLayout />}>
+                    <Route path = "/" element = {<Home />} />
+                    <Route path = "/resume" element = {<Resume />} />
 
-                <Route path = "*" element = {<NotFound />} />
+                    <Route path = "*" element = {<NotFound />} />
+                </Route>
             </Routes>
         </>
     )

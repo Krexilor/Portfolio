@@ -82,7 +82,7 @@
     font-size: calc(var(--font-size-base) * 1.03);
     font-weight: var(--font-weight-semibold);
     text-decoration: none;
-    padding: var(--space-1) 1.25rem;
+    padding: var(--space-1) clamp(0.6rem, 1.6vw, 1.25rem);
     transition: color var(--transition-base);
 }
 
@@ -179,6 +179,7 @@
     flex-direction: column;
 
     max-height: calc(100vh - 7rem);
+    max-height: calc(100dvh - 7rem);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }

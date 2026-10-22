@@ -1,9 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 
 
-// COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
-import Navbar from "../../components/Layout/Navbar/Navbar.jsx"
-
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
 import styles from "./Home.module.css"
 
@@ -11,8 +8,6 @@ import styles from "./Home.module.css"
 export default function Home() {
     return (
         <div className = {styles.pageWrapper}>
-            <Navbar />
-
             <main className = {styles.main}>
                 {/* Page content */}
             </main>

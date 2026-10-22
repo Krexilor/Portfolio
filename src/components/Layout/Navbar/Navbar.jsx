@@ -1,6 +1,10 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "motion/react"
+import { useNavigate, useLocation } from "react-router"
+
+// CONSTANTS ---------------------------------------------------------------------------------------------------------------------------------------|
+const DESKTOP_QUERY = "(min-width: 861px)"
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import { ResumeBtn } from "../../Common/Buttons/Buttons.jsx"
@@ -13,13 +17,13 @@ import styles from "./Navbar.module.css"
 
 // NAVBAR DATA -------------------------------------------------------------------------------------------------------------------------------------|
 const navItems = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#work", label: "Work" },
-    { href: "#stack", label: "Stack" },
-    { href: "#explore", label: "Explore" },
-    { href: "#notes", label: "Notes" },
-    { href: "#contact", label: "Contact" }
+    { hash: "#home", label: "Home" },
+    { hash: "#about", label: "About" },
+    { hash: "#work", label: "Work" },
+    { hash: "#stack", label: "Stack" },
+    { hash: "#explore", label: "Explore" },
+    { hash: "#notes", label: "Notes" },
+    { hash: "#contact", label: "Contact" }
 ]
 
 // WORDMARK DATA -----------------------------------------------------------------------------------------------------------------------------------|
@@ -60,14 +64,38 @@ const strokeVariants = {
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const navRef = useRef(null)
+    const menuBtnRef = useRef(null)
     const canHover = useHoverCapable()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const toggleMenu = (e) => {
-        e.stopPropagation()
-        setIsOpen((prev) => !prev)
+    const toggleMenu = () => setIsOpen((prev) => !prev)
+
+    const handleNavClick = (event, hash) => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+
+        event.preventDefault()
+        navigate({ pathname: "/", hash })
     }
 
     useEffect(() => {
+        setIsOpen(false)
+    }, [location.key])
+
+    useEffect(() => {
+        const query = window.matchMedia(DESKTOP_QUERY)
+        const handleChange = (event) => {
+            if (event.matches) setIsOpen(false)
+        }
+
+        query.addEventListener("change", handleChange)
+
+        return () => query.removeEventListener("change", handleChange)
+    }, [])
+
+    useEffect(() => {
+        if (!isOpen) return
+
         const handleClickOutside = (event) => {
             if (navRef.current && !navRef.current.contains(event.target)) {
                 setIsOpen(false)
@@ -75,14 +103,15 @@ export default function Navbar() {
         }
 
         const handleKeyDown = (event) => {
-            if (event.key === "Escape") setIsOpen(false)
+            if (event.key !== "Escape") return
+
+            setIsOpen(false)
+            menuBtnRef.current?.focus()
         }
 
-        if (isOpen) {
-            document.addEventListener("mousedown", handleClickOutside)
-            document.addEventListener("touchstart", handleClickOutside)
-            document.addEventListener("keydown", handleKeyDown)
-        }
+        document.addEventListener("mousedown", handleClickOutside)
+        document.addEventListener("touchstart", handleClickOutside)
+        document.addEventListener("keydown", handleKeyDown)
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
@@ -103,7 +132,8 @@ export default function Navbar() {
             {/* Navbar Logo (Desktop Only) */}
             <div className = {styles.brandContainer}>
                 <motion.a
-                    href = "#home"
+                    href = "/#home"
+                    onClick = {(event) => handleNavClick(event, "#home")}
                     className = {styles.brandLogo}
                     aria-label = "Krexilor Home"
                     variants = {logoVariants}
@@ -143,11 +173,12 @@ export default function Navbar() {
 
             {/* Hamburger Toggle Button (Mobile/Tablet Left) */}
             <button
+                ref = {menuBtnRef}
                 className = {styles.hamburgerBtn}
                 onClick = {toggleMenu}
                 aria-label = "Toggle Navigation Menu"
                 aria-expanded = {isOpen}
-                aria-controls = "mobile-menu"
+                aria-controls = {isOpen ? "mobile-menu" : undefined}
             >
                 <motion.span
                     animate = {{ rotate: isOpen ? 45 : 0, y: isOpen ? 8 : 0 }}
@@ -167,8 +198,9 @@ export default function Navbar() {
             <nav className = {styles.navLinks} aria-label = "Main Navigation">
                 {navItems.map((item) => (
                     <motion.a
-                        key = {item.href}
-                        href = {item.href}
+                        key = {item.hash}
+                        href = {`/${item.hash}`}
+                        onClick = {(event) => handleNavClick(event, item.hash)}
                         className = {styles.navLink}
                         whileHover = {canHover ? { y: -1 } : undefined}
                         whileTap = {canHover ? { scale: 0.96 } : undefined}
@@ -197,17 +229,17 @@ export default function Navbar() {
                             transition = {{ duration: 0.2, ease: "easeOut" }}
                         >
                             <nav className = {styles.mobileNavLinks} aria-label = "Mobile Navigation">
-                                {navItems.map((item, index) => (
+                                {navItems.map((item) => (
                                     <motion.a
-                                        key = {item.href}
-                                        href = {item.href}
-                                        className = {styles.mobileNavLink}
-                                        onClick = {() => setIsOpen(false)}
-                                        initial = {{ opacity: 0, x: -8 }}
-                                        animate = {{ opacity: 1, x: 0 }}
-                                        transition = {{ delay: 0.05 + index * 0.03, duration: 0.25 }}
+                                        key = {item.hash}
+                                        href = {`/${item.hash}`}
+                                        onClick = {(event) => handleNavClick(event, item.hash)}
+                                        className = {styles.navLink}
+                                        whileHover = {canHover ? { y: -1 } : undefined}
+                                        whileTap = {canHover ? { scale: 0.96 } : undefined}
+                                        transition = {{ type: "spring", stiffness: 400, damping: 25 }}
                                     >
-                                        {item.label}
+                                        <span className = {styles.navLabel}>{item.label}</span>
                                     </motion.a>
                                 ))}
                             </nav>
