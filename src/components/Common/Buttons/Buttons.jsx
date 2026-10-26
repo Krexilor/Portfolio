@@ -2,6 +2,9 @@
 import { Link } from "react-router"
 import { motion } from "motion/react"
 
+// COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
+import { ArrowUp } from "../Icons/Icons.jsx"
+
 // HOOKS -------------------------------------------------------------------------------------------------------------------------------------------|
 import useHoverCapable from "../../../hooks/useHoverCapable.js"
 
@@ -47,20 +50,7 @@ export function BackToTopBtn({ className = "", label = "Back to top" }) {
             transition = {{ type: "spring", stiffness: 400, damping: 20 }}
         >
             {label}
-            <svg
-                className = {styles.backToTopArrow}
-                viewBox = "0 0 16 16"
-                width = "12"
-                height = "12"
-                fill = "none"
-                stroke = "currentColor"
-                strokeWidth = "1.6"
-                strokeLinecap = "round"
-                strokeLinejoin = "round"
-                aria-hidden = "true"
-            >
-                <path d = "M8 13V3M3.5 7.5L8 3L12.5 7.5" />
-            </svg>
+            <ArrowUp className = {styles.backToTopArrow} />
         </motion.button>
     )
 }
