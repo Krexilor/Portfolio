@@ -19,9 +19,9 @@ export default function App() {
                 <Route element = {<AppLayout />}>
                     <Route path = "/" element = {<Landing />} />
                     <Route path = "/resume" element = {<Resume />} />
-
-                    <Route path = "*" element = {<NotFound />} />
                 </Route>
+
+                <Route path = "*" element = {<NotFound />} />
             </Routes>
         </>
     )
