@@ -10,7 +10,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+    scroll-padding-top: 0;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
 }
@@ -164,6 +164,38 @@ body {
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height-body);
+}
+
+/* SCROLLBAR ------------------------------------------------------------------------------------------------------------------------------------- */
+:root {
+    scrollbar-color: var(--color-border-strong) var(--color-bg);
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-strong);
+    border: 2px solid var(--color-bg);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-accent);
+}
+
+:root[data-scrollbar="off"] {
+    scrollbar-width: none;
+}
+
+:root[data-scrollbar="off"]::-webkit-scrollbar {
+    display: none;
 }
 
 /* TYPOGRAPHY ------------------------------------------------------------------------------------------------------------------------------------ */

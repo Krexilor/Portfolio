@@ -6,5 +6,9 @@ import styles from "./Resume.module.css"
 
 // RESUME PAGE -------------------------------------------------------------------------------------------------------------------------------------|
 export default function Resume() {
-    
+    return (
+        <div className = {styles.pageWrapper}>
+            <h1 className = {styles.title}>Resume Page</h1>
+        </div>
+    )
 }

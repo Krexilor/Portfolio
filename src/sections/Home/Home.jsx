@@ -4,13 +4,11 @@
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
 import styles from "./Home.module.css"
 
-// HOME PAGE ---------------------------------------------------------------------------------------------------------------------------------------|
+// HOME SECTION ------------------------------------------------------------------------------------------------------------------------------------|
 export default function Home() {
     return (
-        <div className = {styles.pageWrapper}>
-            <main className = {styles.main}>
-                {/* Page content */}
-            </main>
+        <div id = "home" className = {styles.sectionContainer}>
+            <h1 className = {styles.title}>Home Section</h1>
         </div>
     )
 }
