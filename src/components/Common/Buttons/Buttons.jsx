@@ -17,7 +17,7 @@ export function ResumeBtn({ className = "" }) {
     return (
         <motion.div
             whileHover = {canHover ? { y: -2 } : undefined}
-            whileTap = {canHover ? { scale: 0.97 } : undefined}
+            whileTap = {{ scale: 0.97 }}
             transition = {{ type: "spring", stiffness: 400, damping: 20 }}
             style = {{ display: "inline-block" }}
         >
