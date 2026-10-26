@@ -8,6 +8,7 @@ import { ResumeBtn } from "../../Common/Buttons/Buttons.jsx"
 
 // DATA --------------------------------------------------------------------------------------------------------------------------------------------|
 import { wordmark } from "../../../data/wordmark.js"
+import { sectionLinks as navItems } from "../../../data/navigation.js"
 
 // HOOKS -------------------------------------------------------------------------------------------------------------------------------------------|
 import useHoverCapable from "../../../hooks/useHoverCapable.js"
@@ -17,17 +18,6 @@ import styles from "./Navbar.module.css"
 
 // CONSTANTS ---------------------------------------------------------------------------------------------------------------------------------------|
 const DESKTOP_QUERY = "(min-width: 861px)"
-
-// NAVBAR DATA -------------------------------------------------------------------------------------------------------------------------------------|
-const navItems = [
-    { hash: "#home", label: "Home" },
-    { hash: "#about", label: "About" },
-    { hash: "#work", label: "Work" },
-    { hash: "#stack", label: "Stack" },
-    { hash: "#explore", label: "Explore" },
-    { hash: "#notes", label: "Notes" },
-    { hash: "#contact", label: "Contact" }
-]
 
 // ANIMATION VARIANTS ------------------------------------------------------------------------------------------------------------------------------|
 const logoVariants = {
