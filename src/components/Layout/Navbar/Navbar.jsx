@@ -1,7 +1,7 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "motion/react"
 import { useNavigate, useLocation } from "react-router"
+import { motion, AnimatePresence,useReducedMotion } from "motion/react"
 
 // CONSTANTS ---------------------------------------------------------------------------------------------------------------------------------------|
 const DESKTOP_QUERY = "(min-width: 861px)"
@@ -60,6 +60,58 @@ const strokeVariants = {
     visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
 }
 
+
+const mobileMenuVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.04,
+            delayChildren: 0
+        }
+    },
+    exit: {
+        transition: {
+            staggerChildren: 0.025,
+            staggerDirection: -1
+        }
+    }
+}
+
+const mobileLinkVariants = {
+    hidden: { opacity: 0, y: 12, scale: 0.97 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+            type: "spring",
+            stiffness: 420,
+            damping: 28
+        }
+    },
+    exit: {
+        opacity: 0,
+        y: -5,
+        scale: 0.98,
+        transition: {
+            duration: 0.12,
+            ease: "easeIn"
+        }
+    }
+}
+
+const staticMenuVariants = {
+    hidden: { opacity: 1, y: 0, scale: 1 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+    exit: { opacity: 1, y: 0, scale: 1 }
+}
+
+const staticLinkVariants = {
+    hidden: { opacity: 1, y: 0, scale: 1 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+    exit: { opacity: 1, y: 0, scale: 1 }
+}
+
 // NAVBAR ------------------------------------------------------------------------------------------------------------------------------------------|
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
@@ -68,6 +120,7 @@ export default function Navbar() {
     const canHover = useHoverCapable()
     const navigate = useNavigate()
     const location = useLocation()
+    const shouldReduceMotion = useReducedMotion()
 
     const toggleMenu = () => setIsOpen((prev) => !prev)
 
@@ -219,14 +272,21 @@ export default function Navbar() {
             {/* Mobile Menu Dropdown Wrapper */}
             <AnimatePresence>
                 {isOpen && (
-                    <div className = {styles.mobileMenuWrapper}>
+                    <motion.div
+                        className = {styles.mobileMenuWrapper}
+                        initial = {shouldReduceMotion ? false : { opacity: 0, y: -8 }}
+                        animate = {{ opacity: 1, y: 0 }}
+                        exit = {shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+                        transition = {{ duration: 0.2, ease: "easeOut" }}
+                    >
                         <motion.div
                             id = "mobile-menu"
                             className = {styles.mobileMenu}
-                            initial = {{ opacity: 0, y: -10, scale: 0.98 }}
-                            animate = {{ opacity: 1, y: 0, scale: 1 }}
-                            exit = {{ opacity: 0, y: -10, scale: 0.98 }}
-                            transition = {{ duration: 0.2, ease: "easeOut" }}
+                            variants = {shouldReduceMotion ? staticMenuVariants : mobileMenuVariants}
+                            initial = "hidden"
+                            animate = "visible"
+                            exit = "exit"
+                            transition = {{ duration: 0.24, ease: "easeOut" }}
                         >
                             <nav className = {styles.mobileNavLinks} aria-label = "Mobile Navigation">
                                 {navItems.map((item) => (
@@ -234,17 +294,17 @@ export default function Navbar() {
                                         key = {item.hash}
                                         href = {`/${item.hash}`}
                                         onClick = {(event) => handleNavClick(event, item.hash)}
-                                        className = {styles.navLink}
-                                        whileHover = {canHover ? { y: -1 } : undefined}
-                                        whileTap = {canHover ? { scale: 0.96 } : undefined}
-                                        transition = {{ type: "spring", stiffness: 400, damping: 25 }}
+                                        className = {styles.mobileNavLink}
+                                        variants = {shouldReduceMotion ? staticLinkVariants : mobileLinkVariants}
+                                        whileHover = {canHover && !shouldReduceMotion ? { y: -2 } : undefined}
+                                        whileTap = {shouldReduceMotion ? undefined : { scale: 0.97 }}
                                     >
                                         <span className = {styles.navLabel}>{item.label}</span>
                                     </motion.a>
                                 ))}
                             </nav>
                         </motion.div>
-                    </div>
+                    </motion.div>
                 )}
             </AnimatePresence>
         </motion.header>
