@@ -83,6 +83,13 @@ export default function Cursor() {
             timeouts.add(timeout)
         }
 
+        const handleContextMenu = () => {
+            if (!isMounted) return
+
+            pressedButtons.current.clear()
+            setIsPressed(false)
+        }
+
         const handleMouseUp = (e) => {
             if (!isMounted) return
 
@@ -120,6 +127,7 @@ export default function Cursor() {
             hideCursor()
         }
 
+        window.addEventListener("contextmenu", handleContextMenu)
         window.addEventListener("pointermove", handlePointerMove)
         window.addEventListener("mousedown", handleMouseDown)
         window.addEventListener("mouseup", handleMouseUp)
@@ -129,6 +137,7 @@ export default function Cursor() {
         
         return () => {
             isMounted = false
+            window.removeEventListener("contextmenu", handleContextMenu)
             window.removeEventListener("pointermove", handlePointerMove)
             window.removeEventListener("mousedown", handleMouseDown)
             window.removeEventListener("mouseup", handleMouseUp)
