@@ -34,27 +34,6 @@
     color: var(--color-text);
 }
 
-/* BACK TO TOP BUTTON ---------------------------------------------------------------------------------------------------------------------------- */
-.backToTopBtn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-1) var(--space-3);
-    background-color: transparent;
-    color: var(--color-text-secondary);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-family: var(--font-mono);
-    font-size: var(--font-size-xs);
-    cursor: pointer;
-    transition: color var(--transition-base), border-color var(--transition-base);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.backToTopArrow {
-    transition: transform var(--transition-base);
-}
-
 /* HOVER INTERACTIONS (MOUSE ONLY) --------------------------------------------------------------------------------------------------------------- */
 @media (hover: hover) and (pointer: fine) {
     .resumeBtn:hover {
@@ -66,15 +45,6 @@
     .resumeBtn:hover::before {
         transform: scaleX(1);
     }
-
-    .backToTopBtn:hover {
-        color: var(--color-text);
-        border-color: var(--color-accent);
-    }
-
-    .backToTopBtn:hover .backToTopArrow {
-        transform: translateY(-2px);
-    }
 }
 
 /* RESPONSIVE BREAKPOINT ------------------------------------------------------------------------------------------------------------------------- */
@@ -83,7 +53,6 @@
         height: 46px;
         background-color: color-mix(in srgb, var(--color-surface) 78%, transparent);
         backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
         border: var(--border-width) solid color-mix(in srgb, var(--color-border) 60%, transparent);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-card);
