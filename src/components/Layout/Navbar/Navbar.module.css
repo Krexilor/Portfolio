@@ -12,13 +12,11 @@
     justify-content: space-between;
     padding-inline: var(--space-4);
 
-    /* Fallbacks if CSS variables fail on build */
     background-color: #1b241c;
     background-color: rgba(27, 36, 28, 0.78);
     background-color: color-mix(in srgb, var(--color-surface, #1b241c) 78%, transparent);
 
     backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
 
     border: 1px solid #30372F;
     border: var(--border-width) solid color-mix(in srgb, var(--color-border, #30372F) 60%, transparent);
@@ -126,7 +124,6 @@
     cursor: pointer;
     background-color: color-mix(in srgb, var(--color-surface) 78%, transparent);
     backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: var(--border-width) solid color-mix(in srgb, var(--color-border) 60%, transparent);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
@@ -170,7 +167,6 @@
     background-color: rgba(27, 36, 28, 0.96);
     background-color: color-mix(in srgb, var(--color-surface, #1b241c) 96%, transparent);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid #30372F;
     border: var(--border-width) solid color-mix(in srgb, var(--color-border, #30372F) 80%, transparent);
     border-radius: var(--radius-xl);
@@ -273,7 +269,6 @@
         border: none;
         box-shadow: none;
         backdrop-filter: none;
-        -webkit-backdrop-filter: none;
         pointer-events: none;
     }
 
