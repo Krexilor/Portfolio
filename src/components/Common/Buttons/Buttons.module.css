@@ -34,6 +34,31 @@
     color: var(--color-text);
 }
 
+/* BACK TO TOP BUTTON ---------------------------------------------------------------------------------------------------------------------------- */
+.backToTopBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-surface-raised);
+    color: var(--color-text-secondary);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: color var(--transition-base), border-color var(--transition-base), transform var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.backToTopBtn:active {
+    transform: scale(0.97);
+}
+
+.backToTopArrow {
+    transition: transform var(--transition-base);
+}
+
 /* HOVER INTERACTIONS (MOUSE ONLY) --------------------------------------------------------------------------------------------------------------- */
 @media (hover: hover) and (pointer: fine) {
     .resumeBtn:hover {
@@ -45,10 +70,19 @@
     .resumeBtn:hover::before {
         transform: scaleX(1);
     }
+
+    .backToTopBtn:hover {
+        color: var(--color-text);
+        border-color: var(--color-accent);
+    }
+
+    .backToTopBtn:hover .backToTopArrow {
+        transform: translateY(-2px);
+    }
 }
 
 /* RESPONSIVE BREAKPOINT ------------------------------------------------------------------------------------------------------------------------- */
-@media (max-width: 860px) {
+@media (max-width: 860px), (pointer: coarse) {
     .resumeBtn {
         height: 46px;
         background-color: color-mix(in srgb, var(--color-surface) 78%, transparent);
@@ -56,5 +90,10 @@
         border: var(--border-width) solid color-mix(in srgb, var(--color-border) 60%, transparent);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-card);
+    }
+
+    .backToTopBtn {
+        min-height: 46px;
+        border-radius: var(--radius-lg);
     }
 }
