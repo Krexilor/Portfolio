@@ -142,7 +142,6 @@ p {
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
     --transition-slow: 400ms ease;
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
     /* ---- Layering ---- */
     --z-base: 0;
@@ -364,17 +363,6 @@ button:focus:not(:focus-visible) {
     stroke: var(--color-accent);
     stroke-width: 1.5;
     fill: none;
-}
-
-/* SCROLL REVEAL --------------------------------------------------------------------------------------------------------------------------------- */
-.reveal {
-    transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
-    transition-delay: var(--reveal-delay, 0ms);
-}
-
-[data-revealed="false"] .reveal {
-    opacity: 0;
-    transform: translateY(0.5rem);
 }
 
 /* ACCESSIBILITY AND MOTIONS --------------------------------------------------------------------------------------------------------------------- */
