@@ -249,7 +249,7 @@ export default function Work() {
                                         rel = "noreferrer"
                                         className = {styles.inspectBtn}
                                     >
-                                        GitHub Profile ↗
+                                        GitHub Repo ↗
                                     </a>
                                 )}
                             </div>
