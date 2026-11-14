@@ -1,0 +1,448 @@
+/* ABOUT SECTION --------------------------------------------------------------------------------------------------------------------------------- */
+.sectionContainer {
+    width: 100%;
+    border-top: var(--border-width) solid var(--color-border);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: minmax(250px, 320px) 1fr;
+    gap: clamp(1.75rem, 4vw, 4rem);
+    align-items: start;
+}
+
+/* PORTRAIT PHOTO FRAME -------------------------------------------------------------------------------------------------------------------------- */
+.frameColumn {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-4));
+}
+
+.photoFrame {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.frameViewport {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+    border: var(--border-width) solid var(--color-border-strong);
+    flex-shrink: 0;
+}
+
+.portraitImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    z-index: 2;
+    pointer-events: none;
+    border-color: var(--color-accent);
+    border-style: solid;
+}
+
+.cornerTl {
+    top: 10px;
+    left: 10px;
+    border-width: 2px 0 0 2px;
+}
+
+.cornerTr {
+    top: 10px;
+    right: 10px;
+    border-width: 2px 2px 0 0;
+}
+
+.cornerBl {
+    bottom: 10px;
+    left: 10px;
+    border-width: 0 0 2px 2px;
+}
+
+.cornerBr {
+    bottom: 10px;
+    right: 10px;
+    border-width: 0 2px 2px 0;
+}
+
+.frameCaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: var(--space-1);
+    min-width: 0;
+}
+
+.captionTitle {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+}
+
+.captionMeta {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+}
+
+.captionLoc {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-accent);
+    margin-top: 2px;
+}
+
+/* BIO & HORIZONTAL JOURNEY TIMELINE ------------------------------------------------------------------------------------------------------------- */
+.contentColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    min-width: 0;
+}
+
+.bioStack {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+}
+
+.bioStackSingle {
+    grid-template-columns: 1fr;
+}
+
+.bioText {
+    font-size: var(--font-size-base);
+    line-height: 1.72;
+}
+
+.journeyBlock {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.journeyHeading {
+    font-size: var(--font-size-xl);
+    letter-spacing: -0.02em;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    border-top: var(--border-width) solid var(--color-border);
+}
+
+.timelineItem {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: baseline;
+    padding: var(--space-4) 0;
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.timelinePeriod {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+}
+
+.timelineBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+}
+
+.timelineTitle {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    letter-spacing: -0.015em;
+}
+
+.timelineOrg {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    margin-bottom: var(--space-1);
+}
+
+.timelineDetail {
+    font-size: var(--font-size-sm);
+    line-height: 1.65;
+}
+
+/* TECHNICAL STACK (BELOW BIO & JOURNEY IN CHAPTER 02) ------------------------------------------------------------------------------------------ */
+.stackBlock {
+    margin-top: clamp(2.75rem, 5vw, 4.25rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: var(--border-width) solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.stackHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+}
+
+.stackSectionHeading {
+    font-size: var(--font-size-2xl);
+    letter-spacing: -0.025em;
+}
+
+.stackFilterBar {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    padding: 0.3rem;
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    max-width: 100%;
+}
+
+.stackFilterBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 38px;
+    padding: 0.4rem 0.85rem;
+    background: transparent;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.stackFilterBtn:hover {
+    color: var(--color-text);
+}
+
+.stackFilterCount {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    opacity: 0.72;
+    font-variant-numeric: tabular-nums;
+}
+
+.stackFilterBtnActive {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+}
+
+.stackFilterBtnActive:hover {
+    color: var(--color-bg);
+}
+
+.stackFilterBtnActive .stackFilterCount {
+    opacity: 0.9;
+}
+
+.stackGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    align-items: stretch;
+}
+
+.stackGridSingle {
+    grid-template-columns: 1fr;
+}
+
+.stackCard {
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.stackCard:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
+}
+
+.stackCardHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.stackCardTitle {
+    font-size: var(--font-size-lg);
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+}
+
+.stackCardCount {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.stackItems {
+    display: flex;
+    flex-direction: column;
+}
+
+.stackItemsHorizontal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0 var(--space-5);
+}
+
+.skillRow {
+    padding-block: var(--space-3);
+    border-top: var(--border-width) solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.skillHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-2);
+}
+
+.skillName {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+}
+
+.skillRole {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-accent);
+    text-align: right;
+}
+
+.skillDetail {
+    font-size: var(--font-size-xs);
+    line-height: 1.6;
+}
+
+/* TABLET RESPONSIVENESS (KEEP SIDE-BY-SIDE HORIZONTAL DOWN TO 700PX) ---------------------------------------------------------------------------- */
+@media (max-width: 1024px) and (min-width: 700px) {
+    .grid {
+        grid-template-columns: minmax(200px, 245px) 1fr;
+        gap: var(--space-6);
+    }
+
+    .bioStack {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .timelineItem {
+        grid-template-columns: 120px minmax(0, 1fr);
+        gap: var(--space-4);
+    }
+}
+
+/* MOBILE BREAKPOINT (< 700px): HORIZONTAL PROFILE CARD ------------------------------------------------------------------------------------------ */
+@media (max-width: 699px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-5);
+    }
+
+    .frameColumn {
+        position: static;
+    }
+
+    .photoFrame {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-3);
+    }
+
+    .frameViewport {
+        width: 96px;
+        height: 96px;
+    }
+
+    .corner {
+        width: 8px;
+        height: 8px;
+    }
+
+    .cornerTl { top: 6px; left: 6px; }
+    .cornerTr { top: 6px; right: 6px; }
+    .cornerBl { bottom: 6px; left: 6px; }
+    .cornerBr { bottom: 6px; right: 6px; }
+
+    .frameCaption {
+        padding-top: 0;
+    }
+
+    .bioStack {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .timelineItem {
+        grid-template-columns: 110px minmax(0, 1fr);
+        gap: var(--space-3);
+    }
+}
+
+@media (max-width: 639px) {
+    .stackGrid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    .stackFilterBtn {
+        min-height: 34px;
+        padding: 0.35rem 0.7rem;
+    }
+}
+
+@media (max-width: 440px) {
+    .photoFrame {
+        gap: var(--space-3);
+    }
+
+    .frameViewport {
+        width: 80px;
+        height: 80px;
+    }
+
+    .timelineItem {
+        grid-template-columns: 1fr;
+        gap: var(--space-1);
+    }
+}

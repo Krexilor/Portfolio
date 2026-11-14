@@ -1,0 +1,245 @@
+/* RIGHT-EDGE SCROLL SCALE ----------------------------------------------------------------------------------------------------------------------- */
+.scaleHost {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: calc(var(--z-sticky) - 2);
+    width: 36px;
+    height: min(68vh, 560px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    pointer-events: none;
+    user-select: none;
+}
+
+.ruler {
+    position: relative;
+    width: 100%;
+    flex: 1;
+}
+
+.spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 2px;
+    background-color: color-mix(in srgb, var(--color-border-strong) 45%, transparent);
+    overflow: hidden;
+}
+
+.spineFill {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-accent);
+    transform-origin: 50% 0%;
+}
+
+/* TICK MARKS & CHAPTER ANCHORS ------------------------------------------------------------------------------------------------------------------ */
+.tickSlot {
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.tickBar {
+    display: block;
+    height: 1px;
+    background-color: var(--color-muted);
+    transform-origin: right center;
+    transition: background-color var(--transition-fast);
+}
+
+.tickMinor {
+    width: 5px;
+}
+
+.tickMedium {
+    width: 9px;
+    background-color: var(--color-text-secondary);
+}
+
+.tickMajor {
+    width: 14px;
+    height: 2px;
+    background-color: var(--color-text-secondary);
+}
+
+.tickBarActive {
+    background-color: var(--color-accent);
+}
+
+.chapterAnchor {
+    pointer-events: auto;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding-block: 4px;
+    padding-left: 4px;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.chapterAnchor:hover,
+.chapterAnchor:focus-visible {
+    color: var(--color-text);
+}
+
+.chapterAnchorActive {
+    color: var(--color-accent);
+}
+
+.chapterNum {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+}
+
+.chapterHint {
+    position: absolute;
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translate(6px, -50%);
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text);
+    background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    padding: 0.22rem 0.5rem;
+    backdrop-filter: blur(8px);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.chapterAnchor:hover .chapterHint,
+.chapterAnchor:focus-visible .chapterHint {
+    opacity: 1;
+    transform: translate(0, -50%);
+}
+
+/* HEX CALIBRATION EASTER EGG -------------------------------------------------------------------------------------------------------------------- */
+.hexTrigger {
+    pointer-events: auto;
+    margin-top: 0.9rem;
+    margin-right: 4px;
+    padding: 0.18rem 0.32rem;
+    background: transparent;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.03em;
+    border-right: 2px solid var(--color-border-strong);
+    transition: color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.hexTrigger:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+.hexTriggerUnlocked {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.hexTriggerUnlocked:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    transform: translateX(-2px);
+}
+
+.eggPopover {
+    pointer-events: auto;
+    position: absolute;
+    right: 52px;
+    bottom: 0;
+    width: 260px;
+    padding: var(--space-4);
+    background-color: color-mix(in srgb, var(--color-surface) 95%, transparent);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.eggHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
+.eggTitle {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+}
+
+.eggClose {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--color-muted);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.eggClose:hover {
+    color: var(--color-text);
+    background-color: var(--color-surface-raised);
+}
+
+.eggBody {
+    font-size: var(--font-size-xs);
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+}
+
+.eggAction {
+    align-self: flex-start;
+    min-height: 34px;
+    padding: 0.4rem 0.75rem;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: var(--font-weight-bold);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.eggAction:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-glow);
+}
+
+/* RESPONSIVE BREAKPOINT ------------------------------------------------------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .scaleHost {
+        display: none;
+    }
+}

@@ -1,0 +1,231 @@
+/* ARCHITECTURAL FOOTER -------------------------------------------------------------------------------------------------------------------------- */
+.footer {
+    width: 100%;
+    background: linear-gradient(180deg, var(--color-surface) 0%, #121712 100%);
+    border-top: var(--border-width) solid var(--color-border-strong);
+}
+
+.shell {
+    padding-top: clamp(2.75rem, 5vw, 4.25rem);
+    padding-bottom: max(var(--space-5), env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+}
+
+/* TOP SIGNATURE BAND ---------------------------------------------------------------------------------------------------------------------------- */
+.signatureBand {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-bottom: var(--space-6);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.signatureLeft {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.wordmarkLink {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    color: var(--color-text);
+}
+
+.wordmarkLink:hover {
+    color: var(--color-text);
+}
+
+.wordmarkSvg {
+    width: 132px;
+    height: 27px;
+    overflow: visible;
+}
+
+.statement {
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
+    color: var(--color-text-secondary);
+}
+
+.signatureActions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.copyBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 42px;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.copyBtn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.copyBtnDone {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-bg);
+}
+
+.copyBtnDone:hover {
+    color: var(--color-bg);
+}
+
+.copyIcon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.quickLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.quickLink:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* DIRECTORY GRID -------------------------------------------------------------------------------------------------------------------------------- */
+.directoryGrid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.75fr 0.75fr 0.75fr;
+    gap: clamp(1.5rem, 3.5vw, 3.5rem);
+    align-items: start;
+}
+
+.identityCol {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-width: 44ch;
+}
+
+.identityName {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+}
+
+.identitySummary {
+    font-size: var(--font-size-sm);
+    line-height: 1.65;
+}
+
+.locationMeta {
+    margin-top: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent);
+}
+
+.linkCol {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.colTitle {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+}
+
+.colList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.indexedLink {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.linkIdx {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.indexedLink:hover,
+.indexedLink:hover .linkIdx,
+.colLink:hover {
+    color: var(--color-accent);
+}
+
+.colLink {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+/* BOTTOM BASELINE ------------------------------------------------------------------------------------------------------------------------------- */
+.bottomBar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: var(--border-width) solid var(--color-border);
+}
+
+.meta {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+}
+
+@media (max-width: 960px) {
+    .directoryGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-5);
+    }
+
+    .identityCol {
+        grid-column: 1 / -1;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .directoryGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-5) var(--space-4);
+    }
+}

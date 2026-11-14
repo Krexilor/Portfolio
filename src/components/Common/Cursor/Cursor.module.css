@@ -1,0 +1,111 @@
+/* CURSOR LAYER ---------------------------------------------------------------------------------------------------------------------------------- */
+.cursorLayer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 40); 
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* CURSOR WRAPPER (Position only) ---------------------------------------------------------------------------------------------------------------- */
+.cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #E4FABF;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0);
+  filter:
+    drop-shadow(0 1px 2px rgb(0 0 0 / 85%))
+    drop-shadow(0 0 6px rgb(184 233 134 / 45%));
+  transition: opacity var(--transition-fast, 150ms ease);
+  will-change: transform;
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* CURSOR SHAPE (Scale animation) ---------------------------------------------------------------------------------------------------------------- */
+.cursorShape {
+  display: block;
+  width: 26px;
+  height: 26px;
+  transform-origin: 4px 3.5px;
+  transition: transform var(--transition-fast, 150ms ease);
+}
+
+.cursorShapePressed {
+  transform: scale(0.75);
+}
+
+/* RIPPLE EFFECT --------------------------------------------------------------------------------------------------------------------------------- */
+.ripple {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border: 1.5px solid #E4FABF;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 1px rgb(9 13 9 / 65%), 0 0 8px rgb(184 233 134 / 35%);
+  animation: rippleEcho 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ripple::before,
+.ripple::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border: 1.5px solid #E4FABF;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.ripple::before {
+  animation: rippleEcho 600ms 80ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ripple::after {
+  animation: rippleEcho 600ms 160ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes rippleEcho {
+  0% {
+    width: 4px;
+    height: 4px;
+    opacity: 1;
+  }
+  100% {
+    width: 48px;
+    height: 48px;
+    opacity: 0;
+  }
+}
+
+/* REDUCED MOTION -------------------------------------------------------------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    filter: none;
+  }
+  .cursorShape {
+    transition: none;
+  }
+  .ripple,
+  .ripple::before,
+  .ripple::after {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* DEVICE SUPPORT -------------------------------------------------------------------------------------------------------------------------------- */
+:global(html[data-custom-cursor="on"]),
+:global(html[data-custom-cursor="on"] body),
+:global(html[data-custom-cursor="on"] body *) {
+  cursor: none !important;
+}

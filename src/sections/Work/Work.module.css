@@ -1,0 +1,335 @@
+/* WORK SECTION ---------------------------------------------------------------------------------------------------------------------------------- */
+.sectionContainer {
+    width: 100%;
+    border-top: var(--border-width) solid var(--color-border);
+}
+
+.headerRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+}
+
+.headerRow :global(.section-header) {
+    flex: 1 1 520px;
+    margin-bottom: 0;
+}
+
+.filterBar {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    padding: 0.3rem;
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    max-width: 100%;
+}
+
+.filterBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 40px;
+    padding: 0.45rem 0.95rem;
+    background: transparent;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.filterBtn:hover {
+    color: var(--color-text);
+}
+
+.filterCount {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    opacity: 0.72;
+    font-variant-numeric: tabular-nums;
+}
+
+.filterBtnActive {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+}
+
+.filterBtnActive:hover {
+    color: var(--color-bg);
+}
+
+.filterBtnActive .filterCount {
+    opacity: 0.9;
+}
+
+.emptyState {
+    padding: var(--space-7);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-align: center;
+}
+
+/* UNIFORM PROJECT GRID (MAX 3 PROJECTS PER ROW) ------------------------------------------------------------------------------------------------- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    align-items: stretch;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
+}
+
+.cardMedia {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--color-bg);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform var(--transition-slow);
+}
+
+.card:hover .cardImage {
+    transform: scale(1.03);
+}
+
+.cardBody {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+}
+
+.metaLine {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.indexNum {
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+}
+
+.statusCompleted {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-semibold);
+}
+
+.statusPlanned {
+    color: var(--color-warning);
+    font-weight: var(--font-weight-medium);
+}
+
+.titleGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.cardTitle {
+    font-size: var(--font-size-xl);
+    letter-spacing: -0.025em;
+}
+
+.cardTagline {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+}
+
+.cardSummary {
+    font-size: var(--font-size-sm);
+    line-height: 1.65;
+}
+
+.stackLine {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+}
+
+.cardFooter {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: var(--border-width) solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
+.inspectBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0.45rem 0.95rem;
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.inspectBtn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.extLinks {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.liveLink,
+.repoLink {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.liveLink {
+    color: var(--color-accent);
+}
+
+.repoLink {
+    color: var(--color-text-secondary);
+}
+
+/* MODAL ----------------------------------------------------------------------------------------------------------------------------------------- */
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.modalSummary {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+}
+
+.modalBlock {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.modalSubheading {
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+}
+
+.highlightList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.highlightItem {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+}
+
+.highlightItem::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+}
+
+.modalFooter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: var(--border-width) solid var(--color-border);
+}
+
+.primaryModalBtn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 0.45rem 1rem;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    white-space: nowrap;
+}
+
+.primaryModalBtn:hover {
+    color: var(--color-bg);
+}
+
+/* RESPONSIVE BREAKPOINTS (STRICTLY <= 3 PER ROW) ------------------------------------------------------------------------------------------------ */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-4);
+    }
+}
+
+@media (max-width: 639px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cardBody {
+        padding: var(--space-4);
+    }
+
+    .filterBtn {
+        padding: 0.4rem 0.78rem;
+    }
+}

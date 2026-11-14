@@ -1,0 +1,360 @@
+/* NAVBAR CONTAINER -------------------------------------------------------------------------------------------------------------------------------- */
+.navbar {
+    position: fixed;
+    top: 0.9rem;
+    left: 0;
+    right: 0;
+    width: min(1100px, 100% - (2 * var(--container-padding)));
+    margin-inline: auto;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-inline: 1.4rem;
+
+    background-color: rgba(18, 24, 19, 0.92);
+    background-color: color-mix(in srgb, var(--color-surface, #1b241c) 88%, #0b0e0b 12%);
+    backdrop-filter: blur(18px);
+
+    border: var(--border-width) solid color-mix(in srgb, var(--color-accent) 24%, var(--color-border-strong) 76%);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 14px 36px rgb(0 0 0 / 42%),
+        inset 0 1px 0 rgb(184 233 134 / 10%);
+
+    z-index: var(--z-sticky);
+}
+
+.leftGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+}
+
+/* DIVIDER --------------------------------------------------------------------------------------------------------------------------------------- */
+.divider {
+    width: 1px;
+    height: 22px;
+    background-color: var(--color-border-strong);
+}
+
+/* NAVBAR LOGO ----------------------------------------------------------------------------------------------------------------------------------- */
+.brandContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+}
+
+.brandLogo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.brandLogo:hover {
+    color: var(--color-text);
+}
+
+.brandWordmark {
+    width: 118px;
+    height: 24px;
+    overflow: visible;
+}
+
+/* NAVIGATION LINKS ------------------------------------------------------------------------------------------------------------------------------ */
+.navLinks {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.navLink {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 0.48rem 0.92rem;
+    border-radius: var(--radius-md);
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.navLinkActive {
+    color: var(--color-text);
+}
+
+.navLabel {
+    position: relative;
+    padding-block: 2px;
+}
+
+.navLabel::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-base);
+}
+
+.navLinkActive .navLabel::after {
+    width: 100%;
+}
+
+/* ACTIONS --------------------------------------------------------------------------------------------------------------------------------------- */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
+}
+
+.actionBtn {
+    min-height: 40px;
+    padding: 0.45rem 1.05rem;
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* HAMBURGER BUTTON ------------------------------------------------------------------------------------------------------------------------------ */
+.hamburgerBtn {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    cursor: pointer;
+    background-color: var(--color-surface-raised);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-base), background-color var(--transition-base);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hamburgerBtn:active {
+    transform: scale(0.95);
+}
+
+.hamburgerBtn:focus {
+    outline: none;
+}
+
+.hamburgerBtn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.hamburgerLine {
+    width: 18px;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: var(--radius-full);
+    transition: background-color var(--transition-fast);
+}
+
+/* MOBILE MENU CONTAINER & DROPDOWN -------------------------------------------------------------------------------------------------------------- */
+.mobileMenuWrapper {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+}
+
+.mobileMenu {
+    display: none;
+    background-color: rgba(20, 27, 21, 0.96);
+    background-color: color-mix(in srgb, var(--color-surface, #1b241c) 96%, transparent);
+    backdrop-filter: blur(20px);
+    border: var(--border-width) solid color-mix(in srgb, var(--color-border-strong, #485444) 70%, transparent);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+    flex-direction: column;
+
+    max-height: calc(100vh - 7rem);
+    max-height: calc(100dvh - 7rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobileNavLinks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+    width: 100%;
+}
+
+.mobileNavLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+
+    padding: 0.65rem var(--space-4);
+    border: 1px solid var(--color-border);
+    background-color: color-mix(in srgb, var(--color-bg) 55%, transparent);
+    border-radius: var(--radius-md);
+
+    transition:
+        color var(--transition-base),
+        background-color var(--transition-base),
+        border-color var(--transition-base);
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobileNavLinkActive {
+    color: var(--color-accent);
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border-strong));
+}
+
+.mobileIdx {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent);
+}
+
+.mobileNavLink .navLabel {
+    padding-block: 0;
+}
+
+.mobileNavLink:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* HOVER INTERACTIONS (MOUSE ONLY) --------------------------------------------------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+    .brandLogo:hover {
+        color: var(--color-text);
+    }
+
+    .navLink:hover {
+        color: var(--color-text);
+        background-color: color-mix(in srgb, var(--color-surface-raised) 50%, transparent);
+    }
+
+    .navLink:hover .navLabel::after {
+        width: 100%;
+    }
+
+    .hamburgerBtn:hover {
+        border-color: var(--color-accent);
+    }
+
+    .hamburgerBtn:hover .hamburgerLine {
+        background-color: var(--color-accent);
+    }
+
+    .mobileNavLink:hover {
+        color: var(--color-accent);
+        background-color: color-mix(in srgb, var(--color-surface-raised, #222D23) 60%, transparent);
+        border-color: color-mix(in srgb, var(--color-border-strong, #485444) 55%, transparent);
+    }
+}
+
+/* TABLET SCALING (741px - 980px) ---------------------------------------------------------------------------------------------------------------- */
+@media (max-width: 980px) and (min-width: 741px) {
+    .navbar {
+        height: 60px;
+        padding-inline: 1rem;
+        gap: var(--space-2);
+    }
+
+    .brandWordmark {
+        width: 98px;
+        height: 20px;
+    }
+
+    .navLinks {
+        gap: 0.12rem;
+    }
+
+    .navLink {
+        font-size: 0.85rem;
+        padding: 0.38rem 0.6rem;
+    }
+
+    .actionBtn {
+        min-height: 36px;
+        padding: 0.38rem 0.85rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* MOBILE BREAKPOINT (<= 740px) ------------------------------------------------------------------------------------------------------------------ */
+@media (max-width: 740px) {
+    .navbar {
+        top: 0.65rem;
+        height: 58px;
+        width: min(100% - (2 * var(--container-padding)), var(--container-width));
+        padding-inline: 0.75rem;
+        gap: var(--space-2);
+    }
+
+    .divider,
+    .navLinks {
+        display: none;
+    }
+
+    .hamburgerBtn {
+        display: flex;
+    }
+
+    .brandWordmark {
+        width: 94px;
+        height: 19px;
+    }
+
+    .actionBtn {
+        min-height: 38px;
+        padding: 0.38rem 0.78rem;
+        font-size: var(--font-size-xs);
+    }
+
+    .mobileMenu {
+        display: flex;
+    }
+}
+
+@media (max-width: 420px) {
+    .navbar {
+        padding-inline: 0.65rem;
+    }
+
+    .brandWordmark {
+        width: 82px;
+        height: 17px;
+    }
+
+    .actionBtn {
+        padding: 0.35rem 0.65rem;
+    }
+
+    .mobileNavLinks {
+        grid-template-columns: 1fr;
+    }
+}

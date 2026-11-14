@@ -1,0 +1,399 @@
+/* NOT FOUND PAGE -------------------------------------------------------------------------------------------------------------------------------- */
+.pageWrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    display: flex;
+    align-items: stretch;
+    padding-block: clamp(1.25rem, 3vw, 2.5rem);
+    overflow: hidden;
+}
+
+.shell {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    min-height: calc(100svh - 2 * clamp(1.25rem, 3vw, 2.5rem));
+}
+
+/* TOP BAR --------------------------------------------------------------------------------------------------------------------------------------- */
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: 0.75rem 1.25rem;
+    background-color: color-mix(in srgb, var(--color-surface) 88%, #0b0e0b 12%);
+    backdrop-filter: blur(16px);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+}
+
+.brandLink {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text);
+}
+
+.brandLink:hover {
+    color: var(--color-text);
+}
+
+.brandWordmark {
+    width: 108px;
+    height: 22px;
+    overflow: visible;
+}
+
+.quickNav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.quickLink {
+    padding: 0.38rem 0.85rem;
+    border-radius: var(--radius-md);
+    border: var(--border-width) solid var(--color-border);
+    background-color: var(--color-surface-raised);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+}
+
+.quickLink:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* SPLIT DIAGNOSTIC LAYOUT ----------------------------------------------------------------------------------------------------------------------- */
+.content {
+    margin-block: auto;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(2rem, 4.5vw, 4.5rem);
+}
+
+.copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    min-width: 0;
+}
+
+.codeBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    background-color: color-mix(in srgb, var(--color-surface) 90%, transparent);
+    border: var(--border-width) solid color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    letter-spacing: 0.06em;
+}
+
+.codeDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+}
+
+.title {
+    font-size: clamp(2.1rem, 4.6vw, 3.75rem);
+    line-height: 1.06;
+    letter-spacing: -0.04em;
+    color: var(--color-text);
+}
+
+.description {
+    font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+    line-height: 1.65;
+    max-width: 54ch;
+    color: var(--color-text-secondary);
+}
+
+/* TERMINAL ROUTE TRACE -------------------------------------------------------------------------------------------------------------------------- */
+.traceBox {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    backdrop-filter: blur(12px);
+}
+
+.traceHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+}
+
+.traceStatus {
+    color: var(--color-warning);
+}
+
+.traceCmd {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
+    overflow-wrap: anywhere;
+}
+
+.traceMethod {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-semibold);
+}
+
+.tracePath {
+    color: var(--color-text);
+}
+
+.traceArrow {
+    color: var(--color-muted);
+}
+
+.traceErr {
+    color: var(--color-error);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* RECOVERY ROUTES GRID -------------------------------------------------------------------------------------------------------------------------- */
+.routesSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.routesLabel {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.routesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+}
+
+.routeTile {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.75rem 0.9rem;
+    background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(10px);
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.routeTile:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    color: inherit;
+}
+
+.routeTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-accent);
+}
+
+.routeArrow {
+    color: var(--color-muted);
+}
+
+.routeTile:hover .routeArrow {
+    color: var(--color-accent);
+}
+
+.routeName {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+}
+
+.routePath {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+}
+
+/* CTA BUTTONS ----------------------------------------------------------------------------------------------------------------------------------- */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-1);
+}
+
+.homeBtn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.75rem 1.4rem;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    white-space: nowrap;
+    transition: transform var(--transition-fast), box-shadow var(--transition-base);
+}
+
+.homeBtn:hover {
+    color: var(--color-bg);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+.secondaryBtn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+    background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+
+.secondaryBtn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* ARTWORK FRAME WITH DIAGNOSTIC BRACKETS -------------------------------------------------------------------------------------------------------- */
+.artFrame {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-card);
+}
+
+.artViewport {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: var(--border-width) solid var(--color-border);
+    background-color: var(--color-bg);
+}
+
+.artwork {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    z-index: 2;
+    pointer-events: none;
+    border-color: var(--color-accent);
+    border-style: solid;
+}
+
+.cornerTl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+.cornerTr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+.cornerBl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+.cornerBr { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+.artCaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+}
+
+.artCaptionAccent {
+    color: var(--color-accent);
+}
+
+/* TABLET & MOBILE RESPONSIVENESS ---------------------------------------------------------------------------------------------------------------- */
+@media (max-width: 1024px) and (min-width: 740px) {
+    .content {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: var(--space-5);
+    }
+}
+
+@media (max-width: 739px) {
+    .content {
+        grid-template-columns: 1fr;
+        gap: var(--space-5);
+    }
+
+    .artFrame {
+        order: -1;
+    }
+
+    .topBar {
+        padding: 0.65rem 0.9rem;
+    }
+
+    .brandWordmark {
+        width: 90px;
+        height: 18px;
+    }
+
+    .quickLink {
+        padding: 0.32rem 0.62rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .routesGrid {
+        gap: var(--space-2);
+    }
+
+    .routeTile {
+        padding: 0.65rem 0.75rem;
+    }
+}
+
+@media (max-width: 339px) {
+    .routesGrid {
+        grid-template-columns: 1fr;
+    }
+}

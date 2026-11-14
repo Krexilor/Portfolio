@@ -1,0 +1,17 @@
+{
+    "name": "Krexilor Portfolio",
+    "short_name": "Krexilor",
+    "description": "Portfolio of a systems engineer and backend developer.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#101310",
+    "theme_color": "#101310",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}
