@@ -79,6 +79,11 @@ export default function Contact() {
         setSubmitError("")
         setIsSubmitting(true)
 
+        const cleanName = formValues.name.trim()
+        const cleanEmail = formValues.email.trim()
+        const cleanTopic = formValues.subject.trim()
+        const cleanMessage = formValues.message.trim()
+
         try {
             const response = await fetch(WEB3FORMS_ENDPOINT, {
                 method: "POST",
@@ -88,12 +93,14 @@ export default function Contact() {
                 },
                 body: JSON.stringify({
                     access_key: WEB3FORMS_ACCESS_KEY,
-                    name: formValues.name.trim(),
-                    email: formValues.email.trim(),
-                    replyto: formValues.email.trim(),
-                    from_name: formValues.name.trim(),
-                    subject: formValues.subject.trim(),
-                    message: formValues.message.trim(),
+                    from_name: "Krexilor Portfolio",
+                    subject: `[Portfolio] ${cleanTopic} — ${cleanName}`,
+                    replyto: cleanEmail,
+                    source: "Portfolio Contact Form",
+                    name: cleanName,
+                    email: cleanEmail,
+                    topic: cleanTopic,
+                    message: cleanMessage,
                     botcheck
                 })
             })
