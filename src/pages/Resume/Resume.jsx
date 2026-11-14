@@ -15,6 +15,9 @@ import { copyTextToClipboard } from "../../utils/contentHelpers.js"
 import styles from "./Resume.module.css"
 
 // CONSTANTS ---------------------------------------------------------------------------------------------------------------------------------------|
+const WEB3FORMS_ACCESS_KEY = "795b5f51-be95-4fb7-9d9b-e1c06aa969a6"
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit"
+
 const OPPORTUNITY_TYPES = [
     "Systems / Backend Role",
     "Engineering Internship",
@@ -27,8 +30,11 @@ export default function Resume() {
     const [copiedEmail, setCopiedEmail] = useState(false)
     const [opportunity, setOpportunity] = useState(OPPORTUNITY_TYPES[0])
     const [form, setForm] = useState({ name: "", email: "", team: "", message: "" })
+    const [botcheck, setBotcheck] = useState(false)
     const [errors, setErrors] = useState({})
-    const [submitted, setSubmitted] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitError, setSubmitError] = useState("")
+    const [submittedInfo, setSubmittedInfo] = useState(null)
     const shouldReduceMotion = useReducedMotion()
 
     const handlePrint = () => {
@@ -53,23 +59,87 @@ export default function Resume() {
                 return next
             })
         }
+        if (submitError) {
+            setSubmitError("")
+        }
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
+        if (isSubmitting) return
+
         const validation = validateContactForm({ ...form, subject: opportunity })
         if (!validation.valid) {
             setErrors(validation.errors)
             return
         }
+
         setErrors({})
-        setSubmitted(true)
+        setSubmitError("")
+        setIsSubmitting(true)
+
+        const cleanName = form.name.trim()
+        const cleanEmail = form.email.trim()
+        const cleanTeam = form.team.trim()
+        const cleanMessage = form.message.trim()
+
+        try {
+            const response = await fetch(WEB3FORMS_ENDPOINT, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+                body: JSON.stringify({
+                    access_key: WEB3FORMS_ACCESS_KEY,
+                    from_name: "Krexilor Portfolio",
+                    subject: `[Portfolio · Resume] ${opportunity}${cleanTeam ? ` — ${cleanTeam}` : ""} — ${cleanName}`,
+                    replyto: cleanEmail,
+                    source: "Portfolio Resume Page",
+                    inquiry_type: opportunity,
+                    name: cleanName,
+                    team: cleanTeam || "Not specified",
+                    email: cleanEmail,
+                    message: cleanMessage,
+                    botcheck
+                })
+            })
+
+            const data = await response.json().catch(() => ({}))
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Unable to send inquiry right now.")
+            }
+
+            setSubmittedInfo({
+                name: cleanName,
+                email: cleanEmail,
+                team: cleanTeam,
+                message: cleanMessage,
+                opportunity
+            })
+            setForm({ name: "", email: "", team: "", message: "" })
+        }
+        catch (err) {
+            setSubmitError(err?.message || "Network error while sending inquiry. Please try again or use direct email.")
+        }
+        finally {
+            setIsSubmitting(false)
+        }
     }
 
     const handleReset = () => {
         setForm({ name: "", email: "", team: "", message: "" })
-        setSubmitted(false)
+        setErrors({})
+        setSubmitError("")
+        setSubmittedInfo(null)
     }
+
+    const mailtoHref = `mailto:${profile.email}?subject=${encodeURIComponent(
+        `${opportunity}${form.team ? ` — ${form.team}` : ""}`
+    )}&body=${encodeURIComponent(
+        `From: ${form.name} (${form.email})\n\n${form.message}`
+    )}`
 
     return (
         <main className = {styles.pageWrapper}>
@@ -286,25 +356,15 @@ export default function Resume() {
                             </p>
                         </div>
 
-                        {submitted ? (
+                        {submittedInfo ? (
                             <div className = {styles.successState} role = "status">
-                                <span className = {styles.successEyebrow}>Inquiry Logged</span>
-                                <h3 className = {styles.successTitle}>Thanks, {form.name}.</h3>
+                                <span className = {styles.successEyebrow}>Inquiry Sent</span>
+                                <h3 className = {styles.successTitle}>Thanks, {submittedInfo.name}.</h3>
                                 <p className = {styles.successText}>
-                                    Your note regarding <strong>{opportunity}</strong> has been prepared for{" "}
+                                    Your note regarding <strong>{submittedInfo.opportunity}</strong> has been delivered directly to{" "}
                                     <strong>{profile.email}</strong>. Feel free to also grab the PDF resume above.
                                 </p>
                                 <div className = {styles.successActions}>
-                                    <a
-                                        href = {`mailto:${profile.email}?subject=${encodeURIComponent(
-                                            `${opportunity}${form.team ? ` — ${form.team}` : ""}`
-                                        )}&body=${encodeURIComponent(
-                                            `From: ${form.name} (${form.email})\n\n${form.message}`
-                                        )}`}
-                                        className = {styles.downloadBtn}
-                                    >
-                                        Open in Mail Client ↗
-                                    </a>
                                     <button type = "button" className = {styles.resetBtn} onClick = {handleReset}>
                                         Send Another Inquiry
                                     </button>
@@ -312,6 +372,16 @@ export default function Resume() {
                             </div>
                         ) : (
                             <form className = {styles.form} onSubmit = {handleSubmit} noValidate>
+                                <input
+                                    type = "checkbox"
+                                    name = "botcheck"
+                                    checked = {botcheck}
+                                    onChange = {(event) => setBotcheck(event.target.checked)}
+                                    className = {styles.honeypot}
+                                    tabIndex = {-1}
+                                    autoComplete = "off"
+                                    aria-hidden = "true"
+                                />
                                 <div className = {styles.field}>
                                     <span className = {styles.fieldLabel}>Inquiry Type</span>
                                     <div className = {styles.typeGrid}>
@@ -392,9 +462,18 @@ export default function Resume() {
                                     {errors.message && <span className = {styles.errorText}>{errors.message}</span>}
                                 </div>
 
-                                <button type = "submit" className = {styles.submitBtn}>
-                                    Send Inquiry
+                                <button type = "submit" className = {styles.submitBtn} disabled = {isSubmitting}>
+                                    {isSubmitting ? "Sending..." : "Send Inquiry"}
                                 </button>
+
+                                {submitError && (
+                                    <div className = {styles.errorBox} role = "alert">
+                                        <span>{submitError}</span>
+                                        <a href = {mailtoHref} className = {styles.mailtoLink}>
+                                            Send via Mail Client ↗
+                                        </a>
+                                    </div>
+                                )}
                             </form>
                         )}
                     </aside>
