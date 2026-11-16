@@ -1,12 +1,13 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState } from "react"
-import { motion, AnimatePresence, useReducedMotion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 
 // ASSETS ------------------------------------------------------------------------------------------------------------------------------------------|
 import profilePhoto from "../../assets/images/profile.jpeg"
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import Reveal from "../../components/Common/Reveal/Reveal.jsx"
+import TechnicalStack from "./TechnicalStack.jsx"
 
 // DATA --------------------------------------------------------------------------------------------------------------------------------------------|
 import { aboutIntro, aboutBio, journey } from "../../data/about.data.js"
@@ -37,6 +38,7 @@ export default function About() {
                 id,
                 label: meta?.label || formatCategoryLabel(id),
                 title: meta?.title || formatCategoryLabel(id),
+                icon: meta?.icon || "",
                 items
             }
         })
@@ -48,10 +50,6 @@ export default function About() {
     const effectiveStackFilter = dynamicCategories.some((cat) => cat.id === stackFilter)
         ? stackFilter
         : "all"
-
-    const visibleStackGroups = effectiveStackFilter === "all"
-        ? dynamicCategories
-        : dynamicCategories.filter((cat) => cat.id === effectiveStackFilter)
 
     return (
         <section id = "about" className = {`section ${styles.sectionContainer}`}>
@@ -113,12 +111,12 @@ export default function About() {
                                         <motion.li
                                             key = {`${item.period}-${item.title}-${index}`}
                                             className = {styles.timelineItem}
-                                            initial = {shouldReduceMotion ? false : { opacity: 0, x: -12 }}
+                                            initial = {shouldReduceMotion ? false : { opacity: 0, x: -10 }}
                                             whileInView = {{ opacity: 1, x: 0 }}
-                                            viewport = {{ once: true, amount: 0.2 }}
+                                            viewport = {{ once: true, amount: 0.1 }}
                                             transition = {{
-                                                duration: 0.45,
-                                                delay: Math.min(index * 0.08, 0.4),
+                                                duration: 0.36,
+                                                delay: Math.min(index * 0.05, 0.2),
                                                 ease: [0.16, 1, 0.3, 1]
                                             }}
                                         >
@@ -138,68 +136,14 @@ export default function About() {
 
                 {/* Technical Stack (moved below bio & journey in Chapter 02) */}
                 {dynamicCategories.length > 0 && (
-                    <Reveal className = {styles.stackBlock} delay = {0.2}>
-                        <div className = {styles.stackHeader}>
-                            <h3 className = {styles.stackSectionHeading}>{aboutIntro.stackHeading || "Technical Stack"}</h3>
-
-                            {stackFilters.length > 1 && (
-                                <div className = {styles.stackFilterBar} role = "tablist" aria-label = "Filter technical stack layers">
-                                    {stackFilters.map((cat) => {
-                                        const isActive = effectiveStackFilter === cat.id
-                                        return (
-                                            <button
-                                                key = {cat.id}
-                                                type = "button"
-                                                role = "tab"
-                                                aria-selected = {isActive}
-                                                className = {`${styles.stackFilterBtn} ${isActive ? styles.stackFilterBtnActive : ""}`}
-                                                onClick = {() => setStackFilter(cat.id)}
-                                            >
-                                                <span>{cat.label}</span>
-                                                <span className = {styles.stackFilterCount}>{cat.count}</span>
-                                            </button>
-                                        )
-                                    })}
-                                </div>
-                            )}
-                        </div>
-
-                        <AnimatePresence mode = "wait">
-                            <motion.div
-                                key = {effectiveStackFilter}
-                                className = {`${styles.stackGrid} ${visibleStackGroups.length === 1 ? styles.stackGridSingle : ""}`}
-                                initial = {shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-                                animate = {{ opacity: 1, y: 0 }}
-                                exit = {shouldReduceMotion ? undefined : { opacity: 0, y: -6 }}
-                                transition = {{ duration: 0.22 }}
-                            >
-                                {visibleStackGroups.map((group) => (
-                                    <div key = {group.id} className = {styles.stackCard}>
-                                        <div className = {styles.stackCardHead}>
-                                            <h4 className = {styles.stackCardTitle}>{group.title}</h4>
-                                            <span className = {styles.stackCardCount}>{group.items.length}</span>
-                                        </div>
-                                        <div
-                                            className = {`${styles.stackItems} ${
-                                                visibleStackGroups.length === 1 && group.items.length > 1
-                                                    ? styles.stackItemsHorizontal
-                                                    : ""
-                                            }`}
-                                        >
-                                            {group.items.map((item, idx) => (
-                                                <div key = {`${item.name}-${idx}`} className = {styles.skillRow}>
-                                                    <div className = {styles.skillHead}>
-                                                        <span className = {styles.skillName}>{item.name}</span>
-                                                        {item.role && <span className = {styles.skillRole}>{item.role}</span>}
-                                                    </div>
-                                                    {item.detail && <p className = {styles.skillDetail}>{item.detail}</p>}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </motion.div>
-                        </AnimatePresence>
+                    <Reveal delay = {0.2}>
+                        <TechnicalStack
+                            heading = {aboutIntro.stackHeading || "Technical Stack"}
+                            dynamicCategories = {dynamicCategories}
+                            stackFilters = {stackFilters}
+                            effectiveStackFilter = {effectiveStackFilter}
+                            onSelectFilter = {setStackFilter}
+                        />
                     </Reveal>
                 )}
             </div>

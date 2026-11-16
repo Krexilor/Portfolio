@@ -1,6 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useEffect, useState } from "react"
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react"
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react"
 
 // STYLES ------------------------------------------------------------------------------------------------------------------------------------------|
 import styles from "./ChapterRail.module.css"
@@ -20,7 +20,7 @@ const CHAPTER_BY_TICK = new Map(CHAPTERS.map((chapter) => [chapter.tick, chapter
 const TICKS = Array.from({ length: TOTAL_TICKS + 1 }, (_, index) => index)
 
 // PROGRESSIVE SCALE TICK --------------------------------------------------------------------------------------------------------------------------|
-function ScaleTick({ index, smoothProgress, activeId, shouldReduceMotion }) {
+function ScaleTick({ index, progress, activeId, shouldReduceMotion }) {
     const chapter = CHAPTER_BY_TICK.get(index)
     const isMajor = Boolean(chapter)
     const isMedium = !isMajor && index % 3 === 0
@@ -29,13 +29,13 @@ function ScaleTick({ index, smoothProgress, activeId, shouldReduceMotion }) {
     const spanStart = Math.max(0, threshold - 0.06)
 
     const dynamicScaleX = useTransform(
-        smoothProgress,
+        progress,
         index === 0 ? [0, 1] : [spanStart, threshold],
         index === 0 ? [1, 1] : [0.22, 1]
     )
 
     const dynamicOpacity = useTransform(
-        smoothProgress,
+        progress,
         index === 0 ? [0, 1] : [spanStart, threshold],
         index === 0 ? [1, 1] : [0.24, isMajor ? 0.96 : isMedium ? 0.72 : 0.48]
     )
@@ -95,11 +95,6 @@ export default function ChapterRail() {
 
     const shouldReduceMotion = useReducedMotion()
     const { scrollYProgress } = useScroll()
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 200,
-        damping: 30,
-        restDelta: 0.001
-    })
 
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
         const clamped = Math.min(1, Math.max(0, latest))
@@ -165,7 +160,7 @@ export default function ChapterRail() {
             <div className = {styles.ruler}>
                 <div className = {styles.spine} aria-hidden = "true">
                     {!shouldReduceMotion && (
-                        <motion.div className = {styles.spineFill} style = {{ scaleY: smoothProgress }} />
+                        <motion.div className = {styles.spineFill} style = {{ scaleY: scrollYProgress }} />
                     )}
                 </div>
 
@@ -173,7 +168,7 @@ export default function ChapterRail() {
                     <ScaleTick
                         key = {tickIndex}
                         index = {tickIndex}
-                        smoothProgress = {smoothProgress}
+                        progress = {scrollYProgress}
                         activeId = {activeId}
                         shouldReduceMotion = {shouldReduceMotion}
                     />

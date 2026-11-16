@@ -36,40 +36,23 @@ export default function Home() {
                 <motion.div
                     className = {styles.heroContent}
                     style = {shouldReduceMotion ? undefined : { y: heroY, opacity: heroOpacity }}
+                    initial = {shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+                    animate = {{ opacity: 1, y: 0 }}
+                    transition = {{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <motion.p
-                        className = {`eyebrow ${styles.eyebrow}`}
-                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-                        animate = {{ opacity: 1, y: 0 }}
-                        transition = {{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    >
+                    <p className = {`eyebrow ${styles.eyebrow}`}>
                         {profile.name} · {profile.role}
-                    </motion.p>
+                    </p>
 
-                    <motion.h1
-                        className = {styles.headline}
-                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-                        animate = {{ opacity: 1, y: 0 }}
-                        transition = {{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    >
+                    <h1 className = {styles.headline}>
                         {profile.tagline}
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p
-                        className = {styles.lead}
-                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-                        animate = {{ opacity: 1, y: 0 }}
-                        transition = {{ duration: 0.6, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-                    >
+                    <p className = {styles.lead}>
                         {heroLead}
-                    </motion.p>
+                    </p>
 
-                    <motion.div
-                        className = {styles.ctaRow}
-                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 14 }}
-                        animate = {{ opacity: 1, y: 0 }}
-                        transition = {{ duration: 0.55, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-                    >
+                    <div className = {styles.ctaRow}>
                         <a href = "#work" className = {styles.primaryBtn}>
                             Explore Work
                             <svg
@@ -90,17 +73,12 @@ export default function Home() {
                         <a href = "#lab" className = {styles.secondaryBtn}>
                             Open Systems Lab
                         </a>
-                    </motion.div>
+                    </div>
 
                     {shaderHint && (
-                        <motion.p
-                            className = {styles.shaderHint}
-                            initial = {shouldReduceMotion ? false : { opacity: 0 }}
-                            animate = {{ opacity: 1 }}
-                            transition = {{ duration: 0.6, delay: 0.35 }}
-                        >
+                        <p className = {styles.shaderHint}>
                             {shaderHint}
-                        </motion.p>
+                        </p>
                     )}
                 </motion.div>
 
@@ -108,9 +86,9 @@ export default function Home() {
                     <motion.div
                         className = {styles.focusStrip}
                         style = {{ "--focus-cols": Math.min(4, focusStrip.length) }}
-                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 10 }}
                         animate = {{ opacity: 1, y: 0 }}
-                        transition = {{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                        transition = {{ duration: 0.42, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                     >
                         {focusStrip.map((item, index) => (
                             <div key = {`${item.label}-${index}`} className = {styles.focusItem}>

@@ -6,7 +6,7 @@ export default function Reveal({
     children,
     className = "",
     delay = 0,
-    y = 20,
+    y = 14,
     as = "div"
 }) {
     const shouldReduceMotion = useReducedMotion()
@@ -22,10 +22,10 @@ export default function Reveal({
             className = {className}
             initial = {{ opacity: 0, y }}
             whileInView = {{ opacity: 1, y: 0 }}
-            viewport = {{ once: true, amount: 0.15 }}
+            viewport = {{ once: true, amount: 0.08 }}
             transition = {{
-                duration: 0.55,
-                delay,
+                duration: 0.38,
+                delay: Math.min(delay, 0.2),
                 ease: [0.16, 1, 0.3, 1]
             }}
         >

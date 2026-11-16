@@ -1,7 +1,7 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState } from "react"
 import { Link } from "react-router"
-import { motion, AnimatePresence, useReducedMotion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 
 // POSTS -------------------------------------------------------------------------------------------------------------------------------------------|
 import { blogPosts } from "./Posts/index.js"
@@ -112,15 +112,13 @@ export default function Blog() {
                 </motion.header>
 
                 {/* Articles Feed */}
-                <AnimatePresence mode = "wait">
-                    <motion.div
-                        key = {effectiveTopic}
-                        className = {styles.feed}
-                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-                        animate = {{ opacity: 1, y: 0 }}
-                        exit = {shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
-                        transition = {{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-                    >
+                <motion.div
+                    key = {effectiveTopic}
+                    className = {styles.feed}
+                    initial = {shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+                    animate = {{ opacity: 1, y: 0 }}
+                    transition = {{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                >
                         {!leadPost ? (
                             <div className = {styles.emptyState}>
                                 <p>No articles matched the selected topic.</p>
@@ -234,8 +232,7 @@ export default function Blog() {
                                 )}
                             </>
                         )}
-                    </motion.div>
-                </AnimatePresence>
+                </motion.div>
             </div>
         </main>
     )

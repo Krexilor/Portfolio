@@ -22,6 +22,7 @@ export default function Cursor() {
         )
         const timeouts = new Set()
         let activeMouse = false
+        let visibleState = false
 
         const setCursorAttribute = (enabled) => {
             if (enabled) {
@@ -32,10 +33,16 @@ export default function Cursor() {
         }
 
         const hideCursor = () => {
-            setCursorAttribute(false)
+            if (activeMouse) {
+                activeMouse = false
+                setCursorAttribute(false)
+            }
             if (!isMounted) return
 
-            setIsVisible(false)
+            if (visibleState) {
+                visibleState = false
+                setIsVisible(false)
+            }
             setIsPressed(false)
             pressedButtons.current.clear()
         }
@@ -51,31 +58,28 @@ export default function Cursor() {
         const handlePointerMove = (e) => {
             if (!isMounted) return
 
-            if (e.pointerType !== "mouse") {
-                activeMouse = false
+            if (e.pointerType !== "mouse" || !pointerQuery.matches) {
                 hideCursor()
                 return
             }
 
-            if (!pointerQuery.matches) {
-                activeMouse = false
-                hideCursor()
-                return
+            if (!activeMouse) {
+                activeMouse = true
+                setCursorAttribute(true)
             }
-
-            activeMouse = true
-            setCursorAttribute(true)
             mousePos.current = { x: e.clientX, y: e.clientY }
-
             updatePosition()
-            setIsVisible(true)
+
+            if (!visibleState) {
+                visibleState = true
+                setIsVisible(true)
+            }
         }
 
         const handlePointerDown = (e) => {
             if (!isMounted) return
 
             if (e.pointerType !== "mouse") {
-                activeMouse = false
                 hideCursor()
                 return
             }
@@ -83,11 +87,16 @@ export default function Cursor() {
             if (e.button !== 0 && e.button !== 2) return
             if (!pointerQuery.matches) return
 
-            activeMouse = true
-            setCursorAttribute(true)
+            if (!activeMouse) {
+                activeMouse = true
+                setCursorAttribute(true)
+            }
             mousePos.current = { x: e.clientX, y: e.clientY }
             updatePosition()
-            setIsVisible(true)
+            if (!visibleState) {
+                visibleState = true
+                setIsVisible(true)
+            }
 
             pressedButtons.current.add(e.button)
             setIsPressed(true)

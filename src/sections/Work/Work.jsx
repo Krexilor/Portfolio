@@ -1,6 +1,6 @@
 // LIBRARIES ---------------------------------------------------------------------------------------------------------------------------------------|
 import { useState } from "react"
-import { motion, AnimatePresence, useReducedMotion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 
 // COMPONENTS --------------------------------------------------------------------------------------------------------------------------------------|
 import Modal from "../../components/Common/Modal/Modal.jsx"
@@ -69,36 +69,33 @@ export default function Work() {
                     </div>
                 </div>
 
-                <AnimatePresence mode = "wait">
-                    <motion.div
-                        key = {activeFilter}
-                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-                        animate = {{ opacity: 1, y: 0 }}
-                        exit = {shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
-                        transition = {{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                        {visibleProjects.length === 0 ? (
-                            <div className = {styles.emptyState}>
-                                <p>No projects currently match this status filter.</p>
-                            </div>
-                        ) : (
-                            <div className = {styles.grid}>
-                                {visibleProjects.map((project, index) => {
-                                    const stackList = Array.isArray(project.stack) ? project.stack : []
-                                    return (
-                                        <motion.article
-                                            key = {project.id || `${project.title}-${index}`}
-                                            className = {styles.card}
-                                            initial = {shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-                                            whileInView = {{ opacity: 1, y: 0 }}
-                                            viewport = {{ once: true, amount: 0.15 }}
-                                            transition = {{
-                                                duration: 0.45,
-                                                delay: Math.min((index % 3) * 0.08, 0.3),
-                                                ease: [0.16, 1, 0.3, 1]
-                                            }}
-                                            whileHover = {shouldReduceMotion ? undefined : { y: -4 }}
-                                        >
+                <motion.div
+                    key = {activeFilter}
+                    initial = {shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+                    animate = {{ opacity: 1, y: 0 }}
+                    transition = {{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    {visibleProjects.length === 0 ? (
+                        <div className = {styles.emptyState}>
+                            <p>No projects currently match this status filter.</p>
+                        </div>
+                    ) : (
+                        <div className = {styles.grid}>
+                            {visibleProjects.map((project, index) => {
+                                const stackList = Array.isArray(project.stack) ? project.stack : []
+                                return (
+                                    <motion.article
+                                        key = {project.id || `${project.title}-${index}`}
+                                        className = {styles.card}
+                                        initial = {shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+                                        whileInView = {{ opacity: 1, y: 0 }}
+                                        viewport = {{ once: true, amount: 0.08 }}
+                                        transition = {{
+                                            duration: 0.36,
+                                            delay: Math.min((index % 3) * 0.05, 0.15),
+                                            ease: [0.16, 1, 0.3, 1]
+                                        }}
+                                    >
                                             {project.image && (
                                                 <div className = {styles.cardMedia}>
                                                     <img
@@ -190,8 +187,7 @@ export default function Work() {
                                 })}
                             </div>
                         )}
-                    </motion.div>
-                </AnimatePresence>
+                </motion.div>
             </div>
 
             {/* Uniform Project Modal */}

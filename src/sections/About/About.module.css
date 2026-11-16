@@ -188,7 +188,7 @@
     line-height: 1.65;
 }
 
-/* TECHNICAL STACK (BELOW BIO & JOURNEY IN CHAPTER 02) ------------------------------------------------------------------------------------------ */
+/* TECHNICAL STACK EXPLORER (CHAPTER 02) --------------------------------------------------------------------------------------------------------- */
 .stackBlock {
     margin-top: clamp(2.75rem, 5vw, 4.25rem);
     padding-top: clamp(2rem, 4vw, 3rem);
@@ -201,9 +201,15 @@
 .stackHeader {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     gap: var(--space-4);
+}
+
+.stackTitleGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .stackSectionHeading {
@@ -211,15 +217,28 @@
     letter-spacing: -0.025em;
 }
 
+.stackMetaLine {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+}
+
 .stackFilterBar {
     display: inline-flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: var(--space-1);
     padding: 0.3rem;
     background-color: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-lg);
     max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.stackFilterBar::-webkit-scrollbar {
+    display: none;
 }
 
 .stackFilterBtn {
@@ -234,6 +253,7 @@
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
     white-space: nowrap;
+    flex-shrink: 0;
     transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
@@ -261,99 +281,334 @@
     opacity: 0.9;
 }
 
-.stackGrid {
+/* INTERACTIVE WORKBENCH (BLUEPRINT MAP + LIVE INSPECTOR) ---------------------------------------------------------------------------------------- */
+.stackWorkbench {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-5);
-    align-items: stretch;
-}
-
-.stackGridSingle {
-    grid-template-columns: 1fr;
-}
-
-.stackCard {
-    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    grid-template-columns: 1.32fr 0.88fr;
+    gap: var(--space-4);
+    padding: clamp(1rem, 2.2vw, 1.5rem);
     background-color: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-xl);
+    align-items: stretch;
+}
+
+.blueprintStage {
+    background-color: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.9rem, 2vw, 1.35rem);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
     min-width: 0;
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
-.stackCard:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card);
+.blueprintTier {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: var(--space-3);
+    transition: opacity 200ms ease;
 }
 
-.stackCardHead {
+.blueprintTierDimmed {
+    opacity: 0.34;
+}
+
+.tierRailCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding-top: 2px;
+}
+
+.tierJoint {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    border: var(--border-width) solid var(--color-border-strong);
+    background-color: var(--color-surface);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: var(--font-weight-semibold);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.tierJointActive {
+    border-color: var(--color-accent);
+    color: var(--color-bg);
+    background-color: var(--color-accent);
+}
+
+.tierBusLine {
+    width: 2px;
+    flex: 1;
+    min-height: 18px;
+    background-color: var(--color-border);
+    transition: background-color var(--transition-fast);
+}
+
+.tierBusLineActive {
+    background-color: var(--color-accent);
+    opacity: 0.55;
+}
+
+.tierContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    min-width: 0;
+}
+
+.tierHead {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--space-3);
+    gap: var(--space-2);
 }
 
-.stackCardTitle {
-    font-size: var(--font-size-lg);
-    letter-spacing: -0.02em;
+.tierLabelBtn {
+    background: transparent;
     color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.015em;
+    text-align: left;
+    transition: color var(--transition-fast);
 }
 
-.stackCardCount {
+.tierLabelBtn:hover {
+    color: var(--color-accent);
+}
+
+.tierCount {
     font-family: var(--font-mono);
-    font-size: var(--font-size-xs);
+    font-size: 0.68rem;
     color: var(--color-muted);
     font-variant-numeric: tabular-nums;
 }
 
-.stackItems {
-    display: flex;
-    flex-direction: column;
-}
-
-.stackItemsHorizontal {
+.tierNodeGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0 var(--space-5);
-}
-
-.skillRow {
-    padding-block: var(--space-3);
-    border-top: var(--border-width) solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.skillHead {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-2);
 }
 
-.skillName {
-    font-size: var(--font-size-sm);
+.nodeTile {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 0.75rem;
+    min-height: 54px;
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+    min-width: 0;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.nodeTile:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-1px);
+}
+
+.nodeTileActive,
+.nodeTileActive:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
+}
+
+.nodeGlyphWrap {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    color: var(--color-text-secondary);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.nodeTileActive .nodeGlyphWrap {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.nodeTileText {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.nodeTileName {
+    font-size: 0.8rem;
     font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nodeTileRole {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nodeTileActive .nodeTileRole {
+    color: var(--color-accent);
+}
+
+/* RIGHT NODE INSPECTOR -------------------------------------------------------------------------------------------------------------------------- */
+.stackInspector {
+    background-color: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1rem, 2vw, 1.35rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+}
+
+.inspectorHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.inspectorKicker {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-accent);
+}
+
+.inspectorCounter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.schematicFrame {
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+}
+
+.schematicSvg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.schematicPulse {
+    animation: schematicFlow 1.1s linear infinite;
+}
+
+@keyframes schematicFlow {
+    from {
+        stroke-dashoffset: 20;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.inspectorBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.inspectorTitleRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.inspectorIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-accent);
+    color: var(--color-accent);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.inspectorTitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
     color: var(--color-text);
 }
 
-.skillRole {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--color-accent);
-    text-align: right;
-}
-
-.skillDetail {
-    font-size: var(--font-size-xs);
+.inspectorDetail {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
     line-height: 1.6;
 }
 
+.inspectorFooter {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-2);
+}
+
+.inspectorNavBtn {
+    min-height: 40px;
+    padding: 0.45rem 0.85rem;
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.inspectorNavBtn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .schematicPulse {
+        animation: none;
+    }
+}
+
 /* TABLET RESPONSIVENESS (KEEP SIDE-BY-SIDE HORIZONTAL DOWN TO 700PX) ---------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .stackWorkbench {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 1024px) and (min-width: 700px) {
     .grid {
         grid-template-columns: minmax(200px, 245px) 1fr;
@@ -417,17 +672,48 @@
         grid-template-columns: 110px minmax(0, 1fr);
         gap: var(--space-3);
     }
+
+    .tierNodeGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 639px) {
-    .stackGrid {
-        grid-template-columns: 1fr;
-        gap: var(--space-4);
+    .stackFilterBar {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        width: 100%;
     }
 
     .stackFilterBtn {
-        min-height: 34px;
-        padding: 0.35rem 0.7rem;
+        min-height: 44px;
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+
+    .inspectorNavBtn {
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tierNodeGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nodeTile {
+        padding: 0.5rem 0.6rem;
+        gap: 0.5rem;
+    }
+
+    .nodeTileRole {
+        display: none;
+    }
+}
+
+@media (max-width: 359px) {
+    .tierNodeGrid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -446,3 +732,4 @@
         gap: var(--space-1);
     }
 }
+

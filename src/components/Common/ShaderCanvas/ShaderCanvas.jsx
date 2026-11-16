@@ -105,12 +105,23 @@ export default function ShaderCanvas({ className = "" }) {
 
         let rafId = 0
         const startTime = performance.now()
+        let cachedRect = { left: 0, top: 0, width: 1, height: 1 }
+
+        const syncBounds = () => {
+            const rect = canvas.getBoundingClientRect()
+            cachedRect = {
+                left: rect.left,
+                top: rect.top,
+                width: Math.max(1, rect.width),
+                height: Math.max(1, rect.height)
+            }
+        }
 
         const resize = () => {
-            const rect = canvas.getBoundingClientRect()
-            const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
-            const width = Math.max(1, Math.floor(rect.width * dpr))
-            const height = Math.max(1, Math.floor(rect.height * dpr))
+            syncBounds()
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.25)
+            const width = Math.max(1, Math.floor(cachedRect.width * dpr))
+            const height = Math.max(1, Math.floor(cachedRect.height * dpr))
 
             if (canvas.width !== width || canvas.height !== height) {
                 canvas.width = width
@@ -146,7 +157,7 @@ export default function ShaderCanvas({ className = "" }) {
         }
 
         const tick = (now) => {
-            if (!state.isVisible || shouldReduceMotion) {
+            if (!state.isVisible || shouldReduceMotion || document.hidden) {
                 rafId = 0
                 return
             }
@@ -160,17 +171,14 @@ export default function ShaderCanvas({ className = "" }) {
                 drawFrame(performance.now())
                 return
             }
-            if (!rafId && state.isVisible) {
+            if (!rafId && state.isVisible && !document.hidden) {
                 rafId = window.requestAnimationFrame(tick)
             }
         }
 
         const handlePointerMove = (event) => {
-            const rect = canvas.getBoundingClientRect()
-            if (rect.width <= 0 || rect.height <= 0) return
-
-            const nx = (event.clientX - rect.left) / rect.width
-            const ny = (event.clientY - rect.top) / rect.height
+            const nx = (event.clientX - cachedRect.left) / cachedRect.width
+            const ny = (event.clientY - cachedRect.top) / cachedRect.height
 
             if (nx >= 0 && nx <= 1 && ny >= 0 && ny <= 1) {
                 state.targetMouseX = nx
@@ -182,11 +190,9 @@ export default function ShaderCanvas({ className = "" }) {
         }
 
         const handlePointerDown = (event) => {
-            const rect = canvas.getBoundingClientRect()
-            if (rect.width <= 0 || rect.height <= 0) return
-
-            const nx = (event.clientX - rect.left) / rect.width
-            const ny = (event.clientY - rect.top) / rect.height
+            syncBounds()
+            const nx = (event.clientX - cachedRect.left) / cachedRect.width
+            const ny = (event.clientY - cachedRect.top) / cachedRect.height
 
             if (nx >= 0 && nx <= 1 && ny >= 0 && ny <= 1) {
                 state.targetMouseX = nx
@@ -214,10 +220,20 @@ export default function ShaderCanvas({ className = "" }) {
         }
 
         const handleScroll = () => {
+            syncBounds()
             const maxScroll = Math.max(window.innerHeight, 1)
             state.scrollNorm = Math.min(1.5, window.scrollY / maxScroll)
             if (shouldReduceMotion) {
                 drawFrame(performance.now())
+            }
+        }
+
+        const handleVisibilityChange = () => {
+            if (document.hidden && rafId) {
+                window.cancelAnimationFrame(rafId)
+                rafId = 0
+            } else if (!document.hidden && state.isVisible) {
+                startLoop()
             }
         }
 
@@ -260,6 +276,7 @@ export default function ShaderCanvas({ className = "" }) {
         window.addEventListener("pointerup", handlePointerEnd, { passive: true })
         window.addEventListener("pointercancel", handlePointerEnd, { passive: true })
         document.addEventListener("mouseout", handleDocumentLeave)
+        document.addEventListener("visibilitychange", handleVisibilityChange)
         window.addEventListener("scroll", handleScroll, { passive: true })
         window.addEventListener("krexilor:easter-wave", handleEasterWave)
 
@@ -274,6 +291,7 @@ export default function ShaderCanvas({ className = "" }) {
             window.removeEventListener("pointerup", handlePointerEnd)
             window.removeEventListener("pointercancel", handlePointerEnd)
             document.removeEventListener("mouseout", handleDocumentLeave)
+            document.removeEventListener("visibilitychange", handleVisibilityChange)
             window.removeEventListener("scroll", handleScroll)
             window.removeEventListener("krexilor:easter-wave", handleEasterWave)
             gl.deleteBuffer(buffer)
